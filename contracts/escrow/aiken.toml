@@ -1,0 +1,25 @@
+name = "trust-seal/escrow"
+version = "0.0.0"
+compiler = "v1.1.19"
+plutus = "v3"
+license = "Apache-2.0"
+description = "Aiken contracts for project 'trust-seal/escrow'"
+
+[repository]
+user = "trust-seal"
+project = "escrow"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "v3.0.0"
+source = "github"
+
+
+[[dependencies]]
+name = "sidan-lab/vodka"
+version = "0.1.10"
+source = "github"
+
+
+[config]

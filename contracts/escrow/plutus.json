@@ -1,0 +1,154 @@
+{
+  "preamble": {
+    "title": "trust-seal/escrow",
+    "description": "Aiken contracts for project 'trust-seal/escrow'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.19+e525483"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "escrow.trustseal_escrow.spend",
+      "datum": {
+        "title": "datum",
+        "schema": {
+          "$ref": "#/definitions/escrow~1EscrowDatum"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/escrow~1EscrowRedeemer"
+        }
+      },
+      "compiledCode": "59027401010029800aba2aba1aba0aab9faab9eaab9dab9a488888896600264653001300800198041804800cdc3a400530080024888966002600460106ea800e26466453001159800980098059baa0028cc004c03cc030dd500148c040c044c044c044c044c044c044c044c04400644646600200200644b30010018a508acc004cdc79bae30130010038a51899801001180a000a01c4045300b375400f23010301130113011001488888c966002600e007159800800c4cdd7980118091baa0064c0103d87980008a5040411598009805801c566002b30010018a518998021bac3005301237540146eb8c054c058c048dd500320208acc004c8c8c8cc89660026020602c6ea800a2b3001301030163754603460360071337100026eb4c068c05cdd500144cdc48009bad301a3017375400480aa2941015180c0009bad30183019301930193019301537540126602c602e0026602d3001300d30133754602e60300034c103d87a8000a60103d8798000404897ae030133754602c60266ea8004c054c058c058c058c058c058c058c058c048dd500544cdd7980118091baa0064c103d87980008a50404114a0808229410102020330033758600860226ea8024dd7180a18089baa00545900a4c02cdd5003cc03c00d2225980098020014566002601e6ea802a00716404115980098040014566002601e6ea802a00716404115980099b874801000a264b30013014001899192cc004c01c0062b3001301237540050068b20268acc004c02c0062b3001301237540050068b20268b2020404060206ea8004c04c0062c8088c03cdd500545900d201a4034300d300e001370e900018049baa0038b200e180400098019baa0088a4d1365640041",
+      "hash": "03d7483edf12a5b2eb960cf3b23cc0a33d5c18bb05f81984817f7c2b"
+    },
+    {
+      "title": "escrow.trustseal_escrow.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "59027401010029800aba2aba1aba0aab9faab9eaab9dab9a488888896600264653001300800198041804800cdc3a400530080024888966002600460106ea800e26466453001159800980098059baa0028cc004c03cc030dd500148c040c044c044c044c044c044c044c044c04400644646600200200644b30010018a508acc004cdc79bae30130010038a51899801001180a000a01c4045300b375400f23010301130113011001488888c966002600e007159800800c4cdd7980118091baa0064c0103d87980008a5040411598009805801c566002b30010018a518998021bac3005301237540146eb8c054c058c048dd500320208acc004c8c8c8cc89660026020602c6ea800a2b3001301030163754603460360071337100026eb4c068c05cdd500144cdc48009bad301a3017375400480aa2941015180c0009bad30183019301930193019301537540126602c602e0026602d3001300d30133754602e60300034c103d87a8000a60103d8798000404897ae030133754602c60266ea8004c054c058c058c058c058c058c058c058c048dd500544cdd7980118091baa0064c103d87980008a50404114a0808229410102020330033758600860226ea8024dd7180a18089baa00545900a4c02cdd5003cc03c00d2225980098020014566002601e6ea802a00716404115980098040014566002601e6ea802a00716404115980099b874801000a264b30013014001899192cc004c01c0062b3001301237540050068b20268acc004c02c0062b3001301237540050068b20268b2020404060206ea8004c04c0062c8088c03cdd500545900d201a4034300d300e001370e900018049baa0038b200e180400098019baa0088a4d1365640041",
+      "hash": "03d7483edf12a5b2eb960cf3b23cc0a33d5c18bb05f81984817f7c2b"
+    }
+  ],
+  "definitions": {
+    "ByteArray": {
+      "dataType": "bytes"
+    },
+    "Int": {
+      "dataType": "integer"
+    },
+    "escrow/DisputeResolution": {
+      "title": "DisputeResolution",
+      "anyOf": [
+        {
+          "title": "ReleaseToRecipient",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "RefundToFunder",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
+    },
+    "escrow/EscrowDatum": {
+      "title": "EscrowDatum",
+      "description": "Datum stored on the escrow UTXO",
+      "anyOf": [
+        {
+          "title": "EscrowDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "funder",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "recipient",
+              "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "amount",
+              "$ref": "#/definitions/Int"
+            },
+            {
+              "title": "status",
+              "$ref": "#/definitions/escrow~1EscrowStatus"
+            },
+            {
+              "title": "dispute_deadline",
+              "$ref": "#/definitions/Int"
+            }
+          ]
+        }
+      ]
+    },
+    "escrow/EscrowRedeemer": {
+      "title": "EscrowRedeemer",
+      "anyOf": [
+        {
+          "title": "Approve",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "RaiseDispute",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        },
+        {
+          "title": "ResolveDispute",
+          "dataType": "constructor",
+          "index": 2,
+          "fields": [
+            {
+              "$ref": "#/definitions/escrow~1DisputeResolution"
+            }
+          ]
+        }
+      ]
+    },
+    "escrow/EscrowStatus": {
+      "title": "EscrowStatus",
+      "anyOf": [
+        {
+          "title": "Active",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "Approved",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        },
+        {
+          "title": "Disputed",
+          "dataType": "constructor",
+          "index": 2,
+          "fields": []
+        },
+        {
+          "title": "Resolved",
+          "dataType": "constructor",
+          "index": 3,
+          "fields": []
+        }
+      ]
+    }
+  }
+}
