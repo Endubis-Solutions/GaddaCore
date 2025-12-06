@@ -47,7 +47,6 @@ pub type ArbitratorDatum {
 }
 
 // List of dispute IDs where didn't vote
-
 pub type ArbitratorRedeemer {
   // Register with initial expertise list
   Register { expertise: List<ByteArray>, metadata_ipfs_hash: ByteArray }
@@ -349,7 +348,6 @@ validator arbitrator_registry {
         }
       }
     }
-    // Can't penalize if they voted
   }
 
   else(_) {
