@@ -77,9 +77,9 @@ const Logo = () => {
         </div>
         <div>
             <h1 className="text-2xl font-bold bg-linear-to-r from-primary/80 to-primary bg-clip-text text-transparent">
-                TrustSeal
+                Gadaa
             </h1>
-            <p className="text-xs text-muted-foreground">Secure Cardano Payments</p>
+            <p className="text-xs text-muted-foreground">Secure Escorw</p>
         </div>
     </div>
 }
