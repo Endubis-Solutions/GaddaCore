@@ -1,4 +1,5 @@
 import { EscrowStatus } from "@/types";
+import { deserializeAddress } from "@meshsdk/core";
 
 // Utility functions from demo
 export function formatAddress(address: string, startChars = 8, endChars = 8): string {
@@ -6,12 +7,20 @@ export function formatAddress(address: string, startChars = 8, endChars = 8): st
   return `${address.slice(0, startChars)}...${address.slice(-endChars)}`;
 }
 
-export function lovelaceToAda(lovelace: number): number {
+export const hexToString = (hex: string) => Buffer.from(hex, "hex").toString("utf-8");
+
+export function lovelaceToAda(lovelace: number | bigint): number {
+  if (typeof lovelace === 'bigint') {
+    return Number(lovelace) / 1_000_000;
+  }
   return lovelace / 1_000_000;
 }
 
-export function adaToLovelace(ada: number): number {
-  return Math.floor(ada * 1_000_000);
+export function adaToLovelace(ada: number): bigint {
+  return BigInt(Math.round(ada * 1_000_000));
+}
+export function adaToLovelaceSerialized(ada: number): number {
+  return Number(adaToLovelace(ada))
 }
 
 export function getStatusColor(status: EscrowStatus): string {
@@ -32,4 +41,9 @@ export function getStatusColor(status: EscrowStatus): string {
 
 export function generateQrCodeUrl(data: string): string {
   return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(data)}`;
+}
+
+export function getAddressPlutusData(addressString: string) {
+  const meshAddress = deserializeAddress(addressString);
+  return meshAddress
 }

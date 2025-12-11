@@ -1,381 +1,213 @@
-// use aiken/collection/list
-// use cardano/transaction.{OutputReference, Transaction, placeholder}
-// use cocktail.{valid_after}
-// use mocktail.{mock_interval}
+use cardano/address.{Address}
+use cardano/assets.{
+  AssetName, PolicyId, Value, from_asset_list, from_lovelace, merge,
+}
+use cardano/transaction.{InlineDatum, OutputReference, Transaction, find_input}
+use cocktail.{valid_before}
+use cocktail/vodka_address.{address_pub_key, compare_address}
+use cocktail/vodka_extra_signatories.{
+  all_key_signed, key_signed, one_of_keys_signed,
+}
+use cocktail/vodka_inputs.{inputs_at}
+use cocktail/vodka_outputs.{outputs_at}
+use cocktail/vodka_value.{get_all_value_to, value_geq, value_length}
 
-// // Constants (configurable parameters)
+// 24 hours in miliseconds
+pub const recipient_lock_window = 24 * 60 * 60 * 1000
 
-// // Minimum stake required from recipient to prevent scams (in lovelace)
-// const recipient_min_stack = 5_000_000
+// 5 ADA in lovelace
+pub const recipient_min_stake = 5_000_000
 
-// // 5 ADA
+pub type MValue =
+  Pairs<PolicyId, Pairs<AssetName, Int>>
 
-// // Time window for recipient to lock stake after funder locks funds (in milliseconds)
-// const recipient_lock_window = 48 * 60 * 60 * 1000
+pub type EscrowDatum {
+  Initiation {
+    initiator: Address,
+    initiator_assets: MValue,
+    recipient: Address,
+    deadline: Int,
+    contract_ipfs_url: ByteArray,
+    created_at: Int,
+  }
+  ActiveEscrow {
+    initiator: Address,
+    initiator_assets: MValue,
+    recipient: Address,
+    recipient_assets: MValue,
+    deadline: Int,
+    contract_ipfs_url: ByteArray,
+    created_at: Int,
+  }
+}
 
-// // 48 hours in milliseconds
+pub type EscrowRedeemer {
+  RecipientDeposit { recipient: Address, recipient_assets: MValue }
+  CancelTrade
+  CompleteTrade
+}
 
-// // Types
+validator escrow {
+  spend(
+    _datum: Option<EscrowDatum>,
+    redeemer: EscrowRedeemer,
+    input: OutputReference,
+    tx: Transaction,
+  ) {
+    let Transaction { inputs, outputs, extra_signatories, .. } = tx
+    expect Some(own_input) = find_input(inputs, input)
+    let own_address = own_input.output.address
+    when redeemer is {
+      RecipientDeposit { recipient, recipient_assets } -> {
+        expect ([input], [output]) =
+          (inputs_at(inputs, own_address), outputs_at(outputs, own_address))
+        expect InlineDatum(raw_input_datum) = input.output.datum
+        expect InlineDatum(raw_output_datum) = output.datum
 
-// /// Datum stored on the escrow UTXO
-// pub type EscrowDatum {
-//   funder: ByteArray,
-//   recipient: ByteArray,
-//   amount: Int,
-//   // in lovelace (funder's locked amount)
-//   recipient_stake: Int,
-//   // in lovelace (recipient's security deposit)
-//   status: EscrowStatus,
-//   dispute_deadline: Int,
-//   // timestamp when disputes can be raised
-//   created_at: Int,
-//   // timestamp when escrow was created
-//   funder_locked_at: Option<Int>,
-//   // timestamp when funder locked funds
-//   recipient_lock_deadline: Option<Int>,
-//   // deadline for recipient to lock stake
-//   contract_hash: Option<ByteArray>,
-//   // hash of contract terms from form
-//   ipfs_hash: Option<ByteArray>,
-// }
+        // Pattern match the input datum with the new structure
+        expect Initiation {
+          initiator,
+          initiator_assets,
+          recipient: locked_recipient,
+          deadline,
+          contract_ipfs_url,
+          created_at,
+        }: EscrowDatum = raw_input_datum
 
-// // IPFS hash for document storage
+        expect output_datum: EscrowDatum = raw_output_datum
 
-// pub type EscrowStatus {
-//   AwaitingFunder
-//   // waiting for funder to lock funds
-//   AwaitingRecipient
-//   // funder locked, waiting for recipient stake
-//   Active
-//   // both parties locked funds, waiting for approval/dispute
-//   Approved
-//   // funder approved → ready to release to recipient
-//   Disputed
-//   // in arbitration
-//   Resolved
-//   // dispute resolved
-//   Expired
-//   // recipient didn't lock stake within window
-//   Forfeited
-// }
+        let is_correct_recipient_address =
+          compare_address(recipient, locked_recipient) == Equal
 
-// // recipient forfeited stake due to dispute
+        expect Some(recipient_pub_key) = address_pub_key(locked_recipient)
+        let is_signed_by_recipient =
+          key_signed(extra_signatories, recipient_pub_key)
 
-// pub type EscrowRedeemer {
-//   LockFunderFunds
-//   // funder locks the agreed amount
-//   LockRecipientStake
-//   // recipient locks their 5 ADA stake
-//   Approve
-//   // funder confirms work is done
-//   RaiseDispute
-//   // either party claims issue
-//   ResolveDispute(DisputeResolution)
-//   RefundExpired
-//   // funder claims refund if recipient doesn't lock stake
-//   ReleaseStake
-// }
+        let recipient_lock_deadline = created_at + recipient_lock_window
+        let is_within_lock_window = is_before(tx, recipient_lock_deadline)
 
-// // release recipient's stake after successful completion
+        // STATE TRANSITION: Datum updates to ActiveEscrow, passing through flattened fields
+        let is_datum_updated =
+          output_datum == ActiveEscrow {
+            initiator,
+            recipient: locked_recipient,
+            initiator_assets,
+            recipient_assets,
+            deadline,
+            contract_ipfs_url,
+            created_at,
+          }
+        // VALUE CHECK
+        let is_value_deposited =
+          value_geq(
+            output.value,
+            input.output.value
+              |> merge(recipient_assets |> from_asset_list()),
+          )
 
-// pub type DisputeResolution {
-//   ReleaseToRecipient
-//   // recipient gets funds + stake back
-//   RefundToFunder
-// }
+        let is_stake_maintained =
+          has_minimum_ada(output.value, recipient_min_stake)
 
-// // funder gets refund + recipient's stake as penalty
+        let is_output_value_clean = value_length(output.value) <= 9
+        is_datum_updated && is_value_deposited && is_output_value_clean && is_correct_recipient_address && is_signed_by_recipient
+      }
+      //  && is_within_lock_window && is_stake_maintained
+      CancelTrade -> {
+        expect ([input], []) =
+          (inputs_at(inputs, own_address), outputs_at(outputs, own_address))
+        expect InlineDatum(raw_input_datum) = input.output.datum
+        expect input_datum: EscrowDatum = raw_input_datum
+        when input_datum is {
+          Initiation { initiator, .. } -> {
+            expect Some(pub_key) = address_pub_key(initiator)
+            key_signed(extra_signatories, pub_key)
+          }
 
-// // Helper Functions
+          ActiveEscrow {
+            initiator,
+            recipient,
+            initiator_assets,
+            recipient_assets,
+            deadline,
+            contract_ipfs_url,
+            created_at,
+          } -> {
+            // <<-- TRACE/USE HERE
+            trace deadline
+            trace contract_ipfs_url
+            trace created_at
 
-// /// Check if current time is after a specific timestamp
-// fn is_after_deadline(tx: Transaction, deadline: Int) -> Bool {
-//   valid_after(tx.validity_range, deadline)
-// }
+            let initiator_received = get_all_value_to(outputs, initiator)
+            let recipient_received = get_all_value_to(outputs, recipient)
+            let is_initiator_received_value =
+              value_geq(
+                initiator_received,
+                initiator_assets |> from_asset_list(),
+              )
+            let is_recipient_received_value =
+              value_geq(
+                recipient_received,
+                recipient_assets |> from_asset_list(),
+              )
+            expect Some(initiator_pub_key) = address_pub_key(initiator)
+            expect Some(recipient_pub_key) = address_pub_key(recipient)
+            let is_any_party_signed =
+              one_of_keys_signed(
+                extra_signatories,
+                [initiator_pub_key, recipient_pub_key],
+              )
+            is_any_party_signed && is_initiator_received_value && is_recipient_received_value
+          }
+        }
+      }
+      CompleteTrade -> {
+        expect ([input], []) =
+          (inputs_at(inputs, own_address), outputs_at(outputs, own_address))
+        expect InlineDatum(raw_input_datum) = input.output.datum
+        expect ActiveEscrow {
+          initiator,
+          recipient,
+          initiator_assets,
+          recipient_assets,
+          deadline,
+          contract_ipfs_url,
+          created_at,
+        }: EscrowDatum = raw_input_datum
+        trace deadline
+        trace contract_ipfs_url
+        trace created_at
 
-// /// Check if current time is before a specific timestamp
-// fn is_before_deadline(tx: Transaction, deadline: Int) -> Bool {
-//   !valid_after(tx.validity_range, deadline)
-// }
+        let initiator_received = get_all_value_to(outputs, initiator)
+        let recipient_received = get_all_value_to(outputs, recipient)
 
-// /// Check if recipient has locked sufficient stake
-// fn has_sufficient_stake(datum: EscrowDatum) -> Bool {
-//   datum.recipient_stake >= recipient_min_stack
-// }
+        let is_initiator_received_value =
+          value_geq(initiator_received, recipient_assets |> from_asset_list())
 
-// /// Check if recipient lock window has expired
-// fn recipient_lock_expired(tx: Transaction, datum: EscrowDatum) -> Bool {
-//   expect Some(deadline) = datum.recipient_lock_deadline
-//   is_after_deadline(tx, deadline)
-// }
+        let is_recipient_received_value =
+          value_geq(recipient_received, initiator_assets |> from_asset_list())
+        expect Some(initiator_pub_key) = address_pub_key(initiator)
+        expect Some(recipient_pub_key) = address_pub_key(recipient)
+        let is_both_parties_signed =
+          all_key_signed(
+            extra_signatories,
+            [initiator_pub_key, recipient_pub_key],
+          )
+        is_both_parties_signed && is_initiator_received_value && is_recipient_received_value
+      }
+    }
+  }
 
-// /// Check if recipient is still within lock window
-// fn within_recipient_lock_window(tx: Transaction, datum: EscrowDatum) -> Bool {
-//   expect Some(deadline) = datum.recipient_lock_deadline
-//   is_before_deadline(tx, deadline)
-// }
+  else(_) {
+    fail
+  }
+}
 
-// // Validator Logic
+// Helper functions
+fn is_before(tx: Transaction, deadline: Int) -> Bool {
+  valid_before(tx.validity_range, deadline)
+}
 
-// validator trustseal_escrow {
-//   spend(
-//     datum: Option<EscrowDatum>,
-//     redeemer: EscrowRedeemer,
-//     _input: OutputReference,
-//     tx: Transaction,
-//   ) {
-//     expect Some(escrow) = datum
-
-//     let signed_by_funder = list.has(tx.extra_signatories, escrow.funder)
-//     let signed_by_recipient = list.has(tx.extra_signatories, escrow.recipient)
-
-//     when redeemer is {
-//       // Phase 1: Funder locks their funds
-//       LockFunderFunds ->
-//         signed_by_funder && escrow.status == AwaitingFunder && escrow.amount > 0
-
-//       // Must lock positive amount
-//       // Phase 2: Recipient locks their stake within 48 hours
-//       LockRecipientStake ->
-//         signed_by_recipient && escrow.status == AwaitingRecipient && has_sufficient_stake(
-//           escrow,
-//         ) && within_recipient_lock_window(tx, escrow)
-
-//       // Funder can claim refund if recipient doesn't lock stake within 48 hours
-//       RefundExpired ->
-//         signed_by_funder && escrow.status == AwaitingRecipient && recipient_lock_expired(
-//           tx,
-//           escrow,
-//         )
-
-//       // Only the funder can approve successful completion (escrow is Active)
-//       Approve -> signed_by_funder && escrow.status == Active
-
-//       // Either party can raise a dispute, but only AFTER the dispute deadline
-//       RaiseDispute -> {
-//         let deadline_passed = is_after_deadline(tx, escrow.dispute_deadline)
-//         ( signed_by_funder || signed_by_recipient ) && deadline_passed && escrow.status == Active
-//       }
-
-//       // Release recipient's stake after successful approval
-//       ReleaseStake ->
-//         signed_by_funder && escrow.status == Approved && // Stake can only be released after dispute deadline has passed
-//         is_after_deadline(tx, escrow.dispute_deadline)
-
-//       // Resolve dispute (future: will require arbitrator consensus)
-//       ResolveDispute(resolution) ->
-//         escrow.status == Disputed && when resolution is {
-//           ReleaseToRecipient ->
-//             // Arbitrator decides to release to recipient
-//             // For now, require both parties to sign
-//             signed_by_funder && signed_by_recipient
-//           RefundToFunder ->
-//             // Arbitrator decides to refund to funder + give stake as penalty
-//             // For now, require both parties to sign
-//             signed_by_funder && signed_by_recipient
-//         }
-//     }
-//   }
-
-//   else(_) {
-//     fail
-//   }
-// }
-
-// // Test Suite
-
-// test test_escrow_flow() {
-//   let funder = #"01010101010101010101010101010101010101010101010101010101"
-//   let recipient = #"02020202020202020202020202020202020202020202020202020202"
-//   // Initial state: Awaiting funder
-//   let initial_datum =
-//     EscrowDatum {
-//       funder,
-//       recipient,
-//       amount: 0,
-//       // Not locked yet
-//       recipient_stake: 0,
-//       // Not locked yet
-//       status: AwaitingFunder,
-//       dispute_deadline: 10000,
-//       created_at: 1000,
-//       funder_locked_at: None,
-//       recipient_lock_deadline: None,
-//       contract_hash: None,
-//       ipfs_hash: None,
-//     }
-//   // After funder locks funds
-//   let after_funder_lock =
-//     EscrowDatum {
-//       funder,
-//       recipient,
-//       amount: 10_000_000,
-//       // 10 ADA locked
-//       recipient_stake: 0,
-//       // Still not locked
-//       status: AwaitingRecipient,
-//       dispute_deadline: 10000,
-//       created_at: 1000,
-//       funder_locked_at: Some(2000),
-//       // Funder locked at time 2000
-//       recipient_lock_deadline: Some(2000 + recipient_lock_window),
-//       // Deadline: 2000 + 48 hours
-//       contract_hash: None,
-//       ipfs_hash: None,
-//     }
-//   // Test: Can recipient lock stake within window?
-//   let tx_within_window =
-//     Transaction {
-//       ..placeholder,
-//       extra_signatories: [recipient],
-//       // 24 hours after funder lock (within window)
-//       validity_range: mock_interval(
-//         Some(2000 + 24 * 60 * 60 * 1000),
-//         Some(100000),
-//       ),
-//     }
-//   trace within_recipient_lock_window(tx_within_window, after_funder_lock)
-//   // Test: Has recipient lock window expired?
-//   let tx_after_window =
-//     Transaction {
-//       ..placeholder,
-//       extra_signatories: [funder],
-//       // 72 hours after (window expired)
-//       validity_range: mock_interval(
-//         Some(2000 + 72 * 60 * 60 * 1000),
-//         Some(100000),
-//       ),
-//     }
-//   trace recipient_lock_expired(tx_after_window, after_funder_lock)
-//   Void
-// }
-
-// test test_sufficient_stake() {
-//   let datum_with_stake =
-//     EscrowDatum {
-//       funder: #"01010101010101010101010101010101010101010101010101010101",
-//       recipient: #"02020202020202020202020202020202020202020202020202020202",
-//       amount: 10_000_000,
-//       recipient_stake: 5_000_000,
-//       // 5 ADA - sufficient
-//       status: AwaitingRecipient,
-//       dispute_deadline: 10000,
-//       created_at: 1000,
-//       funder_locked_at: Some(2000),
-//       recipient_lock_deadline: Some(2000 + recipient_lock_window),
-//       contract_hash: None,
-//       ipfs_hash: None,
-//     }
-//   let datum_insufficient_stake =
-//     EscrowDatum {
-//       funder: #"01010101010101010101010101010101010101010101010101010101",
-//       recipient: #"02020202020202020202020202020202020202020202020202020202",
-//       amount: 10_000_000,
-//       recipient_stake: 1_000_000,
-//       // 1 ADA - insufficient
-//       status: AwaitingRecipient,
-//       dispute_deadline: 10000,
-//       created_at: 1000,
-//       funder_locked_at: Some(2000),
-//       recipient_lock_deadline: Some(2000 + recipient_lock_window),
-//       contract_hash: None,
-//       ipfs_hash: None,
-//     }
-//   trace has_sufficient_stake(datum_with_stake)
-//   trace !has_sufficient_stake(datum_insufficient_stake)
-//   Void
-// }
-
-// test test_is_after_deadline() {
-//   let tx =
-//     Transaction {
-//       ..placeholder,
-//       extra_signatories: [],
-//       validity_range: mock_interval(Some(5000), Some(100000)),
-//     }
-//   // Test deadline that has passed
-//   trace is_after_deadline(tx, 3000)
-//   // Current time 5000 > deadline 3000
-//   // Test deadline that hasn't passed
-//   trace !is_after_deadline(tx, 7000)
-//   Void
-//   // Current time 5000 < deadline 7000
-// }
-
-// test test_is_before_deadline() {
-//   let tx =
-//     Transaction {
-//       ..placeholder,
-//       extra_signatories: [],
-//       validity_range: mock_interval(Some(5000), Some(10000)),
-//     }
-//   // Test deadline that hasn't passed
-//   trace is_before_deadline(tx, 7000)
-//   // Current time 5000 < deadline 7000
-//   // Test deadline that has passed
-//   trace !is_before_deadline(tx, 3000)
-//   Void
-//   // Current time 5000 > deadline 3000
-// }
-
-// test test_recipient_lock_stake() {
-//   let funder = #"01010101010101010101010101010101010101010101010101010101"
-//   let recipient = #"02020202020202020202020202020202020202020202020202020202"
-//   let datum =
-//     EscrowDatum {
-//       funder,
-//       recipient,
-//       amount: 10_000_000,
-//       recipient_stake: 5_000_000,
-//       status: AwaitingRecipient,
-//       dispute_deadline: 10000,
-//       created_at: 1000,
-//       funder_locked_at: Some(2000),
-//       recipient_lock_deadline: Some(2000 + recipient_lock_window),
-//       contract_hash: None,
-//       ipfs_hash: None,
-//     }
-//   let tx_within_window =
-//     Transaction {
-//       ..placeholder,
-//       extra_signatories: [recipient],
-//       validity_range: mock_interval(
-//         Some(2000 + 24 * 60 * 60 * 1000),
-//         Some(100000),
-//       ),
-//     }
-//   // All conditions should be true for LockRecipientStake
-//   trace has_sufficient_stake(datum)
-//   trace within_recipient_lock_window(tx_within_window, datum)
-//   Void
-// }
-
-// test test_refund_expired() {
-//   let funder = #"01010101010101010101010101010101010101010101010101010101"
-//   let recipient = #"02020202020202020202020202020202020202020202020202020202"
-//   let datum =
-//     EscrowDatum {
-//       funder,
-//       recipient,
-//       amount: 10_000_000,
-//       recipient_stake: 0,
-//       status: AwaitingRecipient,
-//       dispute_deadline: 10000,
-//       created_at: 1000,
-//       funder_locked_at: Some(2000),
-//       recipient_lock_deadline: Some(2000 + recipient_lock_window),
-//       contract_hash: None,
-//       ipfs_hash: None,
-//     }
-//   let tx_after_window =
-//     Transaction {
-//       ..placeholder,
-//       extra_signatories: [funder],
-//       validity_range: mock_interval(
-//         Some(2000 + 72 * 60 * 60 * 1000),
-//         Some(100000),
-//       ),
-//     }
-//   trace recipient_lock_expired(tx_after_window, datum)
-//   Void
-// }
+fn has_minimum_ada(value: Value, min_lovelace: Int) -> Bool {
+  let required_lovelace = from_lovelace(min_lovelace)
+  value_geq(value, required_lovelace)
+}

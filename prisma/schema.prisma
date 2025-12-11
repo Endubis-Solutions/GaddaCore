@@ -17,11 +17,12 @@ model User {
   updatedAt     DateTime @updatedAt
 
   // Relationships
-  arbitrator   Arbitrator?
-  escrows      Escrow[] // As funder
-  disputes     Dispute[] // Disputes they've raised
-  resolutions  Resolution[] // Resolutions they've made
-  activityLogs ActivityLog[]
+  arbitrator         Arbitrator?
+  escrows            Escrow[] // As funder
+  disputes           Dispute[] // Disputes they've raised
+  resolutions        Resolution[] // Resolutions they've made
+  activityLogs       ActivityLog[]
+  escrowTransactions EscrowTransaction[]
 
   // Indexes
   @@index([walletAddress])
@@ -78,51 +79,76 @@ model Escrow {
   id            String @id @default(cuid())
   txHash        String @unique
   scriptAddress String
-  amount        BigInt // in lovelace
-  amountAda     Float // Computed for easy queries
 
-  // Addresses
+  amount    BigInt
+  amountAda Float
+
   funderAddress       String
-  funderPubKeyHash    String
+  funderPubKeyHash    String? // optional — not sent from frontend
   recipientAddress    String
-  recipientPubKeyHash String
+  recipientPubKeyHash String? // optional
 
-  // Status tracking
-  status             EscrowStatus @default(ACTIVE)
-  disputeDeadline    DateTime // When disputes can be raised
-  resolutionDeadline DateTime? // When dispute must be resolved
+  status EscrowStatus @default(AWAITING_RECIPIENT)
 
-  // Transaction data
-  datum      Json // Full datum object
-  datumHash  String? // For validation
-  scriptCbor String? // Script reference
+  disputeDeadline       DateTime?
+  recipientLockDeadline DateTime?
 
-  // Timestamps
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  lockedAt   DateTime  @default(now())
-  approvedAt DateTime?
-  disputedAt DateTime?
-  resolvedAt DateTime?
+  // Important: datum must be Json (object), not string
+  datum            Json
+  contractIpfsHash String?
 
-  // Blockchain confirmation
-  confirmations Int     @default(0)
-  blockHeight   Int?
-  blockHash     String?
+  // Auto-managed timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lockedAt  DateTime @default(now())
+
+  // Optional / future-use fields (keep optional)
+  resolutionDeadline DateTime?
+  datumHash          String?
+  scriptCbor         String?
+  confirmations      Int       @default(0)
+  blockHeight        Int?
+  blockHash          String?
+  approvedAt         DateTime?
+  disputedAt         DateTime?
+  resolvedAt         DateTime?
 
   // Relationships
-  userId     String?
-  user       User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
-  dispute    Dispute?
-  resolution Resolution?
+  userId             String?
+  user               User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  dispute            Dispute?
+  resolution         Resolution?
+  escrowTransactions EscrowTransaction[]
 
   // Indexes
   @@index([txHash])
   @@index([funderAddress])
   @@index([recipientAddress])
   @@index([status])
-  @@index([disputeDeadline])
   @@index([createdAt])
+}
+
+model EscrowTransaction {
+  id     String @id @default(cuid())
+  txHash String @unique
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  reason String
+
+  escrow   Escrow @relation(fields: [escrowId], references: [id])
+  escrowId String
+}
+
+enum EscrowStatus {
+  AWAITING_RECIPIENT
+  ACTIVE
+  APPROVED
+  DISPUTED
+  RESOLVED
+  EXPIRED
+  CANCELLED
 }
 
 // Dispute model
@@ -242,15 +268,6 @@ enum UserRole {
   USER
   ARBITRATOR
   ADMIN
-}
-
-enum EscrowStatus {
-  ACTIVE
-  APPROVED
-  DISPUTED
-  RESOLVED
-  EXPIRED
-  CANCELLED
 }
 
 enum DisputeStatus {

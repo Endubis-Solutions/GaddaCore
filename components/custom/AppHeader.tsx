@@ -5,14 +5,71 @@ import { useWalletContext } from '@/contexts/WalletContext';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LogOut, Coins, CopyIcon, Shield, FileText, CreditCard } from "lucide-react";
+import { LogOut, Coins, CopyIcon, Shield, CreditCard, CheckCircle, AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ConnectWalletSheet from '@/app/_components/ConnectWalletSheet';
 import { useRouter } from 'next/navigation';
+import { Asset, UTxO } from '@meshsdk/core';
+
+const formatAssets = (assets: Asset[]): string => {
+    const ada = assets.find(a => a.unit === 'lovelace');
+    const tokenCount = assets.length - (ada ? 1 : 0);
+
+    let result = '';
+    if (ada) {
+        result += `${(parseInt(ada.quantity) / 1000000).toFixed(2)} ADA`;
+    }
+    if (tokenCount > 0) {
+        result += (result ? ' + ' : '') + `${tokenCount} Other Asset${tokenCount > 1 ? 's' : ''}`;
+    }
+    return result || '0 ADA';
+};
+
+
+const CollateralStatus = ({ collateral }: { collateral: UTxO[] }) => {
+    const hasCollateral = collateral && collateral.length > 0;
+
+    // If collateral exists, calculate the total amount
+    const totalAssets: Asset[] = hasCollateral
+        ? collateral.flatMap(utxo => utxo.output.amount)
+        : [];
+
+    const collateralDisplay = hasCollateral
+        ? formatAssets(totalAssets)
+        : 'Missing Collateral';
+
+    return (
+        <div
+            className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 
+                ${hasCollateral
+                    ? 'bg-green-100 text-green-700 border border-green-300'
+                    : 'bg-red-100 text-red-700 border border-red-300'
+                }`
+            }
+            title={hasCollateral ? `Collateral UTxOs: ${collateral.length}` : "Collateral is required for Plutus transactions."}
+        >
+            {/* Icon */}
+            {hasCollateral ? (
+                <CheckCircle className="w-4 h-4" />
+            ) : (
+                <AlertTriangle className="w-4 h-4" />
+            )}
+
+            {/* Text */}
+            <span className="truncate">
+                {hasCollateral ? `Collateral: ${collateralDisplay}` : collateralDisplay}
+            </span>
+
+            {/* Optional: Show individual UTxO details on hover */}
+            {/* This is omitted for conciseness but is good UX */}
+        </div>
+    );
+};
 
 const Logo = () => {
-    return <div className="flex items-center gap-3">
-        <div className="relative">
+    const router = useRouter()
+    return <div className="flex items-center gap-3" onClick={() => router.push("/")}>
+        <div className="relative cursor-pointer">
             <div className="w-10 h-10 bg-linear-to-br from-primary/80 to-primary rounded-xl flex items-center justify-center">
                 <Shield className="h-6 w-6 text-white" />
             </div>
@@ -38,6 +95,7 @@ const AppHeader = () => {
         isLoading,
         disconnect,
         refreshBalance,
+        collateral
     } = useWalletContext();
 
     const [copied, setCopied] = React.useState(false);
@@ -71,7 +129,7 @@ const AppHeader = () => {
                 )}
 
                 {connected && (
-                    <div className="flex items-center gap-4 p-4 bg-white/90 backdrop-blur-md rounded-2xl border border-gray-200/60">
+                    <div className="flex flex-wrap items-center gap-4 p-4 bg-white/90 backdrop-blur-md rounded-2xl border border-gray-200/60">
                         {/* Wallet Badge */}
                         <div className="flex items-center gap-2">
                             <Badge variant="secondary" className="font-normal gap-1.5 py-1.5">
@@ -97,8 +155,8 @@ const AppHeader = () => {
                                 <Skeleton className="h-6 w-24 rounded-lg" />
                             ) : (
                                 <>
-                                    <div className="w-8 h-8 bg-linear-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center">
-                                        <Coins className="h-4 w-4 text-white" />
+                                    <div className="w-8 h-8 cursor-pointer bg-linear-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center">
+                                        <Coins className="h-4 w-4 text-white" onClick={refreshBalance} />
                                     </div>
                                     <div className="text-right">
                                         <div className="font-semibold text-gray-900">
@@ -110,8 +168,10 @@ const AppHeader = () => {
                             )}
                         </div>
 
-                        {/* Address */}
+                        {/* Collateral */}
+                        <CollateralStatus collateral={collateral} />
 
+                        {/* Address */}
                         <div className="flex items-center gap-2 text-gray-600 bg-gray-50 px-3 py-1.5 rounded-lg border">
                             <span className='text-sm font-mono'>
                                 {changeAddress?.slice(0, 9)}...{changeAddress?.slice(-3)}
