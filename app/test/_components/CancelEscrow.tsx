@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useWalletContext } from "@/contexts/WalletContext"
 import { getScript, getTxBuilder, getUtxoByTxHash } from "@/lib/aiken"
-import { deserializeAddress, deserializeDatum, mConStr1, MeshValue, serializeAddressObj } from "@meshsdk/core"
+import { deserializeAddress, deserializeDatum, mConStr1, MeshValue, serializeAddressObj, Value } from "@meshsdk/core"
 import { ActiveEscrowDatum, getErrMsg, InitiationDatum, stringifyPlutusData } from "../utils"
 import PersistentText from "./PersistentText"
 import { useContractActionLog } from "@/store/useLogger"
@@ -28,15 +28,19 @@ const CancelEscrow = () => {
         let actionDetails: Record<string, unknown> = {
             signer: walletAddress,
             utxoHash: depositTxHash,
-            status: 'Attempting submission'
+            status: 'Attempting submission',
         };
+
+        let refunds: Record<string, unknown> = {}
+
 
         // Log the initiation attempt immediately
         logAction({
             action: 'INIT',
             contractName: 'AikenEscrow',
             method: 'cancelEscrow',
-            details: actionDetails,
+            details: { ...actionDetails },
+
         });
 
         try {
@@ -59,9 +63,10 @@ const CancelEscrow = () => {
 
             const redeemer = mConStr1([]);
             let stateDescription = 'Initiation (Full Refund to Initiator)';
-            
+
             // 3. Determine Refund Action based on Datum constructor
             if (inputDatum.constructor.toString() === '1') {
+                console.log("I WAS HERE [1]")
                 // ActiveEscrowDatum: Refund both parties
                 const [
                     initiatorAddressObj,
@@ -74,36 +79,40 @@ const CancelEscrow = () => {
                 const recipientAddress = serializeAddressObj(recipientAddressObj!);
 
                 const initiatorToReceive = MeshValue.fromValue(initiatorAmount).toAssets();
-                const recipientToReceive = MeshValue.fromValue(recipientAmount!).toAssets();
+                const recipientToReceive = MeshValue.fromValue(recipientAmount as Value).toAssets();
 
                 txBuilder
                     .txOut(initiatorAddress, initiatorToReceive)
                     .txOut(recipientAddress, recipientToReceive);
 
                 stateDescription = 'Active (Refund to Initiator and Recipient)';
-                actionDetails.refunds = { initiator: initiatorToReceive, recipient: recipientToReceive };
+                refunds = { initiator: initiatorToReceive, recipient: recipientToReceive };
 
             } else {
                 // InitiationDatum: Refund only Initiator
+                console.log("I WAS HERE [2]")
                 const [
                     initiatorAddressObj,
                     initiatorAmount,
                 ] = inputDatum.fields;
+
+                console.log(stringifyPlutusData(inputDatum))
 
                 const initiatorAddress = serializeAddressObj(initiatorAddressObj);
                 const initiatorToReceive = MeshValue.fromValue(initiatorAmount).toAssets();
 
                 txBuilder
                     .txOut(initiatorAddress, initiatorToReceive);
-                
-                actionDetails.refunds = { initiator: initiatorToReceive };
+
+                refunds = { initiator: initiatorToReceive };
             }
 
             // Update details for logging before building
-            actionDetails = { 
-                ...actionDetails, 
-                state: stateDescription, 
-                redeemer: stringifyPlutusData(redeemer) 
+            actionDetails = {
+                ...actionDetails,
+                state: stateDescription,
+                redeemer: stringifyPlutusData(redeemer),
+                refunds
             };
 
             // 4. Build Transaction
@@ -135,7 +144,7 @@ const CancelEscrow = () => {
             await refreshBalance()
 
             setTxHash(newTxHash)
-            
+
             // 5. LOG SUCCESS
             logAction({
                 action: 'CALL',
@@ -149,7 +158,7 @@ const CancelEscrow = () => {
             console.error("Cancel Escrow failed:", error);
             const errorMessage = getErrMsg(error);
             alert(errorMessage);
-            
+
             // 6. LOG ERROR
             logAction({
                 action: 'ERROR',

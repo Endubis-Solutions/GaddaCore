@@ -82,6 +82,8 @@ const RecipientDeposit = () => {
             const inputAssets = MeshValue.fromValue(inputDatum.fields[1]).toAssets();
             const escrowAmount = mergeAssets([...depositAmount, ...inputAssets]);
 
+            console.log()
+
             // Prepare details for successful log
             const logDetails = {
                 recipient: walletAddress,

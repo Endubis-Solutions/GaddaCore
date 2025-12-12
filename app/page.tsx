@@ -31,7 +31,7 @@ import { lovelaceToAda, formatAddress } from "@/utils";
 import QrCodeDialog from "./_components/QrCodeDialog";
 import { useUpsertUserMutation } from "@/services/user.service";
 import { Spinner } from "@/components/ui/spinner";
-import CreateEscrow from "./_components/CreateEscrow";
+// import CreateEscrow from "./_components/CreateEscrow";
 import { useGetUsersEscrowQuery } from "@/services/escrow.service";
 import StakeDialog from "./_components/RecipientStakingDialog";
 import { RECIPIENT_STAKE_AMOUNT } from "@/constants";

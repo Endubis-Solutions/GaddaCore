@@ -1,5 +1,5 @@
 // components/custom/ContractUploader.tsx
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Upload, AlertCircle, FileText } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -20,6 +20,7 @@ interface ContractUploaderProps {
     onFileChange: (file: File | null) => void;
     currentFile: File | null;
     ipfsHash: string;
+    uniqueId: string;
 }
 
 export const ContractUploader: React.FC<ContractUploaderProps> = ({
@@ -27,6 +28,7 @@ export const ContractUploader: React.FC<ContractUploaderProps> = ({
     onFileChange,
     currentFile,
     ipfsHash,
+    uniqueId
 }) => {
     const [uploadError, setUploadError] = useState<string>("");
     const pinataUploadMutation = usePinataUploadMutation();
@@ -35,12 +37,17 @@ export const ContractUploader: React.FC<ContractUploaderProps> = ({
 
     const handleDocumentUpload = useCallback(
         async (event: React.ChangeEvent<HTMLInputElement>) => {
+            console.log("called")
             const file = event.target.files?.[0];
-            if (!file) return;
+            if (!file) {
+                alert("Please select a file");
+                return;
+            }
 
             // Reset previous state
             setUploadError("");
             onUploadSuccess(""); // Clear hash in parent state
+            console.log({file})
 
             // 1. Validation
             if (!VALID_FILE_TYPES.includes(file.type)) {
@@ -53,6 +60,7 @@ export const ContractUploader: React.FC<ContractUploaderProps> = ({
                 onFileChange(null);
                 return;
             }
+
 
             onFileChange(file); // Notify parent component about file change
 
@@ -71,6 +79,12 @@ export const ContractUploader: React.FC<ContractUploaderProps> = ({
         [pinataUploadMutation, onUploadSuccess, onFileChange]
     );
 
+    useEffect(() => {
+        if(uploadError) {
+            alert(uploadError)
+        }
+    }, [uploadError])
+
     return (
         <div className="space-y-4">
             <div className="space-y-2">
@@ -81,11 +95,11 @@ export const ContractUploader: React.FC<ContractUploaderProps> = ({
                         accept=".pdf,.doc,.docx,.txt"
                         onChange={handleDocumentUpload}
                         className="hidden"
-                        id="document-upload"
+                        id={uniqueId}
                         required
                     />
                     <label
-                        htmlFor="document-upload"
+                        htmlFor={uniqueId}
                         className="cursor-pointer flex flex-col items-center"
                     >
                         {currentFile ? (

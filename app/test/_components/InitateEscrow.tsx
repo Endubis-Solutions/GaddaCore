@@ -16,7 +16,6 @@ import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { ContractUploader } from "./ContractUploader"
 import { hashToByteArray } from "@/lib/utils"
-import { de } from "date-fns/locale"
 
 
 
@@ -40,6 +39,7 @@ const InitateEscrow = () => {
     // --- Uploader Callbacks ---
     const handleFileChange = useCallback((file: File | null) => {
         setDocumentFile(file);
+        console.log("kk")
     }, []);
 
     const handleUploadSuccess = useCallback((hash: string) => {
@@ -114,7 +114,7 @@ const InitateEscrow = () => {
                 contractName: 'AikenEscrow',
                 method: 'initiateEscrow',
                 txHash: newTxHash,
-                details: { initiator: walletAddress, recipient: recipientAddress, deposit: `${depositAda} ADA`, scriptAddress: scriptAddr, status: 'Transaction Submitted Successfully', deadline: deadlineTimestamp.toString(), ipfsUrl, contractHash: contractIpfsHash }
+                details: { initiator: walletAddress, recipient: recipientAddress, txHash: newTxHash, deposit: `${depositAda} ADA`, scriptAddress: scriptAddr, status: 'Transaction Submitted Successfully', deadline: deadlineTimestamp.toString(), ipfsUrl, contractHash: contractIpfsHash }
             });
 
         } catch (error) {
@@ -203,6 +203,7 @@ const InitateEscrow = () => {
                         onFileChange={handleFileChange}
                         currentFile={documentFile}
                         ipfsHash={ipfsUrl}
+                        uniqueId={"contractDocument"}
                     />
                 </div>
             </div>

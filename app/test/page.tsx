@@ -9,6 +9,9 @@ import CancelEscrow from "./_components/CancelEscrow";
 import CompleteEscrow from "./_components/CompleteEscrow";
 import EscrowLogs from "./_components/EscrowLogger";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import DisputeActions from "./_components/DisputeActions";
+import ArbitratorRegistration from "./_components/ArbitratorRegistration";
+import ArbitratorCaseList from "./_components/ArbitratorCaseList";
 
 
 const Page = () => {
@@ -48,6 +51,9 @@ const Page = () => {
                 <RecipientDeposit />
                 <CancelEscrow />
                 <CompleteEscrow />
+                <DisputeActions />
+                <ArbitratorRegistration />
+                <ArbitratorCaseList />
             </section>
 
         </main>
