@@ -57,21 +57,6 @@ export const activeEscrowDatum = (
 ): ActiveEscrowDatum => {
     const { pubKeyHash, stakeCredentialHash } = deserializeAddress(walletAddress);
     const [initiator, initiatorAmount, _recipient, deadline, contract_ipfs_url, created_at] = initiationDatum.fields;
-    /**  
-     * ActiveEscrow {
-        initiator: Address,
-        initiator_assets: MValue,
-        recipient: Address,
-        recipient_assets: MValue,
-        deadline: Int,
-        contract_ipfs_url: ByteArray,
-        created_at: Int,
-    }
-     */
-    console.log(stringifyPlutusData({
-        initiationDatum: initiationDatum.fields,
-        _recipient
-    }))
 
     const result: ActiveEscrowDatum = conStr1([
         initiator,
@@ -108,17 +93,6 @@ export const recipientDepositRedeemer = (
 }
 
 
-/**
- *  RaiseInitiatorDispute {
-    initiator_dispute_raised_at: Int,
-    initiator_case_ipfs_url: ByteArray,
-  }
-
-  SubmitRecipientEvidence {
-    recipient_dispute_raised_at: Int,
-    recipient_case_ipfs_url: ByteArray,
-  }
- */
 
 export type RaiseInitiatorDisputeRedeemer = ConStr3<[Integer, BuiltinByteString]>;
 export type SubmitRecipientEvidenceRedeemer = ConStr<4, [Integer, BuiltinByteString]>
@@ -132,27 +106,14 @@ export const submitRecipientEvidenceRedeemer = (recipientDisputeRaisedAt: number
     return conStr(4, [integer(recipientDisputeRaisedAt), builtinByteString(recipientCaseIpfsUrl)]);
 }
 
-/**
- * InitiatorDispute {
-    initiator: Address,
-    initiator_assets: MValue,
-    recipient: Address,
-    recipient_assets: MValue,
-    deadline: Int,
-    contract_ipfs_url: ByteArray,
-    created_at: Int,
-    initiator_dispute_raised_at: Int,
-    initiator_case_ipfs_url: ByteArray,
-  }
-    */
 export type InitiatorDisputeDatum = ConStr2<
     [PubKeyAddress, Value, PubKeyAddress, Value, Integer, BuiltinByteString, Integer, Integer, BuiltinByteString]>
 
-/*******  7e0f2704-dbd3-4775-bfa7-afd4303b7471  *******/export const initiatorDisputeDatum = (
-        activeEscrowDatum: ActiveEscrowDatum,
-        initiatorDisputeRaisedAt: number,
-        initiatorCaseIpfsUrl: string
-    ): InitiatorDisputeDatum => {
+export const initiatorDisputeDatum = (
+    activeEscrowDatum: ActiveEscrowDatum,
+    initiatorDisputeRaisedAt: number,
+    initiatorCaseIpfsUrl: string
+): InitiatorDisputeDatum => {
     const f0_initiator = activeEscrowDatum.fields[0];
     const f1_initiator_assets = activeEscrowDatum.fields[1];
     const f2_recipient = activeEscrowDatum.fields[2];
@@ -191,21 +152,6 @@ export type InitiatorDisputeDatum = ConStr2<
 
     )
 }
-/*
-RecipientDispute {
-  initiator: Address,
-  initiator_assets: MValue,
-  recipient: Address,
-  recipient_assets: MValue,
-  deadline: Int,
-  contract_ipfs_url: ByteArray,
-  created_at: Int,
-  initiator_dispute_raised_at: Int,
-  initiator_case_ipfs_url: ByteArray,
-  recipient_dispute_raised_at: Int,
-  recipient_case_ipfs_url: ByteArray,
-}
-*/
 
 export type RecipientDisputeDatum = ConStr3<
     [PubKeyAddress, Value, PubKeyAddress, Value, Integer, BuiltinByteString, Integer, Integer, BuiltinByteString, Integer, BuiltinByteString]>

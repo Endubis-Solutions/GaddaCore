@@ -109,7 +109,7 @@ const AppHeader = () => {
     };
 
     return (
-        <header className="py-2 px-4 md:px-6 max-w-6xl mx-auto">
+        <header className="py-2 px-4 md:px-6 max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
                 <Logo />
 

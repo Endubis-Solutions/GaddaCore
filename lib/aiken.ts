@@ -23,6 +23,19 @@ export function getScript() {
     return { scriptCbor, scriptAddr };
 }
 
+export function getArbitratorScript() {
+    const scriptCbor = applyParamsToScript(
+        AikenBluePrint.validators[0].compiledCode,
+        []
+    );
+
+    const scriptAddr = serializePlutusScript(
+        { code: scriptCbor, version: "V3" },
+    ).address;
+
+    return { scriptCbor, scriptAddr };
+}
+
 // reusable function to get a transaction builder
 export function getTxBuilder() {
     return new MeshTxBuilder({
@@ -39,9 +52,6 @@ export async function getUtxoByTxHash(txHash: string): Promise<UTxO> {
     }
     return utxos[0];
 }
-
-
-
 
 export const sleep = async (ms: number) => {
     return new Promise((resolve) => {

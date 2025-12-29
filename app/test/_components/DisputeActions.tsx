@@ -45,7 +45,35 @@ const RaiseInitiatorDispute = () => {
         console.log(hash)
         setIpfsUrl(hash);
     }, []);
-    // -------------------------
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const logValues = (...args: any[]): void => {
+        let undefinedCount = 0;
+        const failureIndices: number[] = [];
+
+        console.log("%c 🔍 Sequence Value Audit ", "background: #333; color: #00ff00;");
+
+        args.forEach((val, index) => {
+            // Determine the type and status
+            const status = val === undefined ? "❌ UNDEFINED" : "✅ VALID";
+            const type = typeof val;
+
+            // Log the result with its position in your function call
+            if (val === undefined) {
+                undefinedCount++;
+                failureIndices.push(index + 1); // 1-based index for easier reading
+                console.error(`Arg [${index + 1}]: ${status} | Type: ${type}`);
+            } else {
+                // For objects (like UTxOs), we show a snippet, otherwise the raw value
+                const displayValue = type === 'object' ? stringifyPlutusData(val) + "..." : val;
+                console.log(`Arg [${index + 1}]: ${status} | Value: ${displayValue}`);
+            }
+        });
+
+        console.log("----------------------------------");
+        if (undefinedCount > 0) {
+            console.error(`🚨 Critical: ${undefinedCount} values are undefined at positions: ${failureIndices.join(", ")}`);
+        }
+    };
 
     const handleDispute = async () => {
         if (!activeEscrowTxHash) {
@@ -117,6 +145,26 @@ const RaiseInitiatorDispute = () => {
             //     .selectUtxosFrom(utxos)
             //     .complete();
 
+            // FIND Undefined input value provided 
+
+            logValues(
+                escrowUtxo.input.txHash,
+                escrowUtxo.input.outputIndex,
+                escrowUtxo.output.amount,
+                scriptAddr,
+                scriptCbor,
+                redeemer,
+                newInitiatorDisputeDatum,
+                initiatorPubHash,
+                walletAddress,
+                collateral[0].input.txHash,
+                collateral[0].input.outputIndex,
+                collateral[0].output.amount,
+                collateral[0].output.address,
+                utxos
+            )
+
+
             await txBuilder
                 .spendingPlutusScript("V3") // we used plutus v3
                 .txIn( // spend the utxo from the script address
@@ -125,10 +173,21 @@ const RaiseInitiatorDispute = () => {
                     escrowUtxo.output.amount,
                     scriptAddr,
                 )
+                .spendingReferenceTxInInlineDatumPresent()
+                .txInRedeemerValue(
+                    redeemer,
+                    "JSON"
+                ) // provide the required redeemer value `Hello, World!`
                 .txInScript(scriptCbor)
-                .txInRedeemerValue(redeemer) // provide the required redeemer value `Hello, World!`
-                .txInDatumValue(newInitiatorDisputeDatum) // only the owner of the wallet can unlock the funds
                 .requiredSignerHash(initiatorPubHash)
+                .txOut(
+                    scriptAddr,
+                    escrowUtxo.output.amount
+                )
+                .txOutInlineDatumValue(
+                    newInitiatorDisputeDatum,
+                    "JSON",
+                )
                 .changeAddress(walletAddress)
                 .txInCollateral(
                     collateral[0].input.txHash,
@@ -168,7 +227,7 @@ const RaiseInitiatorDispute = () => {
             //     .complete();
 
             const unsignedTx = txBuilder.txHex;
-            const signedTx = await wallet.signTx(unsignedTx, undefined, true);
+            const signedTx = await wallet.signTx(unsignedTx);
             const newTxHash = await wallet.submitTx(signedTx);
 
             setSubmittedTxHash(newTxHash);
@@ -331,14 +390,17 @@ const SubmitRecipientEvidence = () => {
                     scriptAddr,
                 )
                 .spendingReferenceTxInInlineDatumPresent()
-                .spendingReferenceTxInRedeemerValue(redeemer)
+                .txInRedeemerValue(
+                    redeemer,
+                    "JSON"
+                ) // provide the required redeemer value `Hello, World!`
                 .txInScript(scriptCbor)
+                .requiredSignerHash(recipientPubHash)
                 .txOut(
                     scriptAddr,
                     escrowUtxo.output.amount
                 )
                 .txOutInlineDatumValue(newRecipientDisputeDatum, "JSON")
-                .requiredSignerHash(recipientPubHash) // Only recipient signs
                 .changeAddress(walletAddress)
                 .txInCollateral(
                     collateral[0].input.txHash,
@@ -350,7 +412,7 @@ const SubmitRecipientEvidence = () => {
                 .complete();
 
             const unsignedTx = txBuilder.txHex;
-            const signedTx = await wallet.signTx(unsignedTx, true, true);
+            const signedTx = await wallet.signTx(unsignedTx);
             const newTxHash = await wallet.submitTx(signedTx);
 
             setSubmittedTxHash(newTxHash);
