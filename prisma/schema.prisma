@@ -7,7 +7,6 @@ datasource db {
   provider = "postgresql"
 }
 
-// User model for wallet authentication
 model User {
   id            String   @id @default(cuid())
   walletAddress String   @unique
@@ -16,111 +15,84 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  // Relationships
   arbitrator         Arbitrator?
-  escrows            Escrow[] // As funder
-  disputes           Dispute[] // Disputes they've raised
-  resolutions        Resolution[] // Resolutions they've made
+  escrows            Escrow[]
+  disputes           Dispute[]
+  resolutions        Resolution[]
   activityLogs       ActivityLog[]
   escrowTransactions EscrowTransaction[]
 
-  // Indexes
   @@index([walletAddress])
   @@index([role])
   @@index([network])
 }
 
-// Arbitrator with locked funds (from your existing)
 model Arbitrator {
-  id            String   @id @default(cuid())
-  walletAddress String   @unique
-  name          String?
-  description   String?
-  expertise     String[] // e.g., ["DeFi", "NFTs", "Gaming"]
+  id                  String   @id @default(cuid())
+  walletAddress       String   @unique
+  name                String?
+  description         String?
+  expertise           String[]
+  isQualified         Boolean  @default(false)
+  qualificationScore  Int      @default(0)
+  isActive            Boolean  @default(true)
+  lockedAmount        BigInt   @default(0)
+  lockedTxHash        String?
+  totalEarned         BigInt   @default(0)
+  totalLost           BigInt   @default(0)
+  totalCases          Int      @default(0)
+  correctVotes        Int      @default(0)
+  wrongVotes          Int      @default(0)
+  reputationScore     Float    @default(0.5)
+  registeredAt        DateTime @default(now())
+  lastActiveAt        DateTime?
+  updatedAt           DateTime @updatedAt
 
-  // Verification flags
-  isQualified        Boolean @default(false)
-  qualificationScore Int     @default(0)
-  isActive           Boolean @default(true)
-
-  // Locked funds (stake)
-  lockedAmount BigInt  @default(0)
-  lockedTxHash String?
-
-  // Token incentives
-  totalEarned BigInt @default(0)
-  totalLost   BigInt @default(0)
-
-  // Performance stats
-  totalCases      Int   @default(0)
-  correctVotes    Int   @default(0)
-  wrongVotes      Int   @default(0)
-  reputationScore Float @default(0.5)
-
-  // Timestamps
-  registeredAt DateTime  @default(now())
-  lastActiveAt DateTime?
-  updatedAt    DateTime  @updatedAt
-
-  // Relationships
   user        User         @relation(fields: [walletAddress], references: [walletAddress])
-  resolutions Resolution[] // Arbitrator's resolutions
-  disputes    Dispute[] // Disputes they've been assigned
+  resolutions Resolution[]
+  disputes    Dispute[]    @relation("ArbitratorDisputes")
+  votes       Vote[]
 
-  // Indexes
   @@index([reputationScore])
   @@index([isQualified])
   @@index([isActive])
   @@index([lockedAmount])
 }
 
-// Main escrow transaction model
 model Escrow {
-  id            String @id @default(cuid())
-  txHash        String @unique
-  scriptAddress String
-
-  amount    BigInt
-  amountAda Float
-
-  funderAddress       String
-  funderPubKeyHash    String? // optional — not sent from frontend
-  recipientAddress    String
-  recipientPubKeyHash String? // optional
-
-  status EscrowStatus @default(AWAITING_RECIPIENT)
-
+  id                    String   @id @default(cuid())
+  txHash                String   @unique
+  scriptAddress         String
+  amount                BigInt
+  amountAda             Float
+  funderAddress         String
+  funderPubKeyHash      String?
+  recipientAddress      String
+  recipientPubKeyHash   String?
+  status                EscrowStatus @default(AWAITING_RECIPIENT)
   disputeDeadline       DateTime?
   recipientLockDeadline DateTime?
+  datum                 Json
+  contractIpfsHash      String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  lockedAt              DateTime @default(now())
+  resolutionDeadline    DateTime?
+  datumHash             String?
+  scriptCbor            String?
+  confirmations         Int      @default(0)
+  blockHeight           Int?
+  blockHash             String?
+  approvedAt            DateTime?
+  disputedAt            DateTime?
+  resolvedAt            DateTime?
 
-  // Important: datum must be Json (object), not string
-  datum            Json
-  contractIpfsHash String?
-
-  // Auto-managed timestamps
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  lockedAt  DateTime @default(now())
-
-  // Optional / future-use fields (keep optional)
-  resolutionDeadline DateTime?
-  datumHash          String?
-  scriptCbor         String?
-  confirmations      Int       @default(0)
-  blockHeight        Int?
-  blockHash          String?
-  approvedAt         DateTime?
-  disputedAt         DateTime?
-  resolvedAt         DateTime?
-
-  // Relationships
   userId             String?
   user               User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
   dispute            Dispute?
   resolution         Resolution?
   escrowTransactions EscrowTransaction[]
 
-  // Indexes
   @@index([txHash])
   @@index([funderAddress])
   @@index([recipientAddress])
@@ -129,100 +101,79 @@ model Escrow {
 }
 
 model EscrowTransaction {
-  id     String @id @default(cuid())
-  txHash String @unique
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-
-  reason String
-
+  id       String @id @default(cuid())
+  txHash   String @unique
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String
+  reason   String
   escrow   Escrow @relation(fields: [escrowId], references: [id])
   escrowId String
 }
 
-enum EscrowStatus {
-  AWAITING_RECIPIENT
-  ACTIVE
-  APPROVED
-  DISPUTED
-  RESOLVED
-  EXPIRED
-  CANCELLED
-}
-
-// Dispute model
 model Dispute {
-  id       String @id @default(cuid())
-  escrowId String @unique
-  escrow   Escrow @relation(fields: [escrowId], references: [id], onDelete: Cascade)
+  id                    String          @id @default(cuid())
+  escrowId              String          @unique
+  escrow                Escrow          @relation(fields: [escrowId], references: [id], onDelete: Cascade)
+  raisedBy              DisputeRaisedBy
+  raisedById            String?
+  raisedByAddress       String
+  reason                String?
+  evidence              String?
+  txHash                String?
+  status                DisputeStatus   @default(PENDING)
+  requiredArbitratorCount Int           @default(3)
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  resolvedAt            DateTime?
+  resolutionDeadline    DateTime?
 
-  // Who raised the dispute
-  raisedBy        DisputeRaisedBy // FUNDER|RECIPIENT
-  raisedById      String?
-  raisedByAddress String
-
-  // Dispute details
-  reason   String?
-  evidence String? // IPFS hash or URL
-  txHash   String? // Transaction that raised dispute
-
-  // Status
-  status DisputeStatus @default(PENDING)
-
-  // Assignment for arbitration
-  assignedArbitratorId String?
-  assignedArbitrator   Arbitrator? @relation(fields: [assignedArbitratorId], references: [id])
-
-  // Timestamps
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  resolvedAt DateTime?
-
-  // Relationships
-  resolution Resolution?
-  user       User?       @relation(fields: [userId], references: [id])
-  userId     String?
+  votes       Vote[]
+  resolution  Resolution?
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+  arbitrators Arbitrator[] @relation("ArbitratorDisputes")
 
   @@index([escrowId])
   @@index([raisedByAddress])
   @@index([status])
-  @@index([assignedArbitratorId])
   @@index([createdAt])
 }
 
-// Resolution model (for both direct and arbitrated resolutions)
+model Vote {
+  id            String   @id @default(cuid())
+  disputeId     String
+  dispute       Dispute  @relation(fields: [disputeId], references: [id], onDelete: Cascade)
+  arbitratorId  String
+  arbitrator    Arbitrator @relation(fields: [arbitratorId], references: [id], onDelete: Cascade)
+  decision      ResolutionResult
+  reason        String?
+  txHash        String?
+  createdAt     DateTime @default(now())
+
+  @@unique([disputeId, arbitratorId])
+  @@index([disputeId])
+  @@index([arbitratorId])
+  @@index([decision])
+}
+
 model Resolution {
-  id       String @id @default(cuid())
-  escrowId String @unique
-  escrow   Escrow @relation(fields: [escrowId], references: [id], onDelete: Cascade)
-
-  // Resolution type
-  type   ResolutionType // DIRECT_RELEASE|DIRECT_REFUND|ARBITRATED_RELEASE|ARBITRATED_REFUND
-  result ResolutionResult // RELEASE|REFUND
-
-  // Who resolved it
-  resolvedBy        ResolutionBy // FUNDER|RECIPIENT|ARBITRATOR
+  id                String         @id @default(cuid())
+  escrowId          String         @unique
+  escrow            Escrow         @relation(fields: [escrowId], references: [id], onDelete: Cascade)
+  type              ResolutionType
+  result            ResolutionResult
+  resolvedBy        ResolutionBy
   resolvedById      String?
   resolvedByAddress String
+  arbitratorId      String?
+  arbitrator        Arbitrator?    @relation(fields: [arbitratorId], references: [id])
+  payoutAddress     String
+  payoutAmount      BigInt
+  payoutAmountAda   Float
+  txHash            String
+  createdAt         DateTime       @default(now())
+  resolvedAt        DateTime       @default(now())
 
-  // Arbitrator info if applicable
-  arbitratorId String?
-  arbitrator   Arbitrator? @relation(fields: [arbitratorId], references: [id])
-
-  // Payout details
-  payoutAddress   String
-  payoutAmount    BigInt
-  payoutAmountAda Float
-
-  // Transaction
-  txHash String
-
-  // Timestamps
-  createdAt  DateTime @default(now())
-  resolvedAt DateTime @default(now())
-
-  // Relationships
   disputeId String?  @unique
   dispute   Dispute? @relation(fields: [disputeId], references: [id])
   userId    String?
@@ -234,27 +185,17 @@ model Resolution {
   @@index([createdAt])
 }
 
-// Activity log for audit trail
 model ActivityLog {
-  id String @id @default(cuid())
+  id                  String     @id @default(cuid())
+  entityType          EntityType
+  entityId            String
+  action              String
+  performedBy         String
+  performedByAddress  String?
+  metadata            Json?
+  txHash              String?
+  createdAt           DateTime   @default(now())
 
-  // What entity this log is for
-  entityType EntityType // ESCROW|DISPUTE|RESOLUTION|USER|ARBITRATOR
-  entityId   String
-
-  // Action details
-  action             String // CREATED|LOCKED|APPROVED|DISPUTED|ASSIGNED|RESOLVED|UPDATED
-  performedBy        String // wallet address or user ID
-  performedByAddress String?
-
-  // Metadata
-  metadata Json?
-  txHash   String?
-
-  // Timestamps
-  createdAt DateTime @default(now())
-
-  // Relationships
   userId String?
   user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
@@ -263,11 +204,20 @@ model ActivityLog {
   @@index([createdAt])
 }
 
-// Enums (updated with your existing + new ones)
 enum UserRole {
   USER
   ARBITRATOR
   ADMIN
+}
+
+enum EscrowStatus {
+  AWAITING_RECIPIENT
+  ACTIVE
+  APPROVED
+  DISPUTED
+  RESOLVED
+  EXPIRED
+  CANCELLED
 }
 
 enum DisputeStatus {
@@ -284,10 +234,10 @@ enum DisputeRaisedBy {
 }
 
 enum ResolutionType {
-  DIRECT_RELEASE // Funder directly releases
-  DIRECT_REFUND // Funder directly refunds
-  ARBITRATED_RELEASE // Arbitrator decides to release
-  ARBITRATED_REFUND // Arbitrator decides to refund
+  DIRECT_RELEASE
+  DIRECT_REFUND
+  ARBITRATED_RELEASE
+  ARBITRATED_REFUND
 }
 
 enum ResolutionResult {
