@@ -3,13 +3,13 @@ import { AlertCircle, CheckCircle, Clock } from "lucide-react";
 
 export function getStatusIcon(status: EscrowStatus) {
   switch (status) {
-    case "active":
+    case "ACTIVE":
       return <Clock className="h-3 w-3" />;
-    case "approved":
+    case "APPROVED":
       return <CheckCircle className="h-3 w-3" />;
-    case "disputed":
+    case "DISPUTED":
       return <AlertCircle className="h-3 w-3" />;
-    case "resolved":
+    case "RESOLVED":
       return <CheckCircle className="h-3 w-3" />;
     default:
       return <Clock className="h-3 w-3" />;

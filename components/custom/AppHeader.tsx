@@ -1,19 +1,20 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { useWalletContext } from '@/contexts/WalletContext';
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-    LogOut, 
-    CopyIcon, 
-    PlusCircle, 
-    CheckCircle, 
-    Scale, 
+import {
+    LogOut,
+    CopyIcon,
+    PlusCircle,
+    CheckCircle,
+    Scale,
     ChevronDown,
     LayoutGrid,
-    Wallet2,
-    ShieldCheck
+    ShieldCheck,
+    DnaIcon,
+    KeyIcon
 } from "lucide-react";
 import {
     DropdownMenu,
@@ -23,7 +24,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 import ConnectWalletSheet from '@/app/_components/ConnectWalletSheet';
 import { useRouter } from 'next/navigation';
 
@@ -43,17 +43,18 @@ const AppHeader = () => {
     const hasCollateral = collateral && collateral.length > 0;
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-zinc-100 bg-white/80 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl">
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-                
+
                 {/* Brand Identity */}
-                <div 
-                    className="flex items-center gap-4 cursor-pointer group" 
+                <div
+                    className="flex items-center gap-3 cursor-pointer group"
                     onClick={() => router.push("/")}
                 >
-                    <div className="w-11 h-11 bg-zinc-900 rounded-md flex items-center justify-center transition-all group-hover:bg-indigo-600 shadow-xl shadow-zinc-200">
-                        <Scale className="h-5 w-5 text-white" />
-                    </div>
+                    <span className='relative h-10 w-10'>
+                        <DnaIcon className="h-10 w-10 absolute text-black" />
+                        <KeyIcon className="h-10 w-10 absolute rotate-90 text-black" />
+                    </span>
                     <div className="flex flex-col">
                         <span className="text-xl font-semibold tracking-tight text-zinc-900 leading-none">Gadaa</span>
                         <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] mt-1.5">Arbitration Protocol</span>
@@ -65,16 +66,25 @@ const AppHeader = () => {
                         <>
                             {/* Navigation - Clean & Modern */}
                             <nav className="hidden lg:flex items-center gap-2">
-                                <Button 
-                                    variant="ghost" 
-                                    className="text-[13px] font-medium h-10 px-4 rounded-md hover:bg-zinc-50 transition-colors"
-                                    onClick={() => router.push("/create-escrow")}
+                                <Button
+                                    variant="ghost"
+                                    className="text-[13px] font-medium h-10 px-4 rounded-md bg-zinc-50 hover:bg-zinc-100/80 transition-colors"
+                                    onClick={() => router.push("/new-payment")}
                                 >
                                     <PlusCircle className="h-4 w-4 mr-2 text-zinc-400" />
-                                    New Escrow
+                                    New Payment
                                 </Button>
 
-                                <DropdownMenu>
+                                <Button
+                                    variant="ghost"
+                                    className="text-[13px] font-medium h-10 px-4 rounded-md bg-zinc-50 hover:bg-zinc-100/80 transition-colors"
+                                    onClick={() => router.push("/courts")}
+                                >
+                                    <Scale className="h-4 w-4 mr-2 text-zinc-400" />
+                                    Courts
+                                </Button>
+
+                                {/* <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="ghost" className="text-[13px] font-medium h-10 px-4 rounded-md hover:bg-zinc-50">
                                             <LayoutGrid className="h-4 w-4 mr-2 text-zinc-400" />
@@ -89,7 +99,7 @@ const AppHeader = () => {
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem className="rounded-md py-2.5 text-red-500 focus:text-red-500 cursor-pointer" onClick={() => router.push("/cancel-escrow")}>Cancel Agreement</DropdownMenuItem>
                                     </DropdownMenuContent>
-                                </DropdownMenu>
+                                </DropdownMenu> */}
                             </nav>
 
                             {/* Wallet & Status Section */}
@@ -118,18 +128,18 @@ const AppHeader = () => {
                                         {changeAddress?.slice(0, 5)}...{changeAddress?.slice(-5)}
                                     </span>
                                     <div className="flex items-center gap-1">
-                                        <Button 
-                                            variant="ghost" 
-                                            size="icon" 
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
                                             className="h-7 w-7 rounded-sm hover:bg-white/10 text-white hover:text-white"
                                             onClick={copyAddress}
                                         >
                                             {copied ? <CheckCircle className="h-3.5 w-3.5 text-emerald-400" /> : <CopyIcon className="h-3.5 w-3.5" />}
                                         </Button>
-                                        <div className="w-[1px] h-4 bg-white/20 mx-0.5" />
-                                        <Button 
-                                            variant="ghost" 
-                                            size="icon" 
+                                        <div className="w-px h-4 bg-white/20 mx-0.5" />
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
                                             className="h-7 w-7 rounded-sm hover:bg-red-500/20 text-white hover:text-red-400"
                                             onClick={disconnect}
                                         >

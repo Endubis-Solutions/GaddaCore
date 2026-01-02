@@ -25,13 +25,13 @@ export function adaToLovelaceSerialized(ada: number): number {
 
 export function getStatusColor(status: EscrowStatus): string {
   switch (status) {
-    case "active":
+    case "ACTIVE":
       return "bg-amber-100 text-amber-800 border-amber-200";
-    case "approved":
+    case "APPROVED":
       return "bg-emerald-100 text-emerald-800 border-emerald-200";
-    case "disputed":
+    case "DISPUTED":
       return "bg-red-100 text-red-800 border-red-200";
-    case "resolved":
+    case "RESOLVED":
       return "bg-gray-100 text-gray-800 border-gray-200";
     default:
       return "bg-gray-100 text-gray-800 border-gray-200";

@@ -1,14 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-    ShieldCheck, 
-    Scale, 
-    ArrowRight, 
+import {
+    ShieldCheck,
+    Scale,
+    ArrowRight,
     Lock,
-    Users,
-    ChevronRight,
-    MousePointer2,
     Binary
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,15 +23,15 @@ export default function HeroSection() {
     };
 
     return (
-        <div className="relative min-h-[70vh] flex items-center bg-white overflow-hidden border-b border-zinc-100">
+        <div className="relative min-h-[calc(100vh-5rem)] flex items-center bg-white overflow-hidden border-b border-zinc-100">
             {/* Background Texture */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#f4f4f5_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#f4f4f5_1px,transparent_1px)] bg-size-[24px_24px] opacity-40" />
             </div>
 
             <div className="relative z-10 max-w-7xl mx-auto px-6 w-full py-16">
                 <div className="grid lg:grid-cols-12 gap-16 items-start">
-                    
+
                     {/* --- LEFT: BRANDING & CTA --- */}
                     <div className="lg:col-span-5 space-y-10">
                         <motion.div variants={fadeInUp} initial="initial" animate="animate" className="space-y-6">
@@ -76,9 +73,9 @@ export default function HeroSection() {
                     {/* --- RIGHT: CREATIVE FLOW ILLUSTRATION --- */}
                     <div className="lg:col-span-7 relative">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
-                            
+
                             {/* Step 1: Neutral/Technical */}
-                            <motion.div 
+                            <motion.div
                                 variants={fadeInUp} initial="initial" animate="animate"
                                 className="p-8 rounded-md bg-zinc-50 border border-zinc-200 flex flex-col justify-between min-h-[200px]"
                             >
@@ -95,7 +92,7 @@ export default function HeroSection() {
                             </motion.div>
 
                             {/* Step 2: Primary/Action */}
-                            <motion.div 
+                            <motion.div
                                 variants={fadeInUp} initial="initial" animate="animate"
                                 className="p-8 rounded-md bg-primary text-white shadow-2xl shadow-primary/20 flex flex-col justify-between min-h-[200px] md:translate-y-12"
                             >
@@ -112,7 +109,7 @@ export default function HeroSection() {
                             </motion.div>
 
                             {/* Step 3: Creative Dispute Resolver */}
-                            <motion.div 
+                            <motion.div
                                 variants={fadeInUp} initial="initial" animate="animate"
                                 className="md:col-span-2 p-8 rounded-md bg-zinc-900 text-white flex flex-col md:flex-row items-center gap-8 min-h-[160px] md:mt-12"
                             >
@@ -127,8 +124,12 @@ export default function HeroSection() {
                                 </div>
                                 <div className="flex items-center gap-3 bg-zinc-800 p-4 rounded-md border border-zinc-700">
                                     <div className="flex -space-x-3">
-                                        {[1,2,3].map(i => (
-                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-zinc-900 bg-zinc-600" />
+                                        {[1, 2, 3].map(i => (
+                                            <div key={i} className="w-8 h-8 flex items-center justify-center rounded-full border-2 border-zinc-900 bg-zinc-600">
+                                                <span>
+                                                {'wxy'[i - 1]}
+                                                </span>
+                                            </div>
                                         ))}
                                     </div>
                                     <div className="text-right">
@@ -139,7 +140,7 @@ export default function HeroSection() {
                             </motion.div>
 
                             {/* Creative Connection Line */}
-                            <div className="absolute hidden lg:block top-1/2 left-[-40px] w-12 h-[2px] bg-zinc-100" />
+                            <div className="absolute hidden lg:block top-1/2 -left-10 w-12 h-0.5 bg-zinc-100" />
                         </div>
                     </div>
 

@@ -75,7 +75,7 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
           } transform ${
             position.startsWith("bottom")
               ? "translate-y-0 opacity-100"
-              : "-translate-y-0 opacity-100"
+              : "translate-y-0 opacity-100"
           }`}
           style={{
             // Prevent panel from going off-screen in top positions
@@ -132,6 +132,7 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
                   borderRadius: "0.5rem",
                   backgroundColor: isDark ? "#1e1e1e" : "#fafafa",
                   minHeight: "200px",
+                  overflowY: 'auto'
                 }}
                 // Additional JsonViewer props for better UX
                 highlightUpdates={false}

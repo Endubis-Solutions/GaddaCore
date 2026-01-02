@@ -159,42 +159,42 @@ export default function CancelEscrowPage() {
     }
 
     return (
-        <div className="min-h-screen bg-white py-12 px-6">
-            <div className="max-w-6xl mx-auto">
-                <FloatingDebugJson data={{ refundPreview, depositTxHash }} />
+        <div className="min-h-[calc(100vh-5rem)] bg-white py-12 px-6">
+            <div className="max-w-6xl mx-auto grid grid-cols-2 gap-14">
 
-                {/* Header */}
-                <header className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <div className="space-y-1">
-                        <div className="flex items-center gap-2 text-red-500 mb-1">
-                            <ShieldAlert className="h-4 w-4" />
-                            <span className="text-xs font-bold uppercase tracking-[0.2em]">Termination Protocol</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <h1 className="text-4xl font-semibold tracking-tight text-zinc-900">Cancel Agreement</h1>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 text-zinc-400">
-                                        <HelpCircle className="h-5 w-5" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-80 p-5 shadow-2xl border-zinc-100" align="start">
-                                    <div className="space-y-3">
-                                        <h3 className="font-bold flex items-center gap-2 text-red-600">
-                                            <AlertTriangle className="h-4 w-4" />
-                                            Safety Notice
-                                        </h3>
-                                        <p className="text-sm text-zinc-600 leading-relaxed">
-                                            Cancelling will trigger the smart {`contract's`} refund logic. If the agreement is active, both parties are refunded their respective stakes.
-                                        </p>
-                                    </div>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                    </div>
-                </header>
+                <section>
+                    <FloatingDebugJson data={{ refundPreview, depositTxHash }} />
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+                    <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                        <div className="space-y-1">
+                            <div className="flex items-center gap-2 text-red-500 mb-1">
+                                <ShieldAlert className="h-4 w-4" />
+                                <span className="text-xs font-bold uppercase tracking-[0.2em]">Termination Protocol</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <h1 className="text-4xl font-semibold tracking-tight text-zinc-900">Cancel Agreement</h1>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 text-zinc-400">
+                                            <HelpCircle className="h-5 w-5" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-80 p-5 shadow-2xl border-zinc-100" align="start">
+                                        <div className="space-y-3">
+                                            <h3 className="font-bold flex items-center gap-2 text-red-600">
+                                                <AlertTriangle className="h-4 w-4" />
+                                                Safety Notice
+                                            </h3>
+                                            <p className="text-sm text-zinc-600 leading-relaxed">
+                                                Cancelling will trigger the smart {`contract's`} refund logic. If the agreement is active, both parties are refunded their respective stakes.
+                                            </p>
+                                        </div>
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
+                        </div>
+                    </header>
+
 
                     {/* Left Column: Form */}
                     <div className="lg:col-span-6 space-y-10">
@@ -249,19 +249,15 @@ export default function CancelEscrowPage() {
                             </div>
                         )}
                     </div>
+                </section>
 
-                    {/* Right Column: Refund Inspector */}
-                    <div className="lg:col-span-6">
-                        <div className="lg:col-span-6">
-                            <div className="sticky top-12 space-y-6">
-                                <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Escrow Analysis</h2>
-                                <EscrowAnalysisCard data={refundPreview} mode="cancel" />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                <section>
+                    <EscrowAnalysisCard data={refundPreview} mode="cancel" />
+                </section>
             </div>
+
+
         </div>
+
     )
 }

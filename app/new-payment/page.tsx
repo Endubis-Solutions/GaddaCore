@@ -1,699 +1,294 @@
-// app/create-contract/page.tsx
-"use client";
+"use client"
 
-import React, { useState, useCallback, useMemo } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { format } from "date-fns";
-import { CalendarIcon, Upload, FileText, Eye, AlertCircle } from "lucide-react";
+import { useState, useCallback } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { format } from "date-fns"
+import {
+    Loader2,
+    ArrowRight,
+    ShieldCheck,
+    CheckCircle2,
+    Info,
+    HelpCircle,
+    Calendar as CalendarIconSmall,
+    DollarSign,
+    UserPenIcon,
+    AlertCircle
+} from "lucide-react"
+import { Asset } from "@meshsdk/core"
 
-// shadcn components
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
-import { Card, CardContent } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
-import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet";
-import { Badge } from "@/components/ui/badge";
-import { usePinataUploadMutation } from "@/services/pinata.service";
-import FloatingDebugJson from "@/components/custom/DebugJson";
-import { useWalletContext } from "@/contexts/WalletContext";
-import {  adaToLovelaceSerialized } from "@/utils";
-import { getScript, getTxBuilder } from "@/lib/aiken";
-import { useCreateEscrowMutation } from "@/services/escrow.service";
-import { hashToByteArray } from "@/lib/utils";
-import { mConStr0 } from "@meshsdk/core";
+} from "@/components/ui/form"
 
-// Constants
-const VALID_FILE_TYPES = [
-    "application/pdf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "text/plain",
-];
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+import { useWalletContext } from "@/contexts/WalletContext"
+import { getScript, getTxBuilder } from "@/lib/aiken"
+import { hashToByteArray } from "@/lib/utils"
+import { adaToLovelace } from "@/utils"
+import { getErrMsg, initiateEscrowDatum } from "@/utils/aiken"
+import { ContractUploader } from "@/components/custom/ContractUploader"
+import PersistentText from "@/components/custom/PersistentText"
+import FloatingDebugJson from "@/components/custom/DebugJson"
 
-// Define Zod schema for validation - document is now required
-const formSchema = z.object({
-    receiverAddress: z
-        .string()
-        .min(10, "Wallet address is too short"),
-    amount: z
-        .number()
-        .min(0.1, "Amount must be greater than 0")
-        .max(1000000, "Amount cannot exceed 1,000,000 ADA"),
-    deadline: z.date().refine(
-        (date) => {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            return date >= today;
-        },
-        {
-            message: "Deadline must be today or in the future",
-        }
-    ),
-});
+const escrowFormSchema = z.object({
+    amount: z.number({
+        error: "Amount is required",
+    }).min(1, "Minimum 1 ADA required"),
+    recipientAddress: z.string().min(10, "Please enter a valid wallet address"),
+    deadlineDate: z.date({
+        error: "Expiration date is required"
+    }),
+    ipfsUrl: z.string().min(1, "Document upload is required to verify terms"),
+})
 
-type FormData = z.infer<typeof formSchema>;
+type EscrowFormValues = z.infer<typeof escrowFormSchema>
 
-// Helper functions
-const formatContract = (
-    data: FormData,
-    ipfsHash: string
-): {
-    formattedContract: string;
-    finalContract: Record<string, unknown>;
-} => {
-    const formattedContract = `# ESCROW AGREEMENT
+export default function InitiateEscrowPage() {
+    const { changeAddress, wallet, refreshBalance } = useWalletContext()
 
-**Agreement ID:** ${Date.now()}
-**Created:** ${new Date().toISOString()}
-**IPFS Document Hash:** ${ipfsHash}
+    const [isPending, setIsPending] = useState(false)
+    const [txHash, setTxHash] = useState("")
+    const [documentFile, setDocumentFile] = useState<File | null>(null)
 
-## PARTIES
-**Funder:** [FUNDER'S ADDRESS]
-**Recipient:** ${data.receiverAddress}
+    const form = useForm<EscrowFormValues>({
+        resolver: zodResolver(escrowFormSchema),
+        defaultValues: { amount: 0, recipientAddress: "", deadlineDate: undefined, ipfsUrl: "" },
+    })
 
-## CONTRACT DOCUMENT
-**Document Reference:** IPFS: ${ipfsHash}
-**Note:** The complete contract document is stored on IPFS and referenced by the above hash.
+    const handleFileChange = useCallback((file: File | null) => setDocumentFile(file), [])
 
-## FUNDING DETAILS
-**Amount:** ${data.amount} ADA
-**Deadline:** ${format(data.deadline, "PPP")}
-**Release Condition:** Funds will be automatically released to the recipient if no dispute is raised by the funder before the deadline.
+    const handleUploadSuccess = useCallback((hash: string) => {
+        form.setValue("ipfsUrl", hash, { shouldValidate: true })
+    }, [form])
 
-## DISPUTE RESOLUTION
-Any disputes must be raised before ${format(data.deadline, "PPP")}. 
-After this date, funds are irrevocably released to the recipient.
+    async function onSubmit(values: EscrowFormValues) {
+        const walletAddress = changeAddress;
+        if (!walletAddress) return alert("Please connect your wallet first.");
 
-## SIGNATURES
----
-Funder: ___________________________
-Recipient: _________________________
-Date: ${format(new Date(), "PPP")}`;
-
-    const finalContract = {
-        ...data,
-        formattedContract,
-        ipfsHash,
-        deadline: format(data.deadline, "yyyy-MM-dd"),
-        timestamp: new Date().toISOString(),
-    };
-
-    return { formattedContract, finalContract };
-};
-
-// Preview Component
-const ContractPreview = ({
-    previewContent,
-}: {
-    previewContent: {
-        receiverAddress: string;
-        amount: number;
-        deadline: Date;
-        documentFileName?: string;
-        ipfsHash: string;
-    };
-}) => (
-    <div className="mt-6">
-        <div className="border rounded-lg overflow-hidden">
-            <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <h4 className="font-medium text-sm text-gray-500 mb-2">
-                            Recipient Address
-                        </h4>
-                        <p className="font-mono text-sm bg-gray-50 p-3 rounded break-all">
-                            {previewContent.receiverAddress || "Not specified"}
-                        </p>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <h4 className="font-medium text-sm text-gray-500 mb-2">Amount</h4>
-                            <div className="text-2xl font-bold text-blue-600">
-                                {previewContent.amount || 0}{" "}
-                                <span className="text-lg">ADA</span>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 className="font-medium text-sm text-gray-500 mb-2">
-                                Deadline
-                            </h4>
-                            <div className="font-medium">
-                                {previewContent.deadline
-                                    ? format(previewContent.deadline, "PPP")
-                                    : "Not set"}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <Separator className="my-6" />
-
-                <div className="mb-6">
-                    <h4 className="font-medium text-lg mb-4">Contract Document</h4>
-                    {previewContent.documentFileName ? (
-                        <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
-                            <FileText className="h-6 w-6 text-gray-600" />
-                            <div>
-                                <p className="font-medium">{previewContent.documentFileName}</p>
-                                <p className="text-sm text-gray-500">
-                                    Uploaded contract document
-                                </p>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-2 p-4 bg-amber-50 rounded-lg">
-                            <AlertCircle className="h-5 w-5 text-amber-600" />
-                            <p className="text-amber-800">No contract document uploaded</p>
-                        </div>
-                    )}
-                </div>
-
-                {previewContent.ipfsHash && (
-                    <>
-                        <Separator className="my-6" />
-                        <div>
-                            <h4 className="font-medium text-lg mb-4">IPFS Document</h4>
-                            <p className="text-sm text-gray-600 mb-2">
-                                Contract document stored on IPFS:
-                            </p>
-                            <code className="block bg-gray-50 p-3 rounded text-sm break-all">
-                                {previewContent.ipfsHash}
-                            </code>
-                        </div>
-                    </>
-                )}
-            </div>
-        </div>
-    </div>
-);
-
-export default function CreateContractPage() {
-    const [documentFile, setDocumentFile] = useState<File | null>(null);
-    const [uploadError, setUploadError] = useState<string>("");
-    const [ipfsHash, setIpfsHash] = useState<string>("");
-    const [showPreview, setShowPreview] = useState(false);
-
-    const pinataUploadMutation = usePinataUploadMutation();
-    const createEscrowMutation = useCreateEscrowMutation()
-    const [isLockingFund, setIsLockingFund] = useState(false)
-
-    const {
-        wallet,
-        changeAddress,
-        collateral,
-        refreshBalance,
-        refreshAddresses,
-        balance
-    } = useWalletContext();
-
-    // Initialize form
-    const form = useForm<FormData>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            receiverAddress: "",
-            amount: 0,
-            deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // Default: 7 days from now
-        },
-    });
-
-    // Compute hasContent based on form values
-    const formValues = form.watch();
-
-    const hasContent = useMemo(() => {
-        const hasReceiverAddress =
-            formValues.receiverAddress && formValues.receiverAddress.length >= 10;
-        const hasAmount = formValues.amount && formValues.amount > 0;
-        const hasDocument = !!documentFile;
-
-        return !!hasReceiverAddress || !!hasAmount || !!hasDocument;
-    }, [formValues, documentFile]);
-
-    // Handle document upload
-    const handleDocumentUpload = useCallback(
-        async (event: React.ChangeEvent<HTMLInputElement>) => {
-            const file = event.target.files?.[0];
-            if (!file) return;
-
-            // Reset previous errors
-            setUploadError("");
-
-            // Validate file type
-            if (!VALID_FILE_TYPES.includes(file.type)) {
-                setUploadError("Please upload a valid document (PDF, DOC, DOCX, TXT)");
-                return;
-            }
-
-            // Validate file size
-            if (file.size > MAX_FILE_SIZE) {
-                setUploadError("File size must be less than 10MB");
-                return;
-            }
-
-            setDocumentFile(file);
-
-            try {
-                // Upload to IPFS
-                const hash = await pinataUploadMutation.mutateAsync(file);
-                setIpfsHash(hash);
-                setUploadError("");
-            } catch (error) {
-                setUploadError("Failed to upload document to IPFS");
-                console.error(error);
-                setDocumentFile(null);
-            }
-        },
-        [pinataUploadMutation]
-    );
-
-
-    const funderLockAda = async (data: FormData) => {
-        if (!changeAddress || !wallet) {
-            alert("Wallet not connected properly");
-            return;
-        }
-
-        if (!collateral || collateral.length === 0) {
-            alert("Please set up collateral in your wallet settings first");
-            return;
-        }
-
-        const amountInLovelace = adaToLovelaceSerialized(data.amount);
-        if (data.amount > balance) {
-            alert("Insufficient balance");
-            return;
-        }
-
-        setIsLockingFund(true);
         try {
-            // Convert IPFS hash to hex ByteArray
-            const contractIpfsHash = hashToByteArray(ipfsHash)
+            setIsPending(true)
+            const escrowAmount: Asset[] = [{ unit: "lovelace", quantity: adaToLovelace(values.amount).toString() }]
+            const utxos = await wallet.getUtxos()
+            const { scriptAddr } = getScript()
+            const txBuilder = getTxBuilder()
+            const contractIpfsHash = hashToByteArray(values.ipfsUrl)
 
-            // Convert deadline to seconds
-            const projectDeadline = Math.floor(data.deadline.getTime() / 1000);
-
-            // Current time in seconds
-            const currentTime = Math.floor(Date.now() / 1000);
-            const recipientLockDeadline = currentTime + (48 * 60 * 60); // 48 hours in seconds
-
-            // Create the AwaitingRecipient datum using mConStr0 format
-            // Match the Aiken structure: AwaitingRecipient constructor with 6 fields
-            const escrowDatum = mConStr0([
-                changeAddress, // funder: Address
-                mConStr0([ // funder_amount: MValue as Pairs
-                    mConStr0([ // First policy pair
-                        "", // PolicyId (empty for ADA)
-                        mConStr0([ // Pairs<AssetName, Int>
-                            ["", amountInLovelace] // AssetName (empty), Amount
-                        ])
-                    ])
-                ]),
-                // projectDeadline, // project_deadline: Int
-                // contractIpfsHash, // contract_ipfs_hash: ByteArray
-                // currentTime, // created_at: Int
-                // recipientLockDeadline // recipient_lock_deadline: Int
-            ]);
-
-            console.log("Datum created with mConStr0:", escrowDatum);
-
-            const asset = [{
-                unit: "lovelace",
-                quantity: amountInLovelace.toString()
-            }];
-
-            const utxos = await wallet.getUtxos();
-            const { scriptAddr } = getScript();
-
-            const txBuilder = getTxBuilder();
+            const initiationDatum = initiateEscrowDatum(
+                walletAddress, escrowAmount, values.recipientAddress, values.deadlineDate.getTime(), contractIpfsHash
+            )
 
             await txBuilder
-                .txOut(scriptAddr, asset)
-                .txOutInlineDatumValue(escrowDatum)
+                .txOut(scriptAddr, escrowAmount)
+                .txOutInlineDatumValue(initiationDatum, "JSON")
+                .changeAddress(walletAddress)
                 .selectUtxosFrom(utxos)
-                .changeAddress(changeAddress)
-                .complete();
+                .complete()
 
-            const unsignedTx = txBuilder.txHex;
-            const signedTx = await wallet.signTx(unsignedTx, undefined, true);
-            const txHash = await wallet.submitTx(signedTx);
-
-            alert(`✅ ${data.amount} ADA locked successfully!\nTransaction: ${txHash}`);
-
-            // Store in backend
-            createEscrowMutation.mutate({
-                amount: amountInLovelace,               // BigInt (handled by backend)
-                amountAda: data.amount,     // Float
-                recipientAddress: data.receiverAddress,
-                txHash: txHash,
-                datum: JSON.stringify(escrowDatum),                     // JSON-serializable object
-                contractIpfsHash: contractIpfsHash,
-                disputeDeadline: new Date(projectDeadline * 1000),
-                recipientLockDeadline: new Date(recipientLockDeadline * 1000),
-                funderAddress: changeAddress,
-                status: 'AWAITING_RECIPIENT',
-                scriptAddress: scriptAddr
-                // scriptAddress must also be provided by backend or frontend
-            });
-
-            await refreshBalance();
-            await refreshAddresses();
+            const signedTx = await wallet.signTx(txBuilder.txHex, undefined, true)
+            const newTxHash = await wallet.submitTx(signedTx)
+            await refreshBalance()
+            setTxHash(newTxHash)
         } catch (error) {
-            console.error("Lock ADA failed:", error);
-            console.error("Full error details:", error);
-
-            const errMsg = error instanceof Error ? error.message : "Unknown error";
-            alert("❌ Failed to lock ADA: " + errMsg);
+            console.error(error)
+            alert(getErrMsg(error))
         } finally {
-            setIsLockingFund(false);
+            setIsPending(false)
         }
-    };
-
-
-    // Handle form submission
-    const onSubmit = useCallback(
-        async (data: FormData) => {
-            // Validate that a document has been uploaded
-            if (!documentFile) {
-                setUploadError("Please upload a contract document");
-                return;
-            }
-
-            // Validate that IPFS upload is complete
-            if (!ipfsHash) {
-                setUploadError("Contract document is still uploading to IPFS. Please wait.");
-                return;
-            }
-
-            try {
-                const { formattedContract, finalContract } = formatContract(
-                    data,
-                    ipfsHash
-                );
-
-                console.log("Form submitted:", finalContract, formattedContract);
-
-                // Here you would typically:
-                // 1. Save contract details to your backend
-                // 2. Create smart contract interaction
-                // 3. Handle ADA transfer
-
-                funderLockAda(data)
-                alert("Contract created successfully!");
-
-                // Reset form
-                form.reset();
-                setDocumentFile(null);
-                setIpfsHash("");
-                setUploadError("");
-            } catch (error) {
-                console.error("Submission error:", error);
-                alert("Failed to create contract");
-            }
-        },
-        [form, ipfsHash, documentFile]
-    );
-
-    // Preview content
-    const previewContent = useMemo(
-        () => ({
-            receiverAddress: form.watch("receiverAddress"),
-            amount: form.watch("amount"),
-            deadline: form.watch("deadline"),
-            documentFileName: documentFile?.name,
-            ipfsHash,
-        }),
-        [form, documentFile, ipfsHash]
-    );
+    }
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
-            <div className="flex items-center justify-between mb-8">
-                <div>
-                    <h1 className="text-3xl font-bold flex items-center gap-2">
-                        <FileText className="h-8 w-8" />
-                        Create Escrow Contract
-                    </h1>
-                    <p className="text-muted-foreground mt-2">
-                        Create a time-locked funding agreement with a contract document
-                    </p>
-                </div>
+        <div className="min-h-[calc(100vh-5rem)] bg-white py-12 px-6">
+            <div className="max-w-6xl mx-auto">
 
-                <FloatingDebugJson data={{ data: pinataUploadMutation.data, hash: hashToByteArray(ipfsHash),  collateral}} />
+                <FloatingDebugJson data={{ formData: form.getValues() }} />
 
-                {/* Preview Sheet Trigger */}
-                <Sheet open={showPreview} onOpenChange={setShowPreview}>
-                    <SheetTrigger asChild>
-                        <Button variant="outline" className="gap-2" disabled={!hasContent}>
-                            <Eye className="h-4 w-4" />
-                            Preview Contract
-                            {hasContent && (
-                                <Badge variant="secondary" className="ml-1">
-                                    Live
-                                </Badge>
-                            )}
-                        </Button>
-                    </SheetTrigger>
-                    <SheetContent className="w-full sm:max-w-xl lg:max-w-2xl overflow-y-auto">
-                        <SheetHeader>
-                            <SheetTitle>Contract Preview</SheetTitle>
-                        </SheetHeader>
-                        <ContractPreview previewContent={previewContent} />
-                    </SheetContent>
-                </Sheet>
-            </div>
+                {/* Header */}
+                <header className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2 text-primary/80 mb-1">
+                            <ShieldCheck className="h-4 w-4" />
+                            <span className="text-xs font-bold uppercase tracking-[0.2em]">Escrow Protocol</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <h1 className="text-4xl font-semibold tracking-tight text-zinc-900">New Agreement</h1>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 text-zinc-500 hover:bg-zinc-100 transition-colors">
+                                        <HelpCircle className="h-5 w-5" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-80 p-5 shadow-2xl border-zinc-100" align="start">
+                                    <div className="space-y-3">
+                                        <h3 className="font-bold text-zinc-900 flex items-center gap-2">
+                                            <Info className="h-4 w-4 text-primary" />
+                                            System Guide
+                                        </h3>
+                                        <div className="text-sm text-zinc-600 space-y-3 leading-relaxed">
+                                            <p>This creates a secure vault on the blockchain that only releases funds when the terms are met or the time expires.</p>
+                                        </div>
+                                    </div>
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+                    </div>
+                </header>
 
-            <Card className="shadow-none border">
-                <CardContent className="pt-6">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                            {/* Basic Information */}
-                            <div className="space-y-6">
-                                <h3 className="text-lg font-semibold">Basic Information</h3>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-12 gap-20">
 
-                                <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
+                        {/* LEFT COLUMN */}
+                        <div className="lg:col-span-6 space-y-10">
+                            <div className="space-y-8">
+                                <div className="grid grid-cols-2 gap-8">
+                                    {/* Amount Field */}
                                     <FormField
                                         control={form.control}
-                                        name="receiverAddress"
-                                        render={({ field }) => (
+                                        name="amount"
+                                        render={({ field, fieldState }) => (
                                             <FormItem>
-                                                <FormLabel>Recipient Cardano Wallet Address</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        placeholder="addr1q9x..."
-                                                        {...field}
-                                                        className="font-mono"
-                                                    />
-                                                </FormControl>
-                                                <FormDescription>
-                                                    The Cardano address where funds will be sent after the
-                                                    deadline
-                                                </FormDescription>
-                                                <FormMessage />
+                                                <FormLabel className="text-zinc-500 uppercase text-[10px] font-bold tracking-widest">Amount (ADA)</FormLabel>
+                                                <div className="relative group">
+                                                    <DollarSign className="absolute left-1 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400 group-focus-within:text-primary transition-colors" strokeWidth={1.5} />
+                                                    <FormControl>
+                                                        <Input type="number" placeholder="0.00" {...field}
+                                                            onChange={e => field.onChange(e.target.valueAsNumber || 0)}
+                                                            className="border-0 border-b border-zinc-300 rounded-none pl-[34px] h-12 focus-visible:ring-0 focus-visible:border-primary text-lg! transition-all placeholder:text-zinc-200" />
+                                                    </FormControl>
+                                                </div>
+                                                {fieldState.error?.message}
+                                                <FormMessage className="text-[11px] font-medium pt-1 text-red-500" />
                                             </FormItem>
                                         )}
                                     />
 
+                                    {/* Expiration Field */}
                                     <FormField
                                         control={form.control}
-                                        name="amount"
+                                        name="deadlineDate"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Amount (ADA)</FormLabel>
-                                                <FormControl>
-                                                    <div className="relative">
-                                                        <Input
-                                                            type="number"
-                                                            step="0.1"
-                                                            placeholder="100"
-                                                            value={field.value || ""}
-                                                            onChange={(e) =>
-                                                                field.onChange(parseFloat(e.target.value) || 0)
-                                                            }
-                                                            className="pl-8"
-                                                        />
-                                                        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
-                                                            ₳
+                                                <FormLabel className="text-zinc-500 uppercase text-[10px] font-bold tracking-widest">Expiration</FormLabel>
+                                                <Popover>
+                                                    <PopoverTrigger asChild>
+                                                        <div className="relative group cursor-pointer">
+                                                            <CalendarIconSmall className="absolute left-1 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400 group-hover:text-primary transition-colors" strokeWidth={1.5} />
+                                                            <FormControl>
+                                                                <Button variant="ghost" className="w-full justify-start border-b border-zinc-300 rounded-none pl-8 pr-0 h-12 hover:bg-transparent text-lg! font-normal">
+                                                                    {field.value ? format(field.value, "PP") : <span className="text-zinc-200">Select Date</span>}
+                                                                </Button>
+                                                            </FormControl>
                                                         </div>
-                                                    </div>
-                                                </FormControl>
-                                                <FormDescription>
-                                                    Amount of ADA to be locked in escrow
-                                                </FormDescription>
-                                                <FormMessage />
+                                                    </PopoverTrigger>
+                                                    <PopoverContent className="w-auto p-0 border-zinc-100 shadow-2xl" align="end">
+                                                        <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(d) => d < new Date()} />
+                                                    </PopoverContent>
+                                                </Popover>
+                                                <FormMessage className="text-[11px] font-medium pt-1 text-red-500" />
                                             </FormItem>
                                         )}
                                     />
                                 </div>
 
+                                {/* Recipient Field */}
                                 <FormField
                                     control={form.control}
-                                    name="deadline"
-                                    render={({ field }) => (
-                                        <FormItem className="flex flex-col">
-                                            <FormLabel>Deadline Date</FormLabel>
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <FormControl>
-                                                        <Button
-                                                            variant="outline"
-                                                            className="w-full pl-3 text-left font-normal"
-                                                        >
-                                                            {field.value ? (
-                                                                format(field.value, "PPP")
-                                                            ) : (
-                                                                <span>Pick a date</span>
-                                                            )}
-                                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                        </Button>
-                                                    </FormControl>
-                                                </PopoverTrigger>
-                                                <PopoverContent className="w-auto p-0" align="start">
-                                                    <Calendar
-                                                        mode="single"
-                                                        selected={field.value}
-                                                        onSelect={field.onChange}
-                                                        disabled={(date: Date) => date < new Date()}
-                                                        initialFocus
-                                                    />
-                                                </PopoverContent>
-                                            </Popover>
-                                            <FormDescription>
-                                                Funds will be automatically released after this date if
-                                                no dispute is raised
-                                            </FormDescription>
-                                            <FormMessage />
+                                    name="recipientAddress"
+                                    render={({ field, fieldState }) => (
+                                        <FormItem>
+                                            <FormLabel className="text-zinc-500 uppercase text-[10px] font-bold tracking-widest">Recipient Address</FormLabel>
+                                            <div className="relative group">
+                                                <UserPenIcon className="absolute left-1 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400 group-focus-within:text-primary transition-colors" strokeWidth={1.5} />
+                                                <FormControl>
+                                                    <Input placeholder="addr_test..." {...field} className="border-0 border-b border-zinc-300 rounded-none pl-[34px] h-12 focus-visible:ring-0 focus-visible:border-primary font-mono text-lg! placeholder:text-zinc-200" />
+                                                </FormControl>
+                                            </div>
+                                            {fieldState.error?.message}
+                                            <FormMessage className="text-[11px] font-medium pt-1 text-red-500" />
                                         </FormItem>
                                     )}
                                 />
                             </div>
 
-                            <Separator />
-
-                            {/* Contract Document Upload - Now Required */}
-                            <div className="space-y-6">
-                                <div className="flex items-center justify-between">
-                                    <h3 className="text-lg font-semibold">Contract Document</h3>
-
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="space-y-2">
-                                        <FormLabel>Upload Contract Document</FormLabel>
-                                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors">
-                                            <Input
-                                                type="file"
-                                                accept=".pdf,.doc,.docx,.txt"
-                                                onChange={handleDocumentUpload}
-                                                className="hidden"
-                                                id="document-upload"
-                                                required
-                                            />
-                                            <label
-                                                htmlFor="document-upload"
-                                                className="cursor-pointer flex flex-col items-center"
-                                            >
-                                                <Upload className="h-12 w-12 text-gray-400 mb-4" />
-                                                <p className="text-sm text-gray-600">
-                                                    {documentFile
-                                                        ? `Selected: ${documentFile.name}`
-                                                        : "Click to upload contract document"}
-                                                </p>
-                                                <p className="text-xs text-gray-500 mt-2">
-                                                    PDF, DOC, DOCX or TXT • Max 10MB • Required
-                                                </p>
-                                                {pinataUploadMutation.isPending && (
-                                                    <p className="text-xs text-blue-500 mt-2">
-                                                        Uploading to IPFS...
-                                                    </p>
-                                                )}
-                                            </label>
-                                        </div>
-
-                                        {/* Upload Error */}
-                                        {uploadError && (
-                                            <p className="text-sm text-red-500 flex items-center gap-1">
-                                                <AlertCircle className="h-4 w-4" />
-                                                {uploadError}
-                                            </p>
-                                        )}
-
-                                        {/* Upload Status */}
-                                        {pinataUploadMutation.isPending && (
-                                            <p className="text-sm text-blue-500">
-                                                Uploading document to IPFS...
-                                            </p>
-                                        )}
-                                        {pinataUploadMutation.isSuccess && (
-                                            <p className="text-sm text-green-500">
-                                                Document successfully uploaded to IPFS
-                                            </p>
-                                        )}
+                            {/* Success State */}
+                            {txHash && (
+                                <div className="p-8 bg-zinc-50/80 border border-zinc-100 rounded-2xl animate-in fade-in slide-in-from-bottom-3 duration-700">
+                                    <div className="flex items-center gap-2 text-emerald-600 mb-6">
+                                        <CheckCircle2 className="h-4 w-4" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Transaction Broadcasted</span>
                                     </div>
+                                    <PersistentText
+                                        data={txHash}
+                                        storageKey="funderDepositTxHash"
+                                        label="Agreement ID"
+                                        description="The permanent blockchain identifier for this escrow transaction."
+                                    />
+                                </div>
+                            )}
+                        </div>
 
-                                    {/* IPFS Hash Display */}
-                                    {ipfsHash && (
-                                        <Alert>
-                                            <AlertDescription className="font-mono text-sm break-all">
-                                                <strong className="block mb-1">IPFS URL:</strong>
-                                                {ipfsHash}
-                                            </AlertDescription>
-                                        </Alert>
+                        {/* RIGHT COLUMN */}
+                        <div className="lg:col-span-6">
+                            <div className="space-y-4">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Legal Reference</h2>
+                                <div className="space-y-2">
+                                    <ContractUploader
+                                        onUploadSuccess={handleUploadSuccess}
+                                        onFileChange={handleFileChange}
+                                        currentFile={documentFile}
+                                        ipfsHash={form.watch("ipfsUrl")}
+                                        uniqueId={"contractDocument"}
+                                        withLabel={false}
+                                    />
+                                    {/* Specific Error for File Upload */}
+                                    {form.formState.errors.ipfsUrl && (
+                                        <div className="flex items-center gap-1.5 text-red-500 mt-2">
+                                            <AlertCircle className="h-3.5 w-3.5" />
+                                            <p className="text-[11px] font-medium tracking-wide">
+                                                {form.formState.errors.ipfsUrl.message}
+                                            </p>
+                                        </div>
                                     )}
                                 </div>
                             </div>
 
-                            <Separator />
-
-                            {/* Submit Button */}
-                            <div className="flex justify-end gap-4">
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    onClick={() => setShowPreview(true)}
-                                    disabled={!hasContent}
-                                >
-                                    <Eye className="h-4 w-4 mr-2" />
-                                    Preview
-                                </Button>
+                            <div className="mt-12">
                                 <Button
                                     type="submit"
-                                    size="lg"
-                                    className="bg-linear-to-r from-primary/90 to-primary"
-                                    disabled={form.formState.isSubmitting || !documentFile || !ipfsHash}
+                                    disabled={isPending}
+                                    className="w-full h-14 text-lg font-medium transition-all active:scale-[0.98] disabled:opacity-30"
                                 >
-                                    {form.formState.isSubmitting
-                                        ? "Creating Contract..."
-                                        : "Create Escrow Agreement"}
+                                    {isPending ? (
+                                        <div className="flex items-center gap-3">
+                                            <Loader2 className="h-5 w-5 animate-spin" />
+                                            <span className="tracking-tight">Verifying & Sending...</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-2">
+                                            <span>Secure Agreement</span>
+                                            <ArrowRight className="h-5 w-5" />
+                                        </div>
+                                    )}
                                 </Button>
+                                <p className="text-[10px] text-zinc-400 text-center mt-6 uppercase tracking-[0.15em] font-bold">
+                                    Secured by Cardano Smart Contracts
+                                </p>
                             </div>
-                        </form>
-                    </Form>
-                </CardContent>
-            </Card>
+                        </div>
+
+                    </form>
+                </Form>
+            </div>
         </div>
-    );
+    )
 }

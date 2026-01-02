@@ -1,10 +1,9 @@
 "use client"
 
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import { 
     Loader2, 
     ArrowRight, 
-    ShieldCheck, 
     CheckCircle2, 
     Info, 
     HelpCircle, 
@@ -14,7 +13,6 @@ import {
     ExternalLink,
     Lock
 } from "lucide-react"
-import { format } from "date-fns"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -29,7 +27,6 @@ import {
     getErrMsg, 
     InitiationDatum, 
     recipientDepositRedeemer, 
-    stringifyPlutusData 
 } from '@/utils/aiken'
 
 
@@ -139,7 +136,7 @@ export default function RecipientDepositPage() {
     }
 
     return (
-        <div className="min-h-screen bg-white py-12 px-6">
+        <div className="min-h-[calc(100vh-5rem)] bg-white py-12 px-6">
             <div className="max-w-6xl mx-auto">
                 <FloatingDebugJson data={{ amount, funderTxHash, contractData }} />
 

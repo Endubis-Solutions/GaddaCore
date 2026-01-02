@@ -9,3 +9,8 @@ export function cn(...inputs: ClassValue[]) {
 export const hashToByteArray = (hash: string): string => {
   return Buffer.from(hash).toString('hex');
 };
+
+
+export const byteArrayToHash = (hexString: string): string => {
+  return Buffer.from(hexString, 'hex').toString();
+};

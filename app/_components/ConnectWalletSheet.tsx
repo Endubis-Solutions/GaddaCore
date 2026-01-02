@@ -59,14 +59,14 @@ const ConnectWalletSheet = (props: PropsWithChildren) => {
             </SheetTrigger>
             <SheetContent className="w-full sm:max-w-md border-l border-border/50 bg-background/95 backdrop-blur-xl">
                 <SheetHeader className="text-left pb-6 border-b border-border/40">
-                    <SheetTitle className="flex items-center gap-2.5">
+                    <SheetTitle className="flex items-center gap-2.5 sr-only">
                         <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20">
                             <Wallet className="h-4 w-4 text-primary" />
                         </div>
                         <span className="text-xl">Connect Wallet</span>
                     </SheetTitle>
                     <SheetDescription className="text-base">
-                        Link your Cardano wallet to access <span className="font-semibold text-foreground">Athena Protocol</span> features.
+                        Link your Cardano wallet to access <span className="font-semibold text-foreground">Gadda Protocol</span> features.
                     </SheetDescription>
                 </SheetHeader>
 
@@ -88,14 +88,11 @@ const ConnectWalletSheet = (props: PropsWithChildren) => {
                                     onClick={() => connect(wallet.id)}
                                     disabled={connecting}
                                     className={cn(
-                                        "relative w-full cursor-pointer flex items-center gap-4 p-4 rounded-xl border border-border bg-card/50 hover:bg-accent hover:border-primary/30 transition-all duration-200 group overflow-hidden",
+                                        "relative w-full cursor-pointer flex items-center gap-4 p-4 rounded-md border border-border hover:bg-accent/25 hover:border-primary/30 transition-all duration-200 group overflow-hidden",
                                         "disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border"
                                     )}
                                 >
-                                    {/* Hover gradient effect */}
-                                    <div className="absolute inset-0 bg-linear-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                                    <div className="relative shrink-0 w-12 h-12 bg-white rounded-xl border border-border/50 flex items-center justify-center p-2 shadow-sm group-hover:scale-105 transition-transform duration-200">
+                                    <div className="relative shrink-0 w-12 h-12 flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-200">
                                         {/* Ensure you have domain permissions for these icons in next.config.js */}
                                         <Image
                                             src={wallet.icon}
@@ -106,7 +103,7 @@ const ConnectWalletSheet = (props: PropsWithChildren) => {
                                         />
                                     </div>
                                     <div className="relative flex-1 text-left">
-                                        <div className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                                        <div className="font-semibold text-foreground">
                                             {wallet.name
                                                 .split(' ')
                                                 .map(word => word.charAt(0).toUpperCase() + word.slice(1))

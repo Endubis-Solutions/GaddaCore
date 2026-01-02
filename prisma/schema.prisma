@@ -31,7 +31,7 @@ model Arbitrator {
   id                  String   @id @default(cuid())
   walletAddress       String   @unique
   name                String?
-  description         String?
+  bio                 String?
   expertise           String[]
   isQualified         Boolean  @default(false)
   qualificationScore  Int      @default(0)
