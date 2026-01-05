@@ -1,217 +1,278 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { formatAddress } from "@/utils";
-import { 
-    ExternalLink, 
-    Calendar, 
-    Wallet, 
-    FileText, 
-    Clock, 
-    Shield, 
-    AlertTriangle, 
-    ArrowRightLeft,
-    Timer,
-    Scale,
-    LinkIcon
+import { Separator } from "@/components/ui/separator";
+import {
+  ExternalLink,
+  FileText,
+  Clock,
+  AlertTriangle,
+  ArrowRightLeft,
+  Timer,
+  CheckCircle2,
+  History,
+  Copy,
 } from "lucide-react";
 import { EscrowTransaction } from "@/types";
 import { byteArrayToHash } from "@/lib/utils";
 import FloatingDebugJson from "./DebugJson";
-
-
+import { format } from "date-fns";
 
 interface ViewDetailsDialogProps {
-    transaction: EscrowTransaction;
-    isOpen: boolean;
-    onClose: () => void;
+  transaction: EscrowTransaction;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export default function ViewDetailsDialog({ transaction, isOpen, onClose }: ViewDetailsDialogProps) {
-    if (!transaction) return null;
+export default function ViewDetailsDialog({
+  transaction,
+  isOpen,
+  onClose,
+}: ViewDetailsDialogProps) {
+  if (!transaction) return null;
 
-    const ipfsUrl = transaction.contractIpfsHash ?  byteArrayToHash(transaction.contractIpfsHash) : ''
-    
-    const statusStyles = {
-        ACTIVE: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
-        DISPUTED: "bg-destructive/10 text-destructive border-destructive/20",
-        AWAITING_RECIPIENT: "bg-amber-500/10 text-amber-600 border-amber-500/20",
-        APPROVED: "bg-primary/10 text-primary border-primary/20",
-        DEFAULT: "bg-muted text-muted-foreground border-transparent"
-    };
+  const ipfsUrl = transaction.contractIpfsHash
+    ? `https://gateway.pinata.cloud/ipfs/${byteArrayToHash(transaction.contractIpfsHash).split("/").pop()}`
+    : "";
 
-    const currentStyle = statusStyles[transaction.status as keyof typeof statusStyles] || statusStyles.DEFAULT;
+  const statusStyles = {
+    ACTIVE: "bg-emerald-50 text-emerald-600 border-emerald-200",
+    DISPUTED: "bg-rose-50 text-rose-600 border-rose-200",
+    AWAITING_RECIPIENT: "bg-amber-50 text-amber-600 border-amber-200",
+    APPROVED: "bg-blue-50 text-blue-600 border-blue-200",
+  };
 
-    return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[750px] p-0 overflow-hidden border-none shadow-2xl rounded-md bg-white">
-                <div className={`h-1.5 w-full ${transaction.status === 'DISPUTED' ? 'bg-destructive' : 'bg-primary'}`} />
-                
-                <div className="p-8">
-                    <DialogHeader className="mb-8 flex flex-row items-center justify-between">
-                        <div className="space-y-1">
-                            <DialogTitle className="text-2xl font-semibold tracking-tight flex items-center gap-3">
-                                <div className="p-2 rounded-xl bg-primary/10 text-primary">
-                                    <Shield className="h-6 w-6" />
-                                </div>
-                                Agreement Details
-                            </DialogTitle>
-                            <p className="text-xs text-muted-foreground font-mono">ID: {transaction.id}</p>
-                        </div>
-                        <Badge variant="secondary" className={`rounded-lg px-3 py-1 text-xs font-bold uppercase tracking-widest border ${currentStyle}`}>
-                            {transaction.status?.replace("_", " ")}
-                        </Badge>
-                    </DialogHeader>
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-h-[90vh] overflow-y-auto rounded-md border-none bg-white p-0 shadow-2xl sm:max-w-[850px]">
+        <div className="p-0">
+          {/* <FloatingDebugJson data={{ transaction }} /> */}
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                        {/* Left Column: Core Data */}
-                        <FloatingDebugJson data={{transaction}} />
-                        <div className="lg:col-span-7 space-y-8">
-                            
-                            {/* Value Card */}
-                            <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-100 flex justify-between items-center group">
-                                <div className="space-y-1">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Locked Amount</span>
-                                    <p className="text-3xl font-bold tracking-tighter text-zinc-900">
-                                        {transaction.amountAda?.toFixed(2) ?? "0.00"} 
-                                        <span className="text-sm font-medium ml-2 opacity-40">ADA</span>
-                                    </p>
-                                </div>
-                                <div className="h-12 w-12 rounded-full bg-white border border-zinc-100 flex items-center justify-center shadow-sm">
-                                    <Wallet className="h-5 w-5 text-zinc-400 group-hover:text-primary transition-colors" />
-                                </div>
-                            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            {/* --- Left Panel: Contract Info & Parties --- */}
+            <div className="border-r border-zinc-100 p-8 lg:col-span-7">
+              <DialogHeader className="mb-8">
+                <div className="mb-2 flex items-center justify-between">
+                  <Badge
+                    variant="outline"
+                    className={`rounded-md px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase ${statusStyles[transaction.status as keyof typeof statusStyles] || "bg-zinc-50 text-zinc-600"}`}
+                  >
+                    {transaction.status?.replace("_", " ")}
+                  </Badge>
+                  <span className="font-mono text-[10px] text-zinc-400">Ver. 1.0.4</span>
+                </div>
+                <DialogTitle className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900">
+                  Agreement Details
+                </DialogTitle>
+                <p className="text-sm text-zinc-500">
+                  On-chain verification for Escrow ID:{" "}
+                  <span className="font-mono text-xs">{transaction.id.slice(0, 12)}...</span>
+                </p>
+              </DialogHeader>
 
-                            {/* Addresses Section */}
-                            <div className="space-y-4">
-                                <h4 className="text-[11px] font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
-                                    <ArrowRightLeft className="h-3 w-3" />
-                                    Participating Parties
-                                </h4>
-                                <div className="space-y-3">
-                                    {[
-                                        { label: "Funder", addr: transaction.funderAddress },
-                                        { label: "Recipient", addr: transaction.recipientAddress },
-                                        { label: "Script (Vault)", addr: transaction.scriptAddress }
-                                    ].map((party) => party.addr && (
-                                        <div key={party.label} className="p-3 rounded-xl bg-white border border-zinc-100 flex flex-col gap-1 hover:border-zinc-300 transition-all">
-                                            <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-tighter">{party.label}</span>
-                                            <code className="text-[11px] font-mono text-zinc-600 break-all">{party.addr}</code>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Right Column: Deadlines & Documents */}
-                        <div className="lg:col-span-5 space-y-8">
-                            
-                            {/* Deadlines Sidebar */}
-                            <div className="space-y-4">
-                                <h4 className="text-[11px] font-black uppercase tracking-widest text-zinc-400 flex items-center gap-2">
-                                    <Timer className="h-3.5 w-3.5" />
-                                    Contract Timelines
-                                </h4>
-                                <div className="space-y-4 p-5 rounded-2xl border border-zinc-100 bg-zinc-50/50">
-                                    <DeadlineItem 
-                                        label="Creation" 
-                                        date={transaction.createdAt} 
-                                        icon={<Calendar className="h-3.5 w-3.5" />} 
-                                    />
-                                    <DeadlineItem 
-                                        label="Recipient Stake By" 
-                                        date={transaction.recipientLockDeadline} 
-                                        icon={<Clock className="h-3.5 w-3.5 text-amber-500" />} 
-                                        isWarning 
-                                    />
-                                    <DeadlineItem 
-                                        label="Dispute Cutoff" 
-                                        date={transaction.disputeDeadline} 
-                                        icon={<Scale className="h-3.5 w-3.5 text-rose-500" />} 
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Documents Section */}
-                            <div className="space-y-3">
-                                <h4 className="text-[11px] font-black uppercase tracking-widest text-zinc-400">Legal Documentation</h4>
-                                {ipfsUrl ? (
-                                    <Button 
-                                        variant="outline" 
-                                        className="w-full h-14 justify-between group hover:bg-zinc-900 hover:text-white transition-all rounded-xl"
-                                        onClick={() => window.open(ipfsUrl, '_blank')}
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <div className="p-2 rounded-lg bg-zinc-100 group-hover:bg-zinc-800 transition-colors">
-                                                <FileText className="h-4 w-4" />
-                                            </div>
-                                            <span className="text-sm font-semibold">View Contract (PDF)</span>
-                                        </div>
-                                        <ExternalLink className="h-4 w-4 opacity-30 group-hover:opacity-100" />
-                                    </Button>
-                                ) : (
-                                    <div className="p-4 rounded-xl border border-dashed border-zinc-200 text-center">
-                                        <p className="text-xs text-zinc-400">No external contract attached</p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+              <div className="space-y-6">
+                {/* Financial Summary */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="rounded-xl border border-zinc-100 bg-zinc-50/50 p-4">
+                    <p className="mb-1 text-[10px] font-bold tracking-wider text-zinc-400 uppercase">
+                      Funder Locked
+                    </p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl font-black text-zinc-900">
+                        {transaction.funderStakeInAda}
+                      </span>
+                      <span className="text-xs font-bold text-zinc-500">ADA</span>
                     </div>
-
-                    {/* Dispute Banner */}
-                    {transaction.status === "DISPUTED" && (
-                        <div className="mt-8 bg-rose-50 border border-rose-100 rounded-2xl p-5 flex gap-4 animate-in slide-in-from-bottom-2">
-                            <div className="h-10 w-10 rounded-full bg-rose-100 flex items-center justify-center shrink-0">
-                                <AlertTriangle className="h-5 w-5 text-rose-600" />
-                            </div>
-                            <div className="space-y-1">
-                                <h5 className="text-sm font-bold text-rose-900 uppercase tracking-wide">Litigation in Progress</h5>
-                                <p className="text-xs text-rose-700/80 leading-relaxed">
-                                    Settlement is frozen. Evidence is being reviewed on-chain. Reference hash: 
-                                    <span className="font-mono ml-1">{transaction.txHash.slice(0, 10)}...</span>
-                                </p>
-                            </div>
-                        </div>
-                    )}
+                  </div>
+                  <div className="rounded-xl border border-zinc-100 bg-zinc-50/50 p-4">
+                    <p className="mb-1 text-[10px] font-bold tracking-wider text-zinc-400 uppercase">
+                      Recipient Bond
+                    </p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-2xl font-black text-zinc-900">
+                        {transaction.recipientStakeInAda || 0}
+                      </span>
+                      <span className="text-xs font-bold text-zinc-500">ADA</span>
+                    </div>
+                  </div>
                 </div>
 
-                <DialogFooter className="bg-zinc-50 p-6 border-t border-zinc-100 flex items-center justify-between gap-4">
-                    <div className="hidden sm:flex items-center gap-2 text-zinc-400 group cursor-help">
-                        <LinkIcon className="h-3 w-3" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">UTXO Explorer</span>
+                {/* Participant Addresses */}
+                <div className="space-y-3">
+                  <h4 className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-zinc-900 uppercase">
+                    <ArrowRightLeft className="text-primary h-3 w-3" />
+                    Verified Identities
+                  </h4>
+                  <div className="space-y-2">
+                    <AddressField label="Funder" address={transaction.funderAddress} />
+                    <AddressField label="Recipient" address={transaction.recipientAddress} />
+                    <AddressField label="Script" address={transaction.scriptAddress} />
+                  </div>
+                </div>
+
+                {/* Dispute Alert */}
+                {transaction.status === "DISPUTED" && (
+                  <div className="flex gap-4 rounded-xl border border-rose-100 bg-rose-50 p-4">
+                    <AlertTriangle className="h-5 w-5 shrink-0 text-rose-600" />
+                    <div>
+                      <p className="text-xs font-bold text-rose-900 uppercase">Litigation Active</p>
+                      <p className="text-[11px] leading-relaxed text-rose-700">
+                        Funds are locked in the validator script until an Oracle or Admin resolution
+                        is submitted.
+                      </p>
                     </div>
-                    <div className="flex gap-3 w-full sm:w-auto">
-                        <Button variant="ghost" onClick={onClose} className="rounded-lg text-zinc-500 font-medium">
-                            Close
-                        </Button>
-                        <Button
-                            className="rounded-lg shadow-sm font-semibold px-6"
-                            onClick={() => window.open(`https://preprod.cardanoscan.io/transaction/${transaction.txHash}`, '_blank')}
-                        >
-                            <ExternalLink className="h-4 w-4 mr-2" />
-                            Cardanoscan
-                        </Button>
-                    </div>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    );
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* --- Right Panel: Timelines & History --- */}
+            <div className="bg-zinc-50/50 p-8 lg:col-span-5">
+              <div className="space-y-8">
+                {/* Deadlines Section */}
+                <section className="space-y-4">
+                  <h4 className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-zinc-900 uppercase">
+                    <Timer className="text-primary h-3.5 w-3.5" />
+                    Key Deadlines
+                  </h4>
+                  <div className="space-y-4">
+                    <DeadlineBox
+                      label="Lock Deadline"
+                      date={transaction.recipientLockDeadline}
+                      desc="Recipient must deposit bond by this time."
+                    />
+                    <DeadlineBox
+                      label="Submission"
+                      date={transaction.submissionDeadline}
+                      desc="Final work/proof must be submitted."
+                    />
+                  </div>
+                </section>
+
+                <Separator />
+
+                {/* Transaction History (Parsed from transaction.transactions) */}
+                <section className="space-y-4">
+                  <h4 className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-zinc-900 uppercase">
+                    <History className="text-primary h-3.5 w-3.5" />
+                    Ledger History
+                  </h4>
+                  <div className="relative space-y-4 before:absolute before:top-2 before:bottom-2 before:left-[11px] before:w-0.5 before:bg-zinc-200">
+                    {transaction.transactions.map((tx, idx) => (
+                      <div key={tx.id} className="relative pl-8">
+                        <div className="absolute top-1 left-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-zinc-200 bg-white">
+                          <CheckCircle2 className="h-3 w-3 text-emerald-500" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-bold text-zinc-900">
+                            {tx.type.replace("_", " ")}
+                          </span>
+                          <span className="text-[10px] text-zinc-400">
+                            {format(new Date(tx.createdAt), "MMM d, yyyy · HH:mm")}
+                          </span>
+                          <a
+                            href={`https://preprod.cardanoscan.io/transaction/${tx.txHash}`}
+                            target="_blank"
+                            className="text-primary truncate font-mono text-[9px] hover:underline"
+                          >
+                            {tx.txHash.slice(0, 16)}...
+                          </a>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* --- Unified Footer --- */}
+        <DialogFooter className="flex flex-col items-center justify-between gap-4 border-t border-zinc-100 bg-white p-6 sm:flex-row">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-9 gap-2 text-xs font-bold"
+              onClick={() => window.open(ipfsUrl, "_blank")}
+            >
+              <FileText className="h-3.5 w-3.5" />
+              VIEW CONTRACT
+            </Button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Button
+              className="h-9 gap-2 px-6 text-xs font-bold"
+              onClick={() =>
+                window.open(
+                  `https://preprod.cardanoscan.io/transaction/${transaction.transactions[0].txHash}`,
+                  "_blank"
+                )
+              }
+            >
+              <ExternalLink className="h-3.5 w-3.5" />
+              EXPLORE ON SCAN
+            </Button>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
 }
 
-function DeadlineItem({ label, date, icon, isWarning }: { label: string, date?: string | Date | null, icon: React.ReactNode, isWarning?: boolean }) {
-    if (!date) return null;
-    const d = new Date(date);
-    return (
-        <div className="flex items-start gap-3">
-            <div className="mt-0.5">{icon}</div>
-            <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">{label}</span>
-                <span className={`text-xs font-semibold ${isWarning ? 'text-zinc-900' : 'text-zinc-700'}`}>
-                    {d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })} at {d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-            </div>
-        </div>
-    );
+// --- Sub-components for cleaner code ---
+
+function AddressField({ label, address }: { label: string; address?: string }) {
+  if (!address) return null;
+  return (
+    <div className="group hover:border-primary/30 relative flex flex-col gap-1 rounded-lg border border-zinc-100 bg-white p-3 transition-all">
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] font-bold tracking-tighter text-zinc-400 uppercase">
+          {label}
+        </span>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100"
+          onClick={() => navigator.clipboard.writeText(address)}
+        >
+          <Copy className="h-2.5 w-2.5" />
+        </Button>
+      </div>
+      <code className="font-mono text-[10px] leading-tight break-all text-zinc-600">{address}</code>
+    </div>
+  );
+}
+
+function DeadlineBox({
+  label,
+  date,
+  desc,
+}: {
+  label: string;
+  date?: string | Date | null;
+  desc: string;
+}) {
+  if (!date) return null;
+  return (
+    <div className="space-y-1">
+      <div className="flex items-center gap-2">
+        <Clock className="h-3 w-3 text-zinc-400" />
+        <span className="text-[10px] font-bold text-zinc-900 uppercase">{label}</span>
+      </div>
+      <div className="pl-5">
+        <p className="text-xs font-bold text-zinc-700">{format(new Date(date), "PPP p")}</p>
+        <p className="text-[10px] leading-tight text-zinc-400">{desc}</p>
+      </div>
+    </div>
+  );
 }

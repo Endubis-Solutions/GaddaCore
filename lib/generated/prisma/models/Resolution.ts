@@ -20,37 +20,17 @@ export type ResolutionModel = runtime.Types.Result.DefaultSelection<Prisma.$Reso
 
 export type AggregateResolution = {
   _count: ResolutionCountAggregateOutputType | null
-  _avg: ResolutionAvgAggregateOutputType | null
-  _sum: ResolutionSumAggregateOutputType | null
   _min: ResolutionMinAggregateOutputType | null
   _max: ResolutionMaxAggregateOutputType | null
-}
-
-export type ResolutionAvgAggregateOutputType = {
-  payoutAmount: number | null
-  payoutAmountAda: number | null
-}
-
-export type ResolutionSumAggregateOutputType = {
-  payoutAmount: bigint | null
-  payoutAmountAda: number | null
 }
 
 export type ResolutionMinAggregateOutputType = {
   id: string | null
   escrowId: string | null
-  type: $Enums.ResolutionType | null
   result: $Enums.ResolutionResult | null
-  resolvedBy: $Enums.ResolutionBy | null
-  resolvedById: string | null
-  resolvedByAddress: string | null
-  arbitratorId: string | null
-  payoutAddress: string | null
-  payoutAmount: bigint | null
-  payoutAmountAda: number | null
   txHash: string | null
-  createdAt: Date | null
   resolvedAt: Date | null
+  createdAt: Date | null
   disputeId: string | null
   userId: string | null
 }
@@ -58,18 +38,10 @@ export type ResolutionMinAggregateOutputType = {
 export type ResolutionMaxAggregateOutputType = {
   id: string | null
   escrowId: string | null
-  type: $Enums.ResolutionType | null
   result: $Enums.ResolutionResult | null
-  resolvedBy: $Enums.ResolutionBy | null
-  resolvedById: string | null
-  resolvedByAddress: string | null
-  arbitratorId: string | null
-  payoutAddress: string | null
-  payoutAmount: bigint | null
-  payoutAmountAda: number | null
   txHash: string | null
-  createdAt: Date | null
   resolvedAt: Date | null
+  createdAt: Date | null
   disputeId: string | null
   userId: string | null
 }
@@ -77,49 +49,23 @@ export type ResolutionMaxAggregateOutputType = {
 export type ResolutionCountAggregateOutputType = {
   id: number
   escrowId: number
-  type: number
   result: number
-  resolvedBy: number
-  resolvedById: number
-  resolvedByAddress: number
-  arbitratorId: number
-  payoutAddress: number
-  payoutAmount: number
-  payoutAmountAda: number
   txHash: number
-  createdAt: number
   resolvedAt: number
+  createdAt: number
   disputeId: number
   userId: number
   _all: number
 }
 
 
-export type ResolutionAvgAggregateInputType = {
-  payoutAmount?: true
-  payoutAmountAda?: true
-}
-
-export type ResolutionSumAggregateInputType = {
-  payoutAmount?: true
-  payoutAmountAda?: true
-}
-
 export type ResolutionMinAggregateInputType = {
   id?: true
   escrowId?: true
-  type?: true
   result?: true
-  resolvedBy?: true
-  resolvedById?: true
-  resolvedByAddress?: true
-  arbitratorId?: true
-  payoutAddress?: true
-  payoutAmount?: true
-  payoutAmountAda?: true
   txHash?: true
-  createdAt?: true
   resolvedAt?: true
+  createdAt?: true
   disputeId?: true
   userId?: true
 }
@@ -127,18 +73,10 @@ export type ResolutionMinAggregateInputType = {
 export type ResolutionMaxAggregateInputType = {
   id?: true
   escrowId?: true
-  type?: true
   result?: true
-  resolvedBy?: true
-  resolvedById?: true
-  resolvedByAddress?: true
-  arbitratorId?: true
-  payoutAddress?: true
-  payoutAmount?: true
-  payoutAmountAda?: true
   txHash?: true
-  createdAt?: true
   resolvedAt?: true
+  createdAt?: true
   disputeId?: true
   userId?: true
 }
@@ -146,18 +84,10 @@ export type ResolutionMaxAggregateInputType = {
 export type ResolutionCountAggregateInputType = {
   id?: true
   escrowId?: true
-  type?: true
   result?: true
-  resolvedBy?: true
-  resolvedById?: true
-  resolvedByAddress?: true
-  arbitratorId?: true
-  payoutAddress?: true
-  payoutAmount?: true
-  payoutAmountAda?: true
   txHash?: true
-  createdAt?: true
   resolvedAt?: true
+  createdAt?: true
   disputeId?: true
   userId?: true
   _all?: true
@@ -201,18 +131,6 @@ export type ResolutionAggregateArgs<ExtArgs extends runtime.Types.Extensions.Int
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ResolutionAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ResolutionSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ResolutionMinAggregateInputType
@@ -243,8 +161,6 @@ export type ResolutionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   _count?: ResolutionCountAggregateInputType | true
-  _avg?: ResolutionAvgAggregateInputType
-  _sum?: ResolutionSumAggregateInputType
   _min?: ResolutionMinAggregateInputType
   _max?: ResolutionMaxAggregateInputType
 }
@@ -252,23 +168,13 @@ export type ResolutionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type ResolutionGroupByOutputType = {
   id: string
   escrowId: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById: string | null
-  resolvedByAddress: string
-  arbitratorId: string | null
-  payoutAddress: string
-  payoutAmount: bigint
-  payoutAmountAda: number
   txHash: string
-  createdAt: Date
   resolvedAt: Date
+  createdAt: Date
   disputeId: string | null
   userId: string | null
   _count: ResolutionCountAggregateOutputType | null
-  _avg: ResolutionAvgAggregateOutputType | null
-  _sum: ResolutionSumAggregateOutputType | null
   _min: ResolutionMinAggregateOutputType | null
   _max: ResolutionMaxAggregateOutputType | null
 }
@@ -294,22 +200,14 @@ export type ResolutionWhereInput = {
   NOT?: Prisma.ResolutionWhereInput | Prisma.ResolutionWhereInput[]
   id?: Prisma.StringFilter<"Resolution"> | string
   escrowId?: Prisma.StringFilter<"Resolution"> | string
-  type?: Prisma.EnumResolutionTypeFilter<"Resolution"> | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFilter<"Resolution"> | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFilter<"Resolution"> | $Enums.ResolutionBy
-  resolvedById?: Prisma.StringNullableFilter<"Resolution"> | string | null
-  resolvedByAddress?: Prisma.StringFilter<"Resolution"> | string
-  arbitratorId?: Prisma.StringNullableFilter<"Resolution"> | string | null
-  payoutAddress?: Prisma.StringFilter<"Resolution"> | string
-  payoutAmount?: Prisma.BigIntFilter<"Resolution"> | bigint | number
-  payoutAmountAda?: Prisma.FloatFilter<"Resolution"> | number
   txHash?: Prisma.StringFilter<"Resolution"> | string
-  createdAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
   resolvedAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
   disputeId?: Prisma.StringNullableFilter<"Resolution"> | string | null
   userId?: Prisma.StringNullableFilter<"Resolution"> | string | null
   escrow?: Prisma.XOR<Prisma.EscrowScalarRelationFilter, Prisma.EscrowWhereInput>
-  arbitrator?: Prisma.XOR<Prisma.ArbitratorNullableScalarRelationFilter, Prisma.ArbitratorWhereInput> | null
+  arbitrators?: Prisma.ArbitratorListRelationFilter
   dispute?: Prisma.XOR<Prisma.DisputeNullableScalarRelationFilter, Prisma.DisputeWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
@@ -317,22 +215,14 @@ export type ResolutionWhereInput = {
 export type ResolutionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   escrowId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  resolvedBy?: Prisma.SortOrder
-  resolvedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  resolvedByAddress?: Prisma.SortOrder
-  arbitratorId?: Prisma.SortOrderInput | Prisma.SortOrder
-  payoutAddress?: Prisma.SortOrder
-  payoutAmount?: Prisma.SortOrder
-  payoutAmountAda?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   disputeId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   escrow?: Prisma.EscrowOrderByWithRelationInput
-  arbitrator?: Prisma.ArbitratorOrderByWithRelationInput
+  arbitrators?: Prisma.ArbitratorOrderByRelationAggregateInput
   dispute?: Prisma.DisputeOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -344,21 +234,13 @@ export type ResolutionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ResolutionWhereInput | Prisma.ResolutionWhereInput[]
   OR?: Prisma.ResolutionWhereInput[]
   NOT?: Prisma.ResolutionWhereInput | Prisma.ResolutionWhereInput[]
-  type?: Prisma.EnumResolutionTypeFilter<"Resolution"> | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFilter<"Resolution"> | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFilter<"Resolution"> | $Enums.ResolutionBy
-  resolvedById?: Prisma.StringNullableFilter<"Resolution"> | string | null
-  resolvedByAddress?: Prisma.StringFilter<"Resolution"> | string
-  arbitratorId?: Prisma.StringNullableFilter<"Resolution"> | string | null
-  payoutAddress?: Prisma.StringFilter<"Resolution"> | string
-  payoutAmount?: Prisma.BigIntFilter<"Resolution"> | bigint | number
-  payoutAmountAda?: Prisma.FloatFilter<"Resolution"> | number
   txHash?: Prisma.StringFilter<"Resolution"> | string
-  createdAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
   resolvedAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
   userId?: Prisma.StringNullableFilter<"Resolution"> | string | null
   escrow?: Prisma.XOR<Prisma.EscrowScalarRelationFilter, Prisma.EscrowWhereInput>
-  arbitrator?: Prisma.XOR<Prisma.ArbitratorNullableScalarRelationFilter, Prisma.ArbitratorWhereInput> | null
+  arbitrators?: Prisma.ArbitratorListRelationFilter
   dispute?: Prisma.XOR<Prisma.DisputeNullableScalarRelationFilter, Prisma.DisputeWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "escrowId" | "disputeId">
@@ -366,25 +248,15 @@ export type ResolutionWhereUniqueInput = Prisma.AtLeast<{
 export type ResolutionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   escrowId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  resolvedBy?: Prisma.SortOrder
-  resolvedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  resolvedByAddress?: Prisma.SortOrder
-  arbitratorId?: Prisma.SortOrderInput | Prisma.SortOrder
-  payoutAddress?: Prisma.SortOrder
-  payoutAmount?: Prisma.SortOrder
-  payoutAmountAda?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   disputeId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ResolutionCountOrderByAggregateInput
-  _avg?: Prisma.ResolutionAvgOrderByAggregateInput
   _max?: Prisma.ResolutionMaxOrderByAggregateInput
   _min?: Prisma.ResolutionMinOrderByAggregateInput
-  _sum?: Prisma.ResolutionSumOrderByAggregateInput
 }
 
 export type ResolutionScalarWhereWithAggregatesInput = {
@@ -393,37 +265,22 @@ export type ResolutionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ResolutionScalarWhereWithAggregatesInput | Prisma.ResolutionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Resolution"> | string
   escrowId?: Prisma.StringWithAggregatesFilter<"Resolution"> | string
-  type?: Prisma.EnumResolutionTypeWithAggregatesFilter<"Resolution"> | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultWithAggregatesFilter<"Resolution"> | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByWithAggregatesFilter<"Resolution"> | $Enums.ResolutionBy
-  resolvedById?: Prisma.StringNullableWithAggregatesFilter<"Resolution"> | string | null
-  resolvedByAddress?: Prisma.StringWithAggregatesFilter<"Resolution"> | string
-  arbitratorId?: Prisma.StringNullableWithAggregatesFilter<"Resolution"> | string | null
-  payoutAddress?: Prisma.StringWithAggregatesFilter<"Resolution"> | string
-  payoutAmount?: Prisma.BigIntWithAggregatesFilter<"Resolution"> | bigint | number
-  payoutAmountAda?: Prisma.FloatWithAggregatesFilter<"Resolution"> | number
   txHash?: Prisma.StringWithAggregatesFilter<"Resolution"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Resolution"> | Date | string
   resolvedAt?: Prisma.DateTimeWithAggregatesFilter<"Resolution"> | Date | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Resolution"> | Date | string
   disputeId?: Prisma.StringNullableWithAggregatesFilter<"Resolution"> | string | null
   userId?: Prisma.StringNullableWithAggregatesFilter<"Resolution"> | string | null
 }
 
 export type ResolutionCreateInput = {
   id?: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   escrow: Prisma.EscrowCreateNestedOneWithoutResolutionInput
-  arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutResolutionsInput
+  arbitrators?: Prisma.ArbitratorCreateNestedManyWithoutResolutionsInput
   dispute?: Prisma.DisputeCreateNestedOneWithoutResolutionInput
   user?: Prisma.UserCreateNestedOneWithoutResolutionsInput
 }
@@ -431,37 +288,23 @@ export type ResolutionCreateInput = {
 export type ResolutionUncheckedCreateInput = {
   id?: string
   escrowId: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  arbitratorId?: string | null
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   disputeId?: string | null
   userId?: string | null
+  arbitrators?: Prisma.ArbitratorUncheckedCreateNestedManyWithoutResolutionsInput
 }
 
 export type ResolutionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   escrow?: Prisma.EscrowUpdateOneRequiredWithoutResolutionNestedInput
-  arbitrator?: Prisma.ArbitratorUpdateOneWithoutResolutionsNestedInput
+  arbitrators?: Prisma.ArbitratorUpdateManyWithoutResolutionsNestedInput
   dispute?: Prisma.DisputeUpdateOneWithoutResolutionNestedInput
   user?: Prisma.UserUpdateOneWithoutResolutionsNestedInput
 }
@@ -469,71 +312,41 @@ export type ResolutionUpdateInput = {
 export type ResolutionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   escrowId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  arbitratorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  arbitrators?: Prisma.ArbitratorUncheckedUpdateManyWithoutResolutionsNestedInput
 }
 
 export type ResolutionCreateManyInput = {
   id?: string
   escrowId: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  arbitratorId?: string | null
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   disputeId?: string | null
   userId?: string | null
 }
 
 export type ResolutionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ResolutionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   escrowId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  arbitratorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -556,42 +369,21 @@ export type ResolutionNullableScalarRelationFilter = {
 export type ResolutionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   escrowId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  resolvedBy?: Prisma.SortOrder
-  resolvedById?: Prisma.SortOrder
-  resolvedByAddress?: Prisma.SortOrder
-  arbitratorId?: Prisma.SortOrder
-  payoutAddress?: Prisma.SortOrder
-  payoutAmount?: Prisma.SortOrder
-  payoutAmountAda?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   disputeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type ResolutionAvgOrderByAggregateInput = {
-  payoutAmount?: Prisma.SortOrder
-  payoutAmountAda?: Prisma.SortOrder
 }
 
 export type ResolutionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   escrowId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  resolvedBy?: Prisma.SortOrder
-  resolvedById?: Prisma.SortOrder
-  resolvedByAddress?: Prisma.SortOrder
-  arbitratorId?: Prisma.SortOrder
-  payoutAddress?: Prisma.SortOrder
-  payoutAmount?: Prisma.SortOrder
-  payoutAmountAda?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   disputeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -599,25 +391,12 @@ export type ResolutionMaxOrderByAggregateInput = {
 export type ResolutionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   escrowId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   result?: Prisma.SortOrder
-  resolvedBy?: Prisma.SortOrder
-  resolvedById?: Prisma.SortOrder
-  resolvedByAddress?: Prisma.SortOrder
-  arbitratorId?: Prisma.SortOrder
-  payoutAddress?: Prisma.SortOrder
-  payoutAmount?: Prisma.SortOrder
-  payoutAmountAda?: Prisma.SortOrder
   txHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   disputeId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-}
-
-export type ResolutionSumOrderByAggregateInput = {
-  payoutAmount?: Prisma.SortOrder
-  payoutAmountAda?: Prisma.SortOrder
 }
 
 export type ResolutionCreateNestedManyWithoutUserInput = {
@@ -662,45 +441,41 @@ export type ResolutionUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ResolutionScalarWhereInput | Prisma.ResolutionScalarWhereInput[]
 }
 
-export type ResolutionCreateNestedManyWithoutArbitratorInput = {
-  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorInput> | Prisma.ResolutionCreateWithoutArbitratorInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorInput[]
-  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorInput[]
-  createMany?: Prisma.ResolutionCreateManyArbitratorInputEnvelope
+export type ResolutionCreateNestedManyWithoutArbitratorsInput = {
+  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorsInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput> | Prisma.ResolutionCreateWithoutArbitratorsInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput[]
+  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput[]
   connect?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
 }
 
-export type ResolutionUncheckedCreateNestedManyWithoutArbitratorInput = {
-  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorInput> | Prisma.ResolutionCreateWithoutArbitratorInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorInput[]
-  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorInput[]
-  createMany?: Prisma.ResolutionCreateManyArbitratorInputEnvelope
+export type ResolutionUncheckedCreateNestedManyWithoutArbitratorsInput = {
+  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorsInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput> | Prisma.ResolutionCreateWithoutArbitratorsInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput[]
+  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput[]
   connect?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
 }
 
-export type ResolutionUpdateManyWithoutArbitratorNestedInput = {
-  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorInput> | Prisma.ResolutionCreateWithoutArbitratorInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorInput[]
-  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorInput[]
-  upsert?: Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorInput | Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorInput[]
-  createMany?: Prisma.ResolutionCreateManyArbitratorInputEnvelope
+export type ResolutionUpdateManyWithoutArbitratorsNestedInput = {
+  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorsInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput> | Prisma.ResolutionCreateWithoutArbitratorsInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput[]
+  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput[]
+  upsert?: Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorsInput | Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorsInput[]
   set?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
   disconnect?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
   delete?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
   connect?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
-  update?: Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorInput | Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorInput[]
-  updateMany?: Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorInput | Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorInput[]
+  update?: Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorsInput | Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorsInput[]
+  updateMany?: Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorsInput | Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorsInput[]
   deleteMany?: Prisma.ResolutionScalarWhereInput | Prisma.ResolutionScalarWhereInput[]
 }
 
-export type ResolutionUncheckedUpdateManyWithoutArbitratorNestedInput = {
-  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorInput> | Prisma.ResolutionCreateWithoutArbitratorInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorInput[]
-  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorInput[]
-  upsert?: Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorInput | Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorInput[]
-  createMany?: Prisma.ResolutionCreateManyArbitratorInputEnvelope
+export type ResolutionUncheckedUpdateManyWithoutArbitratorsNestedInput = {
+  create?: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorsInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput> | Prisma.ResolutionCreateWithoutArbitratorsInput[] | Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput[]
+  connectOrCreate?: Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput | Prisma.ResolutionCreateOrConnectWithoutArbitratorsInput[]
+  upsert?: Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorsInput | Prisma.ResolutionUpsertWithWhereUniqueWithoutArbitratorsInput[]
   set?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
   disconnect?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
   delete?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
   connect?: Prisma.ResolutionWhereUniqueInput | Prisma.ResolutionWhereUniqueInput[]
-  update?: Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorInput | Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorInput[]
-  updateMany?: Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorInput | Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorInput[]
+  update?: Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorsInput | Prisma.ResolutionUpdateWithWhereUniqueWithoutArbitratorsInput[]
+  updateMany?: Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorsInput | Prisma.ResolutionUpdateManyWithWhereWithoutArbitratorsInput[]
   deleteMany?: Prisma.ResolutionScalarWhereInput | Prisma.ResolutionScalarWhereInput[]
 }
 
@@ -768,48 +543,26 @@ export type ResolutionUncheckedUpdateOneWithoutDisputeNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ResolutionUpdateToOneWithWhereWithoutDisputeInput, Prisma.ResolutionUpdateWithoutDisputeInput>, Prisma.ResolutionUncheckedUpdateWithoutDisputeInput>
 }
 
-export type EnumResolutionTypeFieldUpdateOperationsInput = {
-  set?: $Enums.ResolutionType
-}
-
-export type EnumResolutionByFieldUpdateOperationsInput = {
-  set?: $Enums.ResolutionBy
-}
-
 export type ResolutionCreateWithoutUserInput = {
   id?: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   escrow: Prisma.EscrowCreateNestedOneWithoutResolutionInput
-  arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutResolutionsInput
+  arbitrators?: Prisma.ArbitratorCreateNestedManyWithoutResolutionsInput
   dispute?: Prisma.DisputeCreateNestedOneWithoutResolutionInput
 }
 
 export type ResolutionUncheckedCreateWithoutUserInput = {
   id?: string
   escrowId: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  arbitratorId?: string | null
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   disputeId?: string | null
+  arbitrators?: Prisma.ArbitratorUncheckedCreateNestedManyWithoutResolutionsInput
 }
 
 export type ResolutionCreateOrConnectWithoutUserInput = {
@@ -844,118 +597,77 @@ export type ResolutionScalarWhereInput = {
   NOT?: Prisma.ResolutionScalarWhereInput | Prisma.ResolutionScalarWhereInput[]
   id?: Prisma.StringFilter<"Resolution"> | string
   escrowId?: Prisma.StringFilter<"Resolution"> | string
-  type?: Prisma.EnumResolutionTypeFilter<"Resolution"> | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFilter<"Resolution"> | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFilter<"Resolution"> | $Enums.ResolutionBy
-  resolvedById?: Prisma.StringNullableFilter<"Resolution"> | string | null
-  resolvedByAddress?: Prisma.StringFilter<"Resolution"> | string
-  arbitratorId?: Prisma.StringNullableFilter<"Resolution"> | string | null
-  payoutAddress?: Prisma.StringFilter<"Resolution"> | string
-  payoutAmount?: Prisma.BigIntFilter<"Resolution"> | bigint | number
-  payoutAmountAda?: Prisma.FloatFilter<"Resolution"> | number
   txHash?: Prisma.StringFilter<"Resolution"> | string
-  createdAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
   resolvedAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Resolution"> | Date | string
   disputeId?: Prisma.StringNullableFilter<"Resolution"> | string | null
   userId?: Prisma.StringNullableFilter<"Resolution"> | string | null
 }
 
-export type ResolutionCreateWithoutArbitratorInput = {
+export type ResolutionCreateWithoutArbitratorsInput = {
   id?: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   escrow: Prisma.EscrowCreateNestedOneWithoutResolutionInput
   dispute?: Prisma.DisputeCreateNestedOneWithoutResolutionInput
   user?: Prisma.UserCreateNestedOneWithoutResolutionsInput
 }
 
-export type ResolutionUncheckedCreateWithoutArbitratorInput = {
+export type ResolutionUncheckedCreateWithoutArbitratorsInput = {
   id?: string
   escrowId: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   disputeId?: string | null
   userId?: string | null
 }
 
-export type ResolutionCreateOrConnectWithoutArbitratorInput = {
+export type ResolutionCreateOrConnectWithoutArbitratorsInput = {
   where: Prisma.ResolutionWhereUniqueInput
-  create: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorInput>
+  create: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorsInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput>
 }
 
-export type ResolutionCreateManyArbitratorInputEnvelope = {
-  data: Prisma.ResolutionCreateManyArbitratorInput | Prisma.ResolutionCreateManyArbitratorInput[]
-  skipDuplicates?: boolean
-}
-
-export type ResolutionUpsertWithWhereUniqueWithoutArbitratorInput = {
+export type ResolutionUpsertWithWhereUniqueWithoutArbitratorsInput = {
   where: Prisma.ResolutionWhereUniqueInput
-  update: Prisma.XOR<Prisma.ResolutionUpdateWithoutArbitratorInput, Prisma.ResolutionUncheckedUpdateWithoutArbitratorInput>
-  create: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorInput>
+  update: Prisma.XOR<Prisma.ResolutionUpdateWithoutArbitratorsInput, Prisma.ResolutionUncheckedUpdateWithoutArbitratorsInput>
+  create: Prisma.XOR<Prisma.ResolutionCreateWithoutArbitratorsInput, Prisma.ResolutionUncheckedCreateWithoutArbitratorsInput>
 }
 
-export type ResolutionUpdateWithWhereUniqueWithoutArbitratorInput = {
+export type ResolutionUpdateWithWhereUniqueWithoutArbitratorsInput = {
   where: Prisma.ResolutionWhereUniqueInput
-  data: Prisma.XOR<Prisma.ResolutionUpdateWithoutArbitratorInput, Prisma.ResolutionUncheckedUpdateWithoutArbitratorInput>
+  data: Prisma.XOR<Prisma.ResolutionUpdateWithoutArbitratorsInput, Prisma.ResolutionUncheckedUpdateWithoutArbitratorsInput>
 }
 
-export type ResolutionUpdateManyWithWhereWithoutArbitratorInput = {
+export type ResolutionUpdateManyWithWhereWithoutArbitratorsInput = {
   where: Prisma.ResolutionScalarWhereInput
-  data: Prisma.XOR<Prisma.ResolutionUpdateManyMutationInput, Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorInput>
+  data: Prisma.XOR<Prisma.ResolutionUpdateManyMutationInput, Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorsInput>
 }
 
 export type ResolutionCreateWithoutEscrowInput = {
   id?: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
-  arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutResolutionsInput
+  createdAt?: Date | string
+  arbitrators?: Prisma.ArbitratorCreateNestedManyWithoutResolutionsInput
   dispute?: Prisma.DisputeCreateNestedOneWithoutResolutionInput
   user?: Prisma.UserCreateNestedOneWithoutResolutionsInput
 }
 
 export type ResolutionUncheckedCreateWithoutEscrowInput = {
   id?: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  arbitratorId?: string | null
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   disputeId?: string | null
   userId?: string | null
+  arbitrators?: Prisma.ArbitratorUncheckedCreateNestedManyWithoutResolutionsInput
 }
 
 export type ResolutionCreateOrConnectWithoutEscrowInput = {
@@ -976,74 +688,46 @@ export type ResolutionUpdateToOneWithWhereWithoutEscrowInput = {
 
 export type ResolutionUpdateWithoutEscrowInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arbitrator?: Prisma.ArbitratorUpdateOneWithoutResolutionsNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arbitrators?: Prisma.ArbitratorUpdateManyWithoutResolutionsNestedInput
   dispute?: Prisma.DisputeUpdateOneWithoutResolutionNestedInput
   user?: Prisma.UserUpdateOneWithoutResolutionsNestedInput
 }
 
 export type ResolutionUncheckedUpdateWithoutEscrowInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  arbitratorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  arbitrators?: Prisma.ArbitratorUncheckedUpdateManyWithoutResolutionsNestedInput
 }
 
 export type ResolutionCreateWithoutDisputeInput = {
   id?: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   escrow: Prisma.EscrowCreateNestedOneWithoutResolutionInput
-  arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutResolutionsInput
+  arbitrators?: Prisma.ArbitratorCreateNestedManyWithoutResolutionsInput
   user?: Prisma.UserCreateNestedOneWithoutResolutionsInput
 }
 
 export type ResolutionUncheckedCreateWithoutDisputeInput = {
   id?: string
   escrowId: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  arbitratorId?: string | null
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   userId?: string | null
+  arbitrators?: Prisma.ArbitratorUncheckedCreateNestedManyWithoutResolutionsInput
 }
 
 export type ResolutionCreateOrConnectWithoutDisputeInput = {
@@ -1064,228 +748,158 @@ export type ResolutionUpdateToOneWithWhereWithoutDisputeInput = {
 
 export type ResolutionUpdateWithoutDisputeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   escrow?: Prisma.EscrowUpdateOneRequiredWithoutResolutionNestedInput
-  arbitrator?: Prisma.ArbitratorUpdateOneWithoutResolutionsNestedInput
+  arbitrators?: Prisma.ArbitratorUpdateManyWithoutResolutionsNestedInput
   user?: Prisma.UserUpdateOneWithoutResolutionsNestedInput
 }
 
 export type ResolutionUncheckedUpdateWithoutDisputeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   escrowId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  arbitratorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  arbitrators?: Prisma.ArbitratorUncheckedUpdateManyWithoutResolutionsNestedInput
 }
 
 export type ResolutionCreateManyUserInput = {
   id?: string
   escrowId: string
-  type: $Enums.ResolutionType
   result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  arbitratorId?: string | null
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
   txHash: string
-  createdAt?: Date | string
   resolvedAt?: Date | string
+  createdAt?: Date | string
   disputeId?: string | null
 }
 
 export type ResolutionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   escrow?: Prisma.EscrowUpdateOneRequiredWithoutResolutionNestedInput
-  arbitrator?: Prisma.ArbitratorUpdateOneWithoutResolutionsNestedInput
+  arbitrators?: Prisma.ArbitratorUpdateManyWithoutResolutionsNestedInput
   dispute?: Prisma.DisputeUpdateOneWithoutResolutionNestedInput
 }
 
 export type ResolutionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   escrowId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  arbitratorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  arbitrators?: Prisma.ArbitratorUncheckedUpdateManyWithoutResolutionsNestedInput
 }
 
 export type ResolutionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   escrowId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  arbitratorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type ResolutionCreateManyArbitratorInput = {
-  id?: string
-  escrowId: string
-  type: $Enums.ResolutionType
-  result: $Enums.ResolutionResult
-  resolvedBy: $Enums.ResolutionBy
-  resolvedById?: string | null
-  resolvedByAddress: string
-  payoutAddress: string
-  payoutAmount: bigint | number
-  payoutAmountAda: number
-  txHash: string
-  createdAt?: Date | string
-  resolvedAt?: Date | string
-  disputeId?: string | null
-  userId?: string | null
-}
-
-export type ResolutionUpdateWithoutArbitratorInput = {
+export type ResolutionUpdateWithoutArbitratorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   escrow?: Prisma.EscrowUpdateOneRequiredWithoutResolutionNestedInput
   dispute?: Prisma.DisputeUpdateOneWithoutResolutionNestedInput
   user?: Prisma.UserUpdateOneWithoutResolutionsNestedInput
 }
 
-export type ResolutionUncheckedUpdateWithoutArbitratorInput = {
+export type ResolutionUncheckedUpdateWithoutArbitratorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   escrowId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type ResolutionUncheckedUpdateManyWithoutArbitratorInput = {
+export type ResolutionUncheckedUpdateManyWithoutArbitratorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   escrowId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumResolutionTypeFieldUpdateOperationsInput | $Enums.ResolutionType
   result?: Prisma.EnumResolutionResultFieldUpdateOperationsInput | $Enums.ResolutionResult
-  resolvedBy?: Prisma.EnumResolutionByFieldUpdateOperationsInput | $Enums.ResolutionBy
-  resolvedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  resolvedByAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  payoutAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  payoutAmountAda?: Prisma.FloatFieldUpdateOperationsInput | number
   txHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolvedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
+
+/**
+ * Count Type ResolutionCountOutputType
+ */
+
+export type ResolutionCountOutputType = {
+  arbitrators: number
+}
+
+export type ResolutionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  arbitrators?: boolean | ResolutionCountOutputTypeCountArbitratorsArgs
+}
+
+/**
+ * ResolutionCountOutputType without action
+ */
+export type ResolutionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ResolutionCountOutputType
+   */
+  select?: Prisma.ResolutionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ResolutionCountOutputType without action
+ */
+export type ResolutionCountOutputTypeCountArbitratorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ArbitratorWhereInput
+}
 
 
 export type ResolutionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   escrowId?: boolean
-  type?: boolean
   result?: boolean
-  resolvedBy?: boolean
-  resolvedById?: boolean
-  resolvedByAddress?: boolean
-  arbitratorId?: boolean
-  payoutAddress?: boolean
-  payoutAmount?: boolean
-  payoutAmountAda?: boolean
   txHash?: boolean
-  createdAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
   disputeId?: boolean
   userId?: boolean
   escrow?: boolean | Prisma.EscrowDefaultArgs<ExtArgs>
-  arbitrator?: boolean | Prisma.Resolution$arbitratorArgs<ExtArgs>
+  arbitrators?: boolean | Prisma.Resolution$arbitratorsArgs<ExtArgs>
   dispute?: boolean | Prisma.Resolution$disputeArgs<ExtArgs>
   user?: boolean | Prisma.Resolution$userArgs<ExtArgs>
+  _count?: boolean | Prisma.ResolutionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["resolution"]>
 
 export type ResolutionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   escrowId?: boolean
-  type?: boolean
   result?: boolean
-  resolvedBy?: boolean
-  resolvedById?: boolean
-  resolvedByAddress?: boolean
-  arbitratorId?: boolean
-  payoutAddress?: boolean
-  payoutAmount?: boolean
-  payoutAmountAda?: boolean
   txHash?: boolean
-  createdAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
   disputeId?: boolean
   userId?: boolean
   escrow?: boolean | Prisma.EscrowDefaultArgs<ExtArgs>
-  arbitrator?: boolean | Prisma.Resolution$arbitratorArgs<ExtArgs>
   dispute?: boolean | Prisma.Resolution$disputeArgs<ExtArgs>
   user?: boolean | Prisma.Resolution$userArgs<ExtArgs>
 }, ExtArgs["result"]["resolution"]>
@@ -1293,22 +907,13 @@ export type ResolutionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type ResolutionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   escrowId?: boolean
-  type?: boolean
   result?: boolean
-  resolvedBy?: boolean
-  resolvedById?: boolean
-  resolvedByAddress?: boolean
-  arbitratorId?: boolean
-  payoutAddress?: boolean
-  payoutAmount?: boolean
-  payoutAmountAda?: boolean
   txHash?: boolean
-  createdAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
   disputeId?: boolean
   userId?: boolean
   escrow?: boolean | Prisma.EscrowDefaultArgs<ExtArgs>
-  arbitrator?: boolean | Prisma.Resolution$arbitratorArgs<ExtArgs>
   dispute?: boolean | Prisma.Resolution$disputeArgs<ExtArgs>
   user?: boolean | Prisma.Resolution$userArgs<ExtArgs>
 }, ExtArgs["result"]["resolution"]>
@@ -1316,38 +921,29 @@ export type ResolutionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type ResolutionSelectScalar = {
   id?: boolean
   escrowId?: boolean
-  type?: boolean
   result?: boolean
-  resolvedBy?: boolean
-  resolvedById?: boolean
-  resolvedByAddress?: boolean
-  arbitratorId?: boolean
-  payoutAddress?: boolean
-  payoutAmount?: boolean
-  payoutAmountAda?: boolean
   txHash?: boolean
-  createdAt?: boolean
   resolvedAt?: boolean
+  createdAt?: boolean
   disputeId?: boolean
   userId?: boolean
 }
 
-export type ResolutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "escrowId" | "type" | "result" | "resolvedBy" | "resolvedById" | "resolvedByAddress" | "arbitratorId" | "payoutAddress" | "payoutAmount" | "payoutAmountAda" | "txHash" | "createdAt" | "resolvedAt" | "disputeId" | "userId", ExtArgs["result"]["resolution"]>
+export type ResolutionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "escrowId" | "result" | "txHash" | "resolvedAt" | "createdAt" | "disputeId" | "userId", ExtArgs["result"]["resolution"]>
 export type ResolutionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   escrow?: boolean | Prisma.EscrowDefaultArgs<ExtArgs>
-  arbitrator?: boolean | Prisma.Resolution$arbitratorArgs<ExtArgs>
+  arbitrators?: boolean | Prisma.Resolution$arbitratorsArgs<ExtArgs>
   dispute?: boolean | Prisma.Resolution$disputeArgs<ExtArgs>
   user?: boolean | Prisma.Resolution$userArgs<ExtArgs>
+  _count?: boolean | Prisma.ResolutionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ResolutionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   escrow?: boolean | Prisma.EscrowDefaultArgs<ExtArgs>
-  arbitrator?: boolean | Prisma.Resolution$arbitratorArgs<ExtArgs>
   dispute?: boolean | Prisma.Resolution$disputeArgs<ExtArgs>
   user?: boolean | Prisma.Resolution$userArgs<ExtArgs>
 }
 export type ResolutionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   escrow?: boolean | Prisma.EscrowDefaultArgs<ExtArgs>
-  arbitrator?: boolean | Prisma.Resolution$arbitratorArgs<ExtArgs>
   dispute?: boolean | Prisma.Resolution$disputeArgs<ExtArgs>
   user?: boolean | Prisma.Resolution$userArgs<ExtArgs>
 }
@@ -1356,25 +952,17 @@ export type $ResolutionPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Resolution"
   objects: {
     escrow: Prisma.$EscrowPayload<ExtArgs>
-    arbitrator: Prisma.$ArbitratorPayload<ExtArgs> | null
+    arbitrators: Prisma.$ArbitratorPayload<ExtArgs>[]
     dispute: Prisma.$DisputePayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     escrowId: string
-    type: $Enums.ResolutionType
     result: $Enums.ResolutionResult
-    resolvedBy: $Enums.ResolutionBy
-    resolvedById: string | null
-    resolvedByAddress: string
-    arbitratorId: string | null
-    payoutAddress: string
-    payoutAmount: bigint
-    payoutAmountAda: number
     txHash: string
-    createdAt: Date
     resolvedAt: Date
+    createdAt: Date
     disputeId: string | null
     userId: string | null
   }, ExtArgs["result"]["resolution"]>
@@ -1772,7 +1360,7 @@ readonly fields: ResolutionFieldRefs;
 export interface Prisma__ResolutionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   escrow<T extends Prisma.EscrowDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EscrowDefaultArgs<ExtArgs>>): Prisma.Prisma__EscrowClient<runtime.Types.Result.GetResult<Prisma.$EscrowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  arbitrator<T extends Prisma.Resolution$arbitratorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resolution$arbitratorArgs<ExtArgs>>): Prisma.Prisma__ArbitratorClient<runtime.Types.Result.GetResult<Prisma.$ArbitratorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  arbitrators<T extends Prisma.Resolution$arbitratorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resolution$arbitratorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArbitratorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dispute<T extends Prisma.Resolution$disputeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resolution$disputeArgs<ExtArgs>>): Prisma.Prisma__DisputeClient<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.Resolution$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resolution$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1806,18 +1394,10 @@ export interface Prisma__ResolutionClient<T, Null = never, ExtArgs extends runti
 export interface ResolutionFieldRefs {
   readonly id: Prisma.FieldRef<"Resolution", 'String'>
   readonly escrowId: Prisma.FieldRef<"Resolution", 'String'>
-  readonly type: Prisma.FieldRef<"Resolution", 'ResolutionType'>
   readonly result: Prisma.FieldRef<"Resolution", 'ResolutionResult'>
-  readonly resolvedBy: Prisma.FieldRef<"Resolution", 'ResolutionBy'>
-  readonly resolvedById: Prisma.FieldRef<"Resolution", 'String'>
-  readonly resolvedByAddress: Prisma.FieldRef<"Resolution", 'String'>
-  readonly arbitratorId: Prisma.FieldRef<"Resolution", 'String'>
-  readonly payoutAddress: Prisma.FieldRef<"Resolution", 'String'>
-  readonly payoutAmount: Prisma.FieldRef<"Resolution", 'BigInt'>
-  readonly payoutAmountAda: Prisma.FieldRef<"Resolution", 'Float'>
   readonly txHash: Prisma.FieldRef<"Resolution", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Resolution", 'DateTime'>
   readonly resolvedAt: Prisma.FieldRef<"Resolution", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Resolution", 'DateTime'>
   readonly disputeId: Prisma.FieldRef<"Resolution", 'String'>
   readonly userId: Prisma.FieldRef<"Resolution", 'String'>
 }
@@ -2216,9 +1796,9 @@ export type ResolutionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Resolution.arbitrator
+ * Resolution.arbitrators
  */
-export type Resolution$arbitratorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Resolution$arbitratorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Arbitrator
    */
@@ -2232,6 +1812,11 @@ export type Resolution$arbitratorArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.ArbitratorInclude<ExtArgs> | null
   where?: Prisma.ArbitratorWhereInput
+  orderBy?: Prisma.ArbitratorOrderByWithRelationInput | Prisma.ArbitratorOrderByWithRelationInput[]
+  cursor?: Prisma.ArbitratorWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ArbitratorScalarFieldEnum | Prisma.ArbitratorScalarFieldEnum[]
 }
 
 /**

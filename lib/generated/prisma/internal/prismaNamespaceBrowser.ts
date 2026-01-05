@@ -54,7 +54,7 @@ export const ModelName = {
   User: 'User',
   Arbitrator: 'Arbitrator',
   Escrow: 'Escrow',
-  EscrowTransaction: 'EscrowTransaction',
+  Transaction: 'Transaction',
   Dispute: 'Dispute',
   Vote: 'Vote',
   Resolution: 'Resolution',
@@ -93,10 +93,11 @@ export const ArbitratorScalarFieldEnum = {
   id: 'id',
   walletAddress: 'walletAddress',
   name: 'name',
-  description: 'description',
+  bio: 'bio',
   expertise: 'expertise',
   isQualified: 'isQualified',
   qualificationScore: 'qualificationScore',
+  reputationScore: 'reputationScore',
   isActive: 'isActive',
   lockedAmount: 'lockedAmount',
   lockedTxHash: 'lockedTxHash',
@@ -105,8 +106,6 @@ export const ArbitratorScalarFieldEnum = {
   totalCases: 'totalCases',
   correctVotes: 'correctVotes',
   wrongVotes: 'wrongVotes',
-  reputationScore: 'reputationScore',
-  registeredAt: 'registeredAt',
   lastActiveAt: 'lastActiveAt',
   updatedAt: 'updatedAt'
 } as const
@@ -116,64 +115,56 @@ export type ArbitratorScalarFieldEnum = (typeof ArbitratorScalarFieldEnum)[keyof
 
 export const EscrowScalarFieldEnum = {
   id: 'id',
-  txHash: 'txHash',
   scriptAddress: 'scriptAddress',
-  amount: 'amount',
-  amountAda: 'amountAda',
-  funderAddress: 'funderAddress',
-  funderPubKeyHash: 'funderPubKeyHash',
-  recipientAddress: 'recipientAddress',
-  recipientPubKeyHash: 'recipientPubKeyHash',
   status: 'status',
-  disputeDeadline: 'disputeDeadline',
-  recipientLockDeadline: 'recipientLockDeadline',
-  datum: 'datum',
+  funderAddress: 'funderAddress',
+  funderStakeInAda: 'funderStakeInAda',
+  recipientAddress: 'recipientAddress',
+  recipientStakeInAda: 'recipientStakeInAda',
   contractIpfsHash: 'contractIpfsHash',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  lockedAt: 'lockedAt',
+  recipientLockDeadline: 'recipientLockDeadline',
+  submissionDeadline: 'submissionDeadline',
   resolutionDeadline: 'resolutionDeadline',
-  datumHash: 'datumHash',
   scriptCbor: 'scriptCbor',
-  confirmations: 'confirmations',
-  blockHeight: 'blockHeight',
-  blockHash: 'blockHash',
   approvedAt: 'approvedAt',
   disputedAt: 'disputedAt',
   resolvedAt: 'resolvedAt',
-  userId: 'userId'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type EscrowScalarFieldEnum = (typeof EscrowScalarFieldEnum)[keyof typeof EscrowScalarFieldEnum]
 
 
-export const EscrowTransactionScalarFieldEnum = {
+export const TransactionScalarFieldEnum = {
   id: 'id',
   txHash: 'txHash',
-  userId: 'userId',
+  datum: 'datum',
+  amount: 'amount',
+  currency: 'currency',
   reason: 'reason',
-  escrowId: 'escrowId'
+  type: 'type',
+  userId: 'userId',
+  escrowId: 'escrowId',
+  disputeId: 'disputeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type EscrowTransactionScalarFieldEnum = (typeof EscrowTransactionScalarFieldEnum)[keyof typeof EscrowTransactionScalarFieldEnum]
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
 export const DisputeScalarFieldEnum = {
   id: 'id',
-  escrowId: 'escrowId',
-  raisedBy: 'raisedBy',
-  raisedById: 'raisedById',
-  raisedByAddress: 'raisedByAddress',
-  reason: 'reason',
-  evidence: 'evidence',
-  txHash: 'txHash',
+  funderEvidenceIpfsHash: 'funderEvidenceIpfsHash',
+  recipientEvidenceIpfsHash: 'recipientEvidenceIpfsHash',
   status: 'status',
   requiredArbitratorCount: 'requiredArbitratorCount',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   resolvedAt: 'resolvedAt',
   resolutionDeadline: 'resolutionDeadline',
-  userId: 'userId'
+  escrowId: 'escrowId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum]
@@ -195,18 +186,10 @@ export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof Vote
 export const ResolutionScalarFieldEnum = {
   id: 'id',
   escrowId: 'escrowId',
-  type: 'type',
   result: 'result',
-  resolvedBy: 'resolvedBy',
-  resolvedById: 'resolvedById',
-  resolvedByAddress: 'resolvedByAddress',
-  arbitratorId: 'arbitratorId',
-  payoutAddress: 'payoutAddress',
-  payoutAmount: 'payoutAmount',
-  payoutAmountAda: 'payoutAmountAda',
   txHash: 'txHash',
-  createdAt: 'createdAt',
   resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
   disputeId: 'disputeId',
   userId: 'userId'
 } as const

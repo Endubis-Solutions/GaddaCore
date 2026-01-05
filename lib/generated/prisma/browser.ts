@@ -33,10 +33,10 @@ export type Arbitrator = Prisma.ArbitratorModel
  */
 export type Escrow = Prisma.EscrowModel
 /**
- * Model EscrowTransaction
+ * Model Transaction
  * 
  */
-export type EscrowTransaction = Prisma.EscrowTransactionModel
+export type Transaction = Prisma.TransactionModel
 /**
  * Model Dispute
  * 

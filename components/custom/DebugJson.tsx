@@ -1,14 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { JsonViewer } from '@textea/json-viewer';
-import {
-  MoonIcon,
-  SunIcon,
-  EyeIcon,
-  CodeIcon,
-  XIcon,
-} from "lucide-react";
+import { JsonViewer } from "@textea/json-viewer";
+import { MoonIcon, SunIcon, EyeIcon, CodeIcon, XIcon } from "lucide-react";
 
 interface FloatingDebugJsonProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -59,9 +53,7 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
       {/* Floating Toggle Button */}
       <button
         onClick={toggleOpen}
-        className={`fixed z-50 flex h-12 w-12 items-center justify-center rounded-full bg-amber-600 text-amberbg-amber-600-foreground shadow-lg transition-all hover:bg-amber-600/90 focus:outline-none focus:ring-2 focus:ring-amberbg-amber-600 focus:ring-offset-2 ${
-          getButtonPositionClasses()
-        }`}
+        className={`text-amberbg-amber-600-foreground focus:ring-amberbg-amber-600 fixed z-50 flex h-12 w-12 items-center justify-center rounded-full bg-amber-600 shadow-lg transition-all hover:bg-amber-600/90 focus:ring-2 focus:ring-offset-2 focus:outline-none ${getButtonPositionClasses()}`}
         aria-label={isOpen ? "Close debug panel" : "Open debug panel"}
       >
         {isOpen ? <XIcon className="h-5 w-5" /> : <CodeIcon className="h-5 w-5" />}
@@ -70,9 +62,7 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
       {/* Floating Debug Panel */}
       {isOpen && (
         <div
-          className={`fixed z-40 max-h-[80vh] w-full max-w-md overflow-hidden rounded-xl border bg-background shadow-xl transition-all duration-300 ease-in-out md:w-96 ${
-            getButtonPositionClasses()
-          } transform ${
+          className={`bg-background fixed z-40 max-h-[80vh] w-full max-w-md overflow-hidden rounded-xl border shadow-xl transition-all duration-300 ease-in-out md:w-96 ${getButtonPositionClasses()} transform ${
             position.startsWith("bottom")
               ? "translate-y-0 opacity-100"
               : "translate-y-0 opacity-100"
@@ -87,27 +77,23 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
         >
           <div className="flex h-full flex-col">
             {/* Header */}
-            <div className="flex items-center justify-between border-b bg-muted/50 px-4 py-3 dark:border-gray-800">
+            <div className="bg-muted/50 flex items-center justify-between border-b px-4 py-3 dark:border-gray-800">
               <div className="flex items-center gap-2">
-                <EyeIcon className="h-4 w-4 text-muted-foreground" />
+                <EyeIcon className="text-muted-foreground h-4 w-4" />
                 <h4 className="font-medium">{title}</h4>
               </div>
 
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={toggleDark}
-                  className="rounded p-1.5 text-muted-foreground transition hover:bg-accent hover:text-foreground"
+                  className="text-muted-foreground hover:bg-accent hover:text-foreground rounded p-1.5 transition"
                   title={isDark ? "Light mode" : "Dark mode"}
                 >
-                  {isDark ? (
-                    <SunIcon className="h-4 w-4" />
-                  ) : (
-                    <MoonIcon className="h-4 w-4" />
-                  )}
+                  {isDark ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="rounded p-1.5 text-muted-foreground transition hover:bg-accent hover:text-foreground"
+                  className="text-muted-foreground hover:bg-accent hover:text-foreground rounded p-1.5 transition"
                   aria-label="Close"
                 >
                   <XIcon className="h-4 w-4" />
@@ -120,7 +106,9 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
               <JsonViewer
                 value={data}
                 theme={isDark ? "dark" : "light"}
-                defaultInspectDepth={typeof collapsed === "number" ? collapsed : (collapsed ? 1 : Infinity)}
+                defaultInspectDepth={
+                  typeof collapsed === "number" ? collapsed : collapsed ? 1 : Infinity
+                }
                 rootName={false}
                 displayDataTypes={false}
                 enableClipboard={true}
@@ -132,7 +120,7 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
                   borderRadius: "0.5rem",
                   backgroundColor: isDark ? "#1e1e1e" : "#fafafa",
                   minHeight: "200px",
-                  overflowY: 'auto'
+                  overflowY: "auto",
                 }}
                 // Additional JsonViewer props for better UX
                 highlightUpdates={false}
@@ -142,7 +130,7 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
             </div>
 
             {/* Footer */}
-            <div className="border-t bg-muted/50 px-4 py-2 text-xs text-muted-foreground">
+            <div className="bg-muted/50 text-muted-foreground border-t px-4 py-2 text-xs">
               <div className="flex items-center justify-between">
                 <span>Inspectable JSON</span>
                 <div className="flex items-center gap-1">
@@ -160,13 +148,13 @@ const FloatingDebugJson: React.FC<FloatingDebugJsonProps> = ({
         .json-viewer-container {
           font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
         }
-        
+
         /* Ensure proper theming */
         .json-viewer-container[data-theme="dark"] {
           background-color: #1e1e1e !important;
           color: #d4d4d4 !important;
         }
-        
+
         .json-viewer-container[data-theme="light"] {
           background-color: #fafafa !important;
           color: #24292e !important;

@@ -9,6 +9,26 @@
 * 🟢 You can import this file directly.
 */
 
+export const TransactionCurrency = {
+  ADA: 'ADA'
+} as const
+
+export type TransactionCurrency = (typeof TransactionCurrency)[keyof typeof TransactionCurrency]
+
+
+export const TransactionType = {
+  CREATE_ESCROW: 'CREATE_ESCROW',
+  DEPOSIT_COLLATERAL: 'DEPOSIT_COLLATERAL',
+  CANCEL: 'CANCEL',
+  RELEASE_FUNDS: 'RELEASE_FUNDS',
+  DISPUTE_INITIATOR: 'DISPUTE_INITIATOR',
+  DISPUTE_RECIPIENT: 'DISPUTE_RECIPIENT',
+  VOTE: 'VOTE'
+} as const
+
+export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
+
+
 export const UserRole = {
   USER: 'USER',
   ARBITRATOR: 'ARBITRATOR',
@@ -24,7 +44,6 @@ export const EscrowStatus = {
   APPROVED: 'APPROVED',
   DISPUTED: 'DISPUTED',
   RESOLVED: 'RESOLVED',
-  EXPIRED: 'EXPIRED',
   CANCELLED: 'CANCELLED'
 } as const
 
@@ -50,31 +69,12 @@ export const DisputeRaisedBy = {
 export type DisputeRaisedBy = (typeof DisputeRaisedBy)[keyof typeof DisputeRaisedBy]
 
 
-export const ResolutionType = {
-  DIRECT_RELEASE: 'DIRECT_RELEASE',
-  DIRECT_REFUND: 'DIRECT_REFUND',
-  ARBITRATED_RELEASE: 'ARBITRATED_RELEASE',
-  ARBITRATED_REFUND: 'ARBITRATED_REFUND'
-} as const
-
-export type ResolutionType = (typeof ResolutionType)[keyof typeof ResolutionType]
-
-
 export const ResolutionResult = {
   RELEASE: 'RELEASE',
   REFUND: 'REFUND'
 } as const
 
 export type ResolutionResult = (typeof ResolutionResult)[keyof typeof ResolutionResult]
-
-
-export const ResolutionBy = {
-  FUNDER: 'FUNDER',
-  RECIPIENT: 'RECIPIENT',
-  ARBITRATOR: 'ARBITRATOR'
-} as const
-
-export type ResolutionBy = (typeof ResolutionBy)[keyof typeof ResolutionBy]
 
 
 export const EntityType = {

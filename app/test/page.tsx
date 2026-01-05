@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { useWalletContext } from "@/contexts/WalletContext";
 
 import InitateEscrow from "./_components/InitateEscrow";
@@ -13,53 +13,46 @@ import DisputeActions from "./_components/DisputeActions";
 import ArbitratorRegistration from "./_components/ArbitratorRegistration";
 import ArbitratorCaseList from "./_components/ArbitratorCaseList";
 
-
 const Page = () => {
-    const { refreshBalance } = useWalletContext()
+  const { refreshBalance } = useWalletContext();
 
-    return (
-        <main className="px-6 mt-6 space-y-6 max-w-4xl mx-auto">
-            <section className="flex justify-between items-center">
-                <div className="flex gap-4">
-                    <Button onClick={refreshBalance} variant="outline">Refresh Wallet</Button>
-                </div>
-                <Sheet>
-                    <SheetTrigger asChild>
-                        <Button>Open Logger</Button>
-                    </SheetTrigger>
+  return (
+    <main className="mx-auto mt-6 max-w-4xl space-y-6 px-6">
+      <section className="flex items-center justify-between">
+        <div className="flex gap-4">
+          <Button onClick={refreshBalance} variant="outline">
+            Refresh Wallet
+          </Button>
+        </div>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button>Open Logger</Button>
+          </SheetTrigger>
 
-                    <SheetContent
-                        className="w-full max-w-[1200px] sm:w-[80vw]"
-                    >
-                        <SheetHeader>
-                            <SheetTitle asChild>
-                                <h2 className="text-2xl font-extrabold text-gray-900">
-                                    Escorw Action Log 📝
-                                </h2>
-                            </SheetTitle>
-                        </SheetHeader>
-                        <section>
-                            <EscrowLogs />
-                        </section>
-                    </SheetContent>
-                </Sheet>
-
+          <SheetContent className="w-full max-w-[1200px] sm:w-[80vw]">
+            <SheetHeader>
+              <SheetTitle asChild>
+                <h2 className="text-2xl font-extrabold text-gray-900">Escorw Action Log 📝</h2>
+              </SheetTitle>
+            </SheetHeader>
+            <section>
+              <EscrowLogs />
             </section>
+          </SheetContent>
+        </Sheet>
+      </section>
 
-            <section className="flex flex-col gap-4">
-                <InitateEscrow />
-                <RecipientDeposit />
-                <CancelEscrow />
-                <CompleteEscrow />
-                <DisputeActions />
-                <ArbitratorRegistration />
-                <ArbitratorCaseList />
-            </section>
+      <section className="flex flex-col gap-4">
+        <InitateEscrow />
+        <RecipientDeposit />
+        <CancelEscrow />
+        <CompleteEscrow />
+        <DisputeActions />
+        <ArbitratorRegistration />
+        <ArbitratorCaseList />
+      </section>
+    </main>
+  );
+};
 
-        </main>
-    )
-}
-
-
-
-export default Page
+export default Page;

@@ -387,7 +387,7 @@ export const ModelName = {
   User: 'User',
   Arbitrator: 'Arbitrator',
   Escrow: 'Escrow',
-  EscrowTransaction: 'EscrowTransaction',
+  Transaction: 'Transaction',
   Dispute: 'Dispute',
   Vote: 'Vote',
   Resolution: 'Resolution',
@@ -407,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "arbitrator" | "escrow" | "escrowTransaction" | "dispute" | "vote" | "resolution" | "activityLog"
+    modelProps: "user" | "arbitrator" | "escrow" | "transaction" | "dispute" | "vote" | "resolution" | "activityLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -633,77 +633,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    EscrowTransaction: {
-      payload: Prisma.$EscrowTransactionPayload<ExtArgs>
-      fields: Prisma.EscrowTransactionFieldRefs
+    Transaction: {
+      payload: Prisma.$TransactionPayload<ExtArgs>
+      fields: Prisma.TransactionFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.EscrowTransactionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload> | null
+          args: Prisma.TransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.EscrowTransactionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>
+          args: Prisma.TransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
         }
         findFirst: {
-          args: Prisma.EscrowTransactionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload> | null
+          args: Prisma.TransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.EscrowTransactionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>
+          args: Prisma.TransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
         }
         findMany: {
-          args: Prisma.EscrowTransactionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>[]
+          args: Prisma.TransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
         }
         create: {
-          args: Prisma.EscrowTransactionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>
+          args: Prisma.TransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
         }
         createMany: {
-          args: Prisma.EscrowTransactionCreateManyArgs<ExtArgs>
+          args: Prisma.TransactionCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.EscrowTransactionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>[]
+          args: Prisma.TransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
         }
         delete: {
-          args: Prisma.EscrowTransactionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>
+          args: Prisma.TransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
         }
         update: {
-          args: Prisma.EscrowTransactionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>
+          args: Prisma.TransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
         }
         deleteMany: {
-          args: Prisma.EscrowTransactionDeleteManyArgs<ExtArgs>
+          args: Prisma.TransactionDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.EscrowTransactionUpdateManyArgs<ExtArgs>
+          args: Prisma.TransactionUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.EscrowTransactionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>[]
+          args: Prisma.TransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>[]
         }
         upsert: {
-          args: Prisma.EscrowTransactionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$EscrowTransactionPayload>
+          args: Prisma.TransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionPayload>
         }
         aggregate: {
-          args: Prisma.EscrowTransactionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateEscrowTransaction>
+          args: Prisma.TransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTransaction>
         }
         groupBy: {
-          args: Prisma.EscrowTransactionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.EscrowTransactionGroupByOutputType>[]
+          args: Prisma.TransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionGroupByOutputType>[]
         }
         count: {
-          args: Prisma.EscrowTransactionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.EscrowTransactionCountAggregateOutputType> | number
+          args: Prisma.TransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionCountAggregateOutputType> | number
         }
       }
     }
@@ -1058,10 +1058,11 @@ export const ArbitratorScalarFieldEnum = {
   id: 'id',
   walletAddress: 'walletAddress',
   name: 'name',
-  description: 'description',
+  bio: 'bio',
   expertise: 'expertise',
   isQualified: 'isQualified',
   qualificationScore: 'qualificationScore',
+  reputationScore: 'reputationScore',
   isActive: 'isActive',
   lockedAmount: 'lockedAmount',
   lockedTxHash: 'lockedTxHash',
@@ -1070,8 +1071,6 @@ export const ArbitratorScalarFieldEnum = {
   totalCases: 'totalCases',
   correctVotes: 'correctVotes',
   wrongVotes: 'wrongVotes',
-  reputationScore: 'reputationScore',
-  registeredAt: 'registeredAt',
   lastActiveAt: 'lastActiveAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1081,64 +1080,56 @@ export type ArbitratorScalarFieldEnum = (typeof ArbitratorScalarFieldEnum)[keyof
 
 export const EscrowScalarFieldEnum = {
   id: 'id',
-  txHash: 'txHash',
   scriptAddress: 'scriptAddress',
-  amount: 'amount',
-  amountAda: 'amountAda',
-  funderAddress: 'funderAddress',
-  funderPubKeyHash: 'funderPubKeyHash',
-  recipientAddress: 'recipientAddress',
-  recipientPubKeyHash: 'recipientPubKeyHash',
   status: 'status',
-  disputeDeadline: 'disputeDeadline',
-  recipientLockDeadline: 'recipientLockDeadline',
-  datum: 'datum',
+  funderAddress: 'funderAddress',
+  funderStakeInAda: 'funderStakeInAda',
+  recipientAddress: 'recipientAddress',
+  recipientStakeInAda: 'recipientStakeInAda',
   contractIpfsHash: 'contractIpfsHash',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  lockedAt: 'lockedAt',
+  recipientLockDeadline: 'recipientLockDeadline',
+  submissionDeadline: 'submissionDeadline',
   resolutionDeadline: 'resolutionDeadline',
-  datumHash: 'datumHash',
   scriptCbor: 'scriptCbor',
-  confirmations: 'confirmations',
-  blockHeight: 'blockHeight',
-  blockHash: 'blockHash',
   approvedAt: 'approvedAt',
   disputedAt: 'disputedAt',
   resolvedAt: 'resolvedAt',
-  userId: 'userId'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type EscrowScalarFieldEnum = (typeof EscrowScalarFieldEnum)[keyof typeof EscrowScalarFieldEnum]
 
 
-export const EscrowTransactionScalarFieldEnum = {
+export const TransactionScalarFieldEnum = {
   id: 'id',
   txHash: 'txHash',
-  userId: 'userId',
+  datum: 'datum',
+  amount: 'amount',
+  currency: 'currency',
   reason: 'reason',
-  escrowId: 'escrowId'
+  type: 'type',
+  userId: 'userId',
+  escrowId: 'escrowId',
+  disputeId: 'disputeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type EscrowTransactionScalarFieldEnum = (typeof EscrowTransactionScalarFieldEnum)[keyof typeof EscrowTransactionScalarFieldEnum]
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
 export const DisputeScalarFieldEnum = {
   id: 'id',
-  escrowId: 'escrowId',
-  raisedBy: 'raisedBy',
-  raisedById: 'raisedById',
-  raisedByAddress: 'raisedByAddress',
-  reason: 'reason',
-  evidence: 'evidence',
-  txHash: 'txHash',
+  funderEvidenceIpfsHash: 'funderEvidenceIpfsHash',
+  recipientEvidenceIpfsHash: 'recipientEvidenceIpfsHash',
   status: 'status',
   requiredArbitratorCount: 'requiredArbitratorCount',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   resolvedAt: 'resolvedAt',
   resolutionDeadline: 'resolutionDeadline',
-  userId: 'userId'
+  escrowId: 'escrowId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum]
@@ -1160,18 +1151,10 @@ export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof Vote
 export const ResolutionScalarFieldEnum = {
   id: 'id',
   escrowId: 'escrowId',
-  type: 'type',
   result: 'result',
-  resolvedBy: 'resolvedBy',
-  resolvedById: 'resolvedById',
-  resolvedByAddress: 'resolvedByAddress',
-  arbitratorId: 'arbitratorId',
-  payoutAddress: 'payoutAddress',
-  payoutAmount: 'payoutAmount',
-  payoutAmountAda: 'payoutAmountAda',
   txHash: 'txHash',
-  createdAt: 'createdAt',
   resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
   disputeId: 'disputeId',
   userId: 'userId'
 } as const
@@ -1313,20 +1296,6 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'BigInt'
- */
-export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
-    
-
-
-/**
- * Reference to a field of type 'BigInt[]'
- */
-export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1337,6 +1306,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt'
+ */
+export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+/**
+ * Reference to a field of type 'BigInt[]'
+ */
+export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
     
 
 
@@ -1369,16 +1352,30 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
- * Reference to a field of type 'DisputeRaisedBy'
+ * Reference to a field of type 'TransactionCurrency'
  */
-export type EnumDisputeRaisedByFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisputeRaisedBy'>
+export type EnumTransactionCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionCurrency'>
     
 
 
 /**
- * Reference to a field of type 'DisputeRaisedBy[]'
+ * Reference to a field of type 'TransactionCurrency[]'
  */
-export type ListEnumDisputeRaisedByFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisputeRaisedBy[]'>
+export type ListEnumTransactionCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionCurrency[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionType'
+ */
+export type EnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionType[]'
+ */
+export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
     
 
 
@@ -1407,34 +1404,6 @@ export type EnumResolutionResultFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'ResolutionResult[]'
  */
 export type ListEnumResolutionResultFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResolutionResult[]'>
-    
-
-
-/**
- * Reference to a field of type 'ResolutionType'
- */
-export type EnumResolutionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResolutionType'>
-    
-
-
-/**
- * Reference to a field of type 'ResolutionType[]'
- */
-export type ListEnumResolutionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResolutionType[]'>
-    
-
-
-/**
- * Reference to a field of type 'ResolutionBy'
- */
-export type EnumResolutionByFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResolutionBy'>
-    
-
-
-/**
- * Reference to a field of type 'ResolutionBy[]'
- */
-export type ListEnumResolutionByFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResolutionBy[]'>
     
 
 
@@ -1533,7 +1502,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   arbitrator?: Prisma.ArbitratorOmit
   escrow?: Prisma.EscrowOmit
-  escrowTransaction?: Prisma.EscrowTransactionOmit
+  transaction?: Prisma.TransactionOmit
   dispute?: Prisma.DisputeOmit
   vote?: Prisma.VoteOmit
   resolution?: Prisma.ResolutionOmit
