@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, {
   createContext,
@@ -7,9 +7,11 @@ import React, {
   useMemo,
   useCallback,
   useState,
-} from 'react';
-import { Asset, IWallet, UTxO } from '@meshsdk/core'; // 👈 Import UTxO
-import { useNetwork, useWallet } from '@meshsdk/react';
+  useRef,
+} from "react";
+import { Asset, IWallet, UTxO } from "@meshsdk/core"; // 👈 Import UTxO
+import { useNetwork, useWallet } from "@meshsdk/react";
+import { useUpsertUserMutation } from "@/services/user.service";
 
 interface WalletState {
   connected: boolean;
@@ -24,6 +26,9 @@ interface WalletState {
   unusedAddresses: string[];
   rewardAddresses: string[];
   collateral: UTxO[];
+  isUserSynced: boolean;
+  isUserSyncing: boolean;
+  userSyncError?: string;
 }
 
 interface WalletContextType extends WalletState {
@@ -36,18 +41,13 @@ interface WalletContextType extends WalletState {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const {
-    connected,
-    wallet,
-    disconnect: meshDisconnect,
-    name: connectedWalletName,
-  } = useWallet();
+export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { connected, wallet, disconnect: meshDisconnect, name: connectedWalletName } = useWallet();
   const network = useNetwork();
+  const upsertUserMutation = useUpsertUserMutation();
+  const isUserSyncedRef = useRef(false);
 
-  const [changeAddress, setChangeAddress] = useState<string>('');
+  const [changeAddress, setChangeAddress] = useState<string>("");
   const [assets, setAssets] = useState<Asset[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [usedAddresses, setUsedAddresses] = useState<string[]>([]);
@@ -56,12 +56,12 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   const [collateral, setCollateral] = useState<UTxO[]>([]); // 👈 State
 
   const balance = useMemo(() => {
-    const lovelace = assets.find((a) => a.unit === 'lovelace');
+    const lovelace = assets.find((a) => a.unit === "lovelace");
     return lovelace ? Number(lovelace.quantity) / 1_000_000 : 0;
   }, [assets]);
 
   const nativeAssets = useMemo(() => {
-    return assets.filter((asset) => asset.unit !== 'lovelace');
+    return assets.filter((asset) => asset.unit !== "lovelace");
   }, [assets]);
 
   const refreshBalance = useCallback(async () => {
@@ -71,7 +71,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
       const newBalance = await wallet.getBalance();
       setAssets(newBalance);
     } catch (error) {
-      console.error('Failed to fetch balance:', error);
+      console.error("Failed to fetch balance:", error);
     } finally {
       setIsLoading(false);
     }
@@ -80,19 +80,18 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
   const refreshAddresses = useCallback(async () => {
     if (!wallet) return;
     try {
-      const [changeAddr, usedAddrs, unusedAddrs, rewardAddrs] =
-        await Promise.all([
-          wallet.getChangeAddress(),
-          wallet.getUsedAddresses(),
-          wallet.getUnusedAddresses(),
-          wallet.getRewardAddresses(),
-        ]);
+      const [changeAddr, usedAddrs, unusedAddrs, rewardAddrs] = await Promise.all([
+        wallet.getChangeAddress(),
+        wallet.getUsedAddresses(),
+        wallet.getUnusedAddresses(),
+        wallet.getRewardAddresses(),
+      ]);
       setChangeAddress(changeAddr);
       setUsedAddresses(usedAddrs);
       setUnusedAddresses(unusedAddrs);
       setRewardAddresses(rewardAddrs);
     } catch (error) {
-      console.error('Failed to fetch wallet info:', error);
+      console.error("Failed to fetch wallet info:", error);
     }
   }, [wallet]);
 
@@ -103,14 +102,14 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
       const coll = await wallet.getCollateral();
       setCollateral(coll);
     } catch (error) {
-      console.error('Failed to fetch collateral:', error);
+      console.error("Failed to fetch collateral:", error);
       setCollateral([]);
     }
   }, [wallet]);
 
   const disconnect = useCallback(() => {
     meshDisconnect();
-    setChangeAddress('');
+    setChangeAddress("");
     setAssets([]);
     setUsedAddresses([]);
     setUnusedAddresses([]);
@@ -125,7 +124,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
       refreshCollateral(); // 👈 Fetch on connect
     } else {
       setAssets([]);
-      setChangeAddress('');
+      setChangeAddress("");
       setUsedAddresses([]);
       setUnusedAddresses([]);
       setRewardAddresses([]);
@@ -133,11 +132,24 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [connected, wallet, refreshBalance, refreshAddresses, refreshCollateral]);
 
+  useEffect(() => {
+    if (isUserSyncedRef.current) return;
+    if (connected && changeAddress && network !== undefined) {
+      upsertUserMutation.mutate({
+        walletAddress: changeAddress,
+        network: network ? (network === 1 ? "mainnet" : "preprod") : undefined,
+        role: "USER",
+      });
+
+      isUserSyncedRef.current = true;
+    }
+  }, [connected, changeAddress, network, upsertUserMutation]);
+
   const value = useMemo<WalletContextType>(
     () => ({
       connected,
       wallet,
-      walletName: connectedWalletName || 'Unknown',
+      walletName: connectedWalletName || "Unknown",
       network,
       changeAddress,
       assets,
@@ -152,6 +164,9 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
       refreshAddresses,
       refreshCollateral, // 👈 Expose
       nativeAssets,
+      isUserSynced: upsertUserMutation.isSuccess,
+      isUserSyncing: upsertUserMutation.isPending,
+      userSyncError: (upsertUserMutation.error as Error)?.message,
     }),
     [
       connected,
@@ -171,18 +186,17 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
       refreshAddresses,
       refreshCollateral,
       nativeAssets,
+      upsertUserMutation,
     ]
   );
 
-  return (
-    <WalletContext.Provider value={value}>{children}</WalletContext.Provider>
-  );
+  return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
 };
 
 export const useWalletContext = () => {
   const context = useContext(WalletContext);
   if (context === undefined) {
-    throw new Error('useWalletContext must be used within a WalletProvider');
+    throw new Error("useWalletContext must be used within a WalletProvider");
   }
   return context;
 };

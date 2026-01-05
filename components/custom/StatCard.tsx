@@ -7,9 +7,10 @@ interface StatCardProps {
   value: string | number;
   icon: ElementType;
   trend?: "up" | "down";
+  description?: string;
 }
 
-const StatCard = ({ label, value, icon: Icon, trend }: StatCardProps) => {
+const StatCard = ({ label, value, icon: Icon, trend, description }: StatCardProps) => {
   const trendConfig = {
     up: {
       bg: "bg-emerald-50",
@@ -34,26 +35,17 @@ const StatCard = ({ label, value, icon: Icon, trend }: StatCardProps) => {
   return (
     <div
       className={cn(
-        "group p-6 bg-white border border-zinc-100 rounded-md",
-        "shadow-none hover:border-zinc-200 transition-all duration-300",
+        "group rounded-md border border-zinc-100 bg-white p-6",
+        "shadow-none transition-all duration-300 hover:border-zinc-200",
         ""
       )}
     >
-      <div className="flex items-center justify-between mb-4">
-        <span
-          className={cn(
-            "text-[10px] font-black uppercase tracking-[0.2em]",
-            "text-zinc-400"
-          )}
-        >
+      <div className="mb-4 flex items-center justify-between">
+        <span className={cn("text-[10px] font-black tracking-[0.2em] uppercase", "text-zinc-400")}>
           {label}
         </span>
         <div
-          className={cn(
-            "p-2 rounded-lg transition-colors duration-300",
-            config.bg,
-            config.text
-          )}
+          className={cn("rounded-lg p-2 transition-colors duration-300", config.bg, config.text)}
         >
           <TrendIcon className="h-4 w-4" />
         </div>
@@ -61,11 +53,13 @@ const StatCard = ({ label, value, icon: Icon, trend }: StatCardProps) => {
       <div
         className={cn(
           "text-3xl font-semibold tracking-tight",
-          "text-zinc-900 group-hover:text-zinc-950 transition-colors"
+          "text-zinc-900 transition-colors group-hover:text-zinc-950"
         )}
       >
         {value}
       </div>
+
+      {description && <p>{description}</p>}
     </div>
   );
 };

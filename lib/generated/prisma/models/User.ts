@@ -195,7 +195,7 @@ export type UserWhereInput = {
   disputes?: Prisma.DisputeListRelationFilter
   resolutions?: Prisma.ResolutionListRelationFilter
   activityLogs?: Prisma.ActivityLogListRelationFilter
-  escrowTransactions?: Prisma.EscrowTransactionListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -210,7 +210,7 @@ export type UserOrderByWithRelationInput = {
   disputes?: Prisma.DisputeOrderByRelationAggregateInput
   resolutions?: Prisma.ResolutionOrderByRelationAggregateInput
   activityLogs?: Prisma.ActivityLogOrderByRelationAggregateInput
-  escrowTransactions?: Prisma.EscrowTransactionOrderByRelationAggregateInput
+  transactions?: Prisma.TransactionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -228,7 +228,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   disputes?: Prisma.DisputeListRelationFilter
   resolutions?: Prisma.ResolutionListRelationFilter
   activityLogs?: Prisma.ActivityLogListRelationFilter
-  escrowTransactions?: Prisma.EscrowTransactionListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }, "id" | "walletAddress">
 
 export type UserOrderByWithAggregationInput = {
@@ -263,11 +263,11 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -278,11 +278,11 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorUncheckedCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -293,11 +293,11 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -308,11 +308,11 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -374,6 +374,16 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type UserNullableScalarRelationFilter = {
   is?: Prisma.UserWhereInput | null
   isNot?: Prisma.UserWhereInput | null
@@ -405,50 +415,94 @@ export type UserUpdateOneRequiredWithoutArbitratorNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutArbitratorInput, Prisma.UserUpdateWithoutArbitratorInput>, Prisma.UserUncheckedUpdateWithoutArbitratorInput>
 }
 
-export type UserCreateNestedOneWithoutEscrowsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowsInput
+export type UserCreateNestedManyWithoutEscrowsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput> | Prisma.UserCreateWithoutEscrowsInput[] | Prisma.UserUncheckedCreateWithoutEscrowsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowsInput | Prisma.UserCreateOrConnectWithoutEscrowsInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutEscrowsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput> | Prisma.UserCreateWithoutEscrowsInput[] | Prisma.UserUncheckedCreateWithoutEscrowsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowsInput | Prisma.UserCreateOrConnectWithoutEscrowsInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutEscrowsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput> | Prisma.UserCreateWithoutEscrowsInput[] | Prisma.UserUncheckedCreateWithoutEscrowsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowsInput | Prisma.UserCreateOrConnectWithoutEscrowsInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutEscrowsInput | Prisma.UserUpsertWithWhereUniqueWithoutEscrowsInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutEscrowsInput | Prisma.UserUpdateWithWhereUniqueWithoutEscrowsInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutEscrowsInput | Prisma.UserUpdateManyWithWhereWithoutEscrowsInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutEscrowsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput> | Prisma.UserCreateWithoutEscrowsInput[] | Prisma.UserUncheckedCreateWithoutEscrowsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowsInput | Prisma.UserCreateOrConnectWithoutEscrowsInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutEscrowsInput | Prisma.UserUpsertWithWhereUniqueWithoutEscrowsInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutEscrowsInput | Prisma.UserUpdateWithWhereUniqueWithoutEscrowsInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutEscrowsInput | Prisma.UserUpdateManyWithWhereWithoutEscrowsInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedOneWithoutTransactionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutEscrowsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowsInput
-  upsert?: Prisma.UserUpsertWithoutEscrowsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
+export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput
+  upsert?: Prisma.UserUpsertWithoutTransactionsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEscrowsInput, Prisma.UserUpdateWithoutEscrowsInput>, Prisma.UserUncheckedUpdateWithoutEscrowsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
 }
 
-export type UserCreateNestedOneWithoutEscrowTransactionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowTransactionsInput, Prisma.UserUncheckedCreateWithoutEscrowTransactionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowTransactionsInput
-  connect?: Prisma.UserWhereUniqueInput
+export type UserCreateNestedManyWithoutDisputesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput> | Prisma.UserCreateWithoutDisputesInput[] | Prisma.UserUncheckedCreateWithoutDisputesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesInput | Prisma.UserCreateOrConnectWithoutDisputesInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
 }
 
-export type UserUpdateOneRequiredWithoutEscrowTransactionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEscrowTransactionsInput, Prisma.UserUncheckedCreateWithoutEscrowTransactionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEscrowTransactionsInput
-  upsert?: Prisma.UserUpsertWithoutEscrowTransactionsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEscrowTransactionsInput, Prisma.UserUpdateWithoutEscrowTransactionsInput>, Prisma.UserUncheckedUpdateWithoutEscrowTransactionsInput>
+export type UserUncheckedCreateNestedManyWithoutDisputesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput> | Prisma.UserCreateWithoutDisputesInput[] | Prisma.UserUncheckedCreateWithoutDisputesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesInput | Prisma.UserCreateOrConnectWithoutDisputesInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
 }
 
-export type UserCreateNestedOneWithoutDisputesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesInput
-  connect?: Prisma.UserWhereUniqueInput
+export type UserUpdateManyWithoutDisputesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput> | Prisma.UserCreateWithoutDisputesInput[] | Prisma.UserUncheckedCreateWithoutDisputesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesInput | Prisma.UserCreateOrConnectWithoutDisputesInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutDisputesInput | Prisma.UserUpsertWithWhereUniqueWithoutDisputesInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutDisputesInput | Prisma.UserUpdateWithWhereUniqueWithoutDisputesInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutDisputesInput | Prisma.UserUpdateManyWithWhereWithoutDisputesInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
-export type UserUpdateOneWithoutDisputesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesInput
-  upsert?: Prisma.UserUpsertWithoutDisputesInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDisputesInput, Prisma.UserUpdateWithoutDisputesInput>, Prisma.UserUncheckedUpdateWithoutDisputesInput>
+export type UserUncheckedUpdateManyWithoutDisputesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput> | Prisma.UserCreateWithoutDisputesInput[] | Prisma.UserUncheckedCreateWithoutDisputesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDisputesInput | Prisma.UserCreateOrConnectWithoutDisputesInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutDisputesInput | Prisma.UserUpsertWithWhereUniqueWithoutDisputesInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutDisputesInput | Prisma.UserUpdateWithWhereUniqueWithoutDisputesInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutDisputesInput | Prisma.UserUpdateManyWithWhereWithoutDisputesInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedOneWithoutResolutionsInput = {
@@ -490,11 +544,11 @@ export type UserCreateWithoutArbitratorInput = {
   network?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  escrows?: Prisma.EscrowCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutArbitratorInput = {
@@ -504,11 +558,11 @@ export type UserUncheckedCreateWithoutArbitratorInput = {
   network?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutArbitratorInput = {
@@ -534,11 +588,11 @@ export type UserUpdateWithoutArbitratorInput = {
   network?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  escrows?: Prisma.EscrowUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutArbitratorInput = {
@@ -548,11 +602,11 @@ export type UserUncheckedUpdateWithoutArbitratorInput = {
   network?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEscrowsInput = {
@@ -563,10 +617,10 @@ export type UserCreateWithoutEscrowsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutUserInput
-  disputes?: Prisma.DisputeCreateNestedManyWithoutUserInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEscrowsInput = {
@@ -577,10 +631,10 @@ export type UserUncheckedCreateWithoutEscrowsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorUncheckedCreateNestedOneWithoutUserInput
-  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUserInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEscrowsInput = {
@@ -588,46 +642,35 @@ export type UserCreateOrConnectWithoutEscrowsInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput>
 }
 
-export type UserUpsertWithoutEscrowsInput = {
+export type UserUpsertWithWhereUniqueWithoutEscrowsInput = {
+  where: Prisma.UserWhereUniqueInput
   update: Prisma.XOR<Prisma.UserUpdateWithoutEscrowsInput, Prisma.UserUncheckedUpdateWithoutEscrowsInput>
   create: Prisma.XOR<Prisma.UserCreateWithoutEscrowsInput, Prisma.UserUncheckedCreateWithoutEscrowsInput>
-  where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutEscrowsInput = {
-  where?: Prisma.UserWhereInput
+export type UserUpdateWithWhereUniqueWithoutEscrowsInput = {
+  where: Prisma.UserWhereUniqueInput
   data: Prisma.XOR<Prisma.UserUpdateWithoutEscrowsInput, Prisma.UserUncheckedUpdateWithoutEscrowsInput>
 }
 
-export type UserUpdateWithoutEscrowsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  network?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
-  disputes?: Prisma.DisputeUpdateManyWithoutUserNestedInput
-  resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutUserNestedInput
+export type UserUpdateManyWithWhereWithoutEscrowsInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutEscrowsInput>
 }
 
-export type UserUncheckedUpdateWithoutEscrowsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  network?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
-  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUserNestedInput
-  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutUserNestedInput
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  walletAddress?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  network?: Prisma.StringFilter<"User"> | string
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
-export type UserCreateWithoutEscrowTransactionsInput = {
+export type UserCreateWithoutTransactionsInput = {
   id?: string
   walletAddress: string
   role?: $Enums.UserRole
@@ -635,13 +678,13 @@ export type UserCreateWithoutEscrowTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutEscrowTransactionsInput = {
+export type UserUncheckedCreateWithoutTransactionsInput = {
   id?: string
   walletAddress: string
   role?: $Enums.UserRole
@@ -649,29 +692,29 @@ export type UserUncheckedCreateWithoutEscrowTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorUncheckedCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutEscrowTransactionsInput = {
+export type UserCreateOrConnectWithoutTransactionsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutEscrowTransactionsInput, Prisma.UserUncheckedCreateWithoutEscrowTransactionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
 }
 
-export type UserUpsertWithoutEscrowTransactionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutEscrowTransactionsInput, Prisma.UserUncheckedUpdateWithoutEscrowTransactionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutEscrowTransactionsInput, Prisma.UserUncheckedCreateWithoutEscrowTransactionsInput>
+export type UserUpsertWithoutTransactionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutEscrowTransactionsInput = {
+export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutEscrowTransactionsInput, Prisma.UserUncheckedUpdateWithoutEscrowTransactionsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
 }
 
-export type UserUpdateWithoutEscrowTransactionsInput = {
+export type UserUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -679,13 +722,13 @@ export type UserUpdateWithoutEscrowTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutEscrowTransactionsInput = {
+export type UserUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -693,8 +736,8 @@ export type UserUncheckedUpdateWithoutEscrowTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -707,10 +750,10 @@ export type UserCreateWithoutDisputesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDisputesInput = {
@@ -721,10 +764,10 @@ export type UserUncheckedCreateWithoutDisputesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorUncheckedCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutUserInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDisputesInput = {
@@ -732,43 +775,20 @@ export type UserCreateOrConnectWithoutDisputesInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput>
 }
 
-export type UserUpsertWithoutDisputesInput = {
+export type UserUpsertWithWhereUniqueWithoutDisputesInput = {
+  where: Prisma.UserWhereUniqueInput
   update: Prisma.XOR<Prisma.UserUpdateWithoutDisputesInput, Prisma.UserUncheckedUpdateWithoutDisputesInput>
   create: Prisma.XOR<Prisma.UserCreateWithoutDisputesInput, Prisma.UserUncheckedCreateWithoutDisputesInput>
-  where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutDisputesInput = {
-  where?: Prisma.UserWhereInput
+export type UserUpdateWithWhereUniqueWithoutDisputesInput = {
+  where: Prisma.UserWhereUniqueInput
   data: Prisma.XOR<Prisma.UserUpdateWithoutDisputesInput, Prisma.UserUncheckedUpdateWithoutDisputesInput>
 }
 
-export type UserUpdateWithoutDisputesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  network?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUpdateManyWithoutUserNestedInput
-  resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutDisputesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  network?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUserNestedInput
-  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
-  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutUserNestedInput
+export type UserUpdateManyWithWhereWithoutDisputesInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutDisputesInput>
 }
 
 export type UserCreateWithoutResolutionsInput = {
@@ -779,10 +799,10 @@ export type UserCreateWithoutResolutionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutUsersInput
   activityLogs?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutResolutionsInput = {
@@ -793,10 +813,10 @@ export type UserUncheckedCreateWithoutResolutionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorUncheckedCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUsersInput
   activityLogs?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutResolutionsInput = {
@@ -823,10 +843,10 @@ export type UserUpdateWithoutResolutionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutUsersNestedInput
   activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResolutionsInput = {
@@ -837,10 +857,10 @@ export type UserUncheckedUpdateWithoutResolutionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUsersNestedInput
   activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutActivityLogsInput = {
@@ -851,10 +871,10 @@ export type UserCreateWithoutActivityLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -865,10 +885,10 @@ export type UserUncheckedCreateWithoutActivityLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   arbitrator?: Prisma.ArbitratorUncheckedCreateNestedOneWithoutUserInput
-  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUserInput
-  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUserInput
+  escrows?: Prisma.EscrowUncheckedCreateNestedManyWithoutUsersInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutUsersInput
   resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutUserInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -895,10 +915,10 @@ export type UserUpdateWithoutActivityLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -909,10 +929,84 @@ export type UserUncheckedUpdateWithoutActivityLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
-  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUserNestedInput
-  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUserNestedInput
+  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUsersNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUsersNestedInput
   resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpdateWithoutEscrowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  network?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutUsersNestedInput
+  resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEscrowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  network?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutUsersNestedInput
+  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutEscrowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  network?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserUpdateWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  network?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arbitrator?: Prisma.ArbitratorUpdateOneWithoutUserNestedInput
+  escrows?: Prisma.EscrowUpdateManyWithoutUsersNestedInput
+  resolutions?: Prisma.ResolutionUpdateManyWithoutUserNestedInput
+  activityLogs?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  network?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  arbitrator?: Prisma.ArbitratorUncheckedUpdateOneWithoutUserNestedInput
+  escrows?: Prisma.EscrowUncheckedUpdateManyWithoutUsersNestedInput
+  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutUserNestedInput
+  activityLogs?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  network?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -925,7 +1019,7 @@ export type UserCountOutputType = {
   disputes: number
   resolutions: number
   activityLogs: number
-  escrowTransactions: number
+  transactions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -933,7 +1027,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   disputes?: boolean | UserCountOutputTypeCountDisputesArgs
   resolutions?: boolean | UserCountOutputTypeCountResolutionsArgs
   activityLogs?: boolean | UserCountOutputTypeCountActivityLogsArgs
-  escrowTransactions?: boolean | UserCountOutputTypeCountEscrowTransactionsArgs
+  transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
 }
 
 /**
@@ -977,8 +1071,8 @@ export type UserCountOutputTypeCountActivityLogsArgs<ExtArgs extends runtime.Typ
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountEscrowTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EscrowTransactionWhereInput
+export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionWhereInput
 }
 
 
@@ -994,7 +1088,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   disputes?: boolean | Prisma.User$disputesArgs<ExtArgs>
   resolutions?: boolean | Prisma.User$resolutionsArgs<ExtArgs>
   activityLogs?: boolean | Prisma.User$activityLogsArgs<ExtArgs>
-  escrowTransactions?: boolean | Prisma.User$escrowTransactionsArgs<ExtArgs>
+  transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1032,7 +1126,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   disputes?: boolean | Prisma.User$disputesArgs<ExtArgs>
   resolutions?: boolean | Prisma.User$resolutionsArgs<ExtArgs>
   activityLogs?: boolean | Prisma.User$activityLogsArgs<ExtArgs>
-  escrowTransactions?: boolean | Prisma.User$escrowTransactionsArgs<ExtArgs>
+  transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1046,7 +1140,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     disputes: Prisma.$DisputePayload<ExtArgs>[]
     resolutions: Prisma.$ResolutionPayload<ExtArgs>[]
     activityLogs: Prisma.$ActivityLogPayload<ExtArgs>[]
-    escrowTransactions: Prisma.$EscrowTransactionPayload<ExtArgs>[]
+    transactions: Prisma.$TransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1454,7 +1548,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   disputes<T extends Prisma.User$disputesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$disputesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   resolutions<T extends Prisma.User$resolutionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$resolutionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResolutionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   activityLogs<T extends Prisma.User$activityLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activityLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  escrowTransactions<T extends Prisma.User$escrowTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$escrowTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EscrowTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1993,27 +2087,27 @@ export type User$activityLogsArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * User.escrowTransactions
+ * User.transactions
  */
-export type User$escrowTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the EscrowTransaction
+   * Select specific fields to fetch from the Transaction
    */
-  select?: Prisma.EscrowTransactionSelect<ExtArgs> | null
+  select?: Prisma.TransactionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the EscrowTransaction
+   * Omit specific fields from the Transaction
    */
-  omit?: Prisma.EscrowTransactionOmit<ExtArgs> | null
+  omit?: Prisma.TransactionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.EscrowTransactionInclude<ExtArgs> | null
-  where?: Prisma.EscrowTransactionWhereInput
-  orderBy?: Prisma.EscrowTransactionOrderByWithRelationInput | Prisma.EscrowTransactionOrderByWithRelationInput[]
-  cursor?: Prisma.EscrowTransactionWhereUniqueInput
+  include?: Prisma.TransactionInclude<ExtArgs> | null
+  where?: Prisma.TransactionWhereInput
+  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.EscrowTransactionScalarFieldEnum | Prisma.EscrowTransactionScalarFieldEnum[]
+  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
 }
 
 /**

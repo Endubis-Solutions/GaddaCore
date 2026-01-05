@@ -27,209 +27,145 @@ export type AggregateEscrow = {
 }
 
 export type EscrowAvgAggregateOutputType = {
-  amount: number | null
-  amountAda: number | null
-  confirmations: number | null
-  blockHeight: number | null
+  funderStakeInAda: number | null
+  recipientStakeInAda: number | null
 }
 
 export type EscrowSumAggregateOutputType = {
-  amount: bigint | null
-  amountAda: number | null
-  confirmations: number | null
-  blockHeight: number | null
+  funderStakeInAda: number | null
+  recipientStakeInAda: number | null
 }
 
 export type EscrowMinAggregateOutputType = {
   id: string | null
-  txHash: string | null
   scriptAddress: string | null
-  amount: bigint | null
-  amountAda: number | null
-  funderAddress: string | null
-  funderPubKeyHash: string | null
-  recipientAddress: string | null
-  recipientPubKeyHash: string | null
   status: $Enums.EscrowStatus | null
-  disputeDeadline: Date | null
-  recipientLockDeadline: Date | null
+  funderAddress: string | null
+  funderStakeInAda: number | null
+  recipientAddress: string | null
+  recipientStakeInAda: number | null
   contractIpfsHash: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
-  lockedAt: Date | null
+  recipientLockDeadline: Date | null
+  submissionDeadline: Date | null
   resolutionDeadline: Date | null
-  datumHash: string | null
   scriptCbor: string | null
-  confirmations: number | null
-  blockHeight: number | null
-  blockHash: string | null
   approvedAt: Date | null
   disputedAt: Date | null
   resolvedAt: Date | null
-  userId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type EscrowMaxAggregateOutputType = {
   id: string | null
-  txHash: string | null
   scriptAddress: string | null
-  amount: bigint | null
-  amountAda: number | null
-  funderAddress: string | null
-  funderPubKeyHash: string | null
-  recipientAddress: string | null
-  recipientPubKeyHash: string | null
   status: $Enums.EscrowStatus | null
-  disputeDeadline: Date | null
-  recipientLockDeadline: Date | null
+  funderAddress: string | null
+  funderStakeInAda: number | null
+  recipientAddress: string | null
+  recipientStakeInAda: number | null
   contractIpfsHash: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
-  lockedAt: Date | null
+  recipientLockDeadline: Date | null
+  submissionDeadline: Date | null
   resolutionDeadline: Date | null
-  datumHash: string | null
   scriptCbor: string | null
-  confirmations: number | null
-  blockHeight: number | null
-  blockHash: string | null
   approvedAt: Date | null
   disputedAt: Date | null
   resolvedAt: Date | null
-  userId: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type EscrowCountAggregateOutputType = {
   id: number
-  txHash: number
   scriptAddress: number
-  amount: number
-  amountAda: number
-  funderAddress: number
-  funderPubKeyHash: number
-  recipientAddress: number
-  recipientPubKeyHash: number
   status: number
-  disputeDeadline: number
-  recipientLockDeadline: number
-  datum: number
+  funderAddress: number
+  funderStakeInAda: number
+  recipientAddress: number
+  recipientStakeInAda: number
   contractIpfsHash: number
-  createdAt: number
-  updatedAt: number
-  lockedAt: number
+  recipientLockDeadline: number
+  submissionDeadline: number
   resolutionDeadline: number
-  datumHash: number
   scriptCbor: number
-  confirmations: number
-  blockHeight: number
-  blockHash: number
   approvedAt: number
   disputedAt: number
   resolvedAt: number
-  userId: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
 
 export type EscrowAvgAggregateInputType = {
-  amount?: true
-  amountAda?: true
-  confirmations?: true
-  blockHeight?: true
+  funderStakeInAda?: true
+  recipientStakeInAda?: true
 }
 
 export type EscrowSumAggregateInputType = {
-  amount?: true
-  amountAda?: true
-  confirmations?: true
-  blockHeight?: true
+  funderStakeInAda?: true
+  recipientStakeInAda?: true
 }
 
 export type EscrowMinAggregateInputType = {
   id?: true
-  txHash?: true
   scriptAddress?: true
-  amount?: true
-  amountAda?: true
-  funderAddress?: true
-  funderPubKeyHash?: true
-  recipientAddress?: true
-  recipientPubKeyHash?: true
   status?: true
-  disputeDeadline?: true
-  recipientLockDeadline?: true
+  funderAddress?: true
+  funderStakeInAda?: true
+  recipientAddress?: true
+  recipientStakeInAda?: true
   contractIpfsHash?: true
-  createdAt?: true
-  updatedAt?: true
-  lockedAt?: true
+  recipientLockDeadline?: true
+  submissionDeadline?: true
   resolutionDeadline?: true
-  datumHash?: true
   scriptCbor?: true
-  confirmations?: true
-  blockHeight?: true
-  blockHash?: true
   approvedAt?: true
   disputedAt?: true
   resolvedAt?: true
-  userId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type EscrowMaxAggregateInputType = {
   id?: true
-  txHash?: true
   scriptAddress?: true
-  amount?: true
-  amountAda?: true
-  funderAddress?: true
-  funderPubKeyHash?: true
-  recipientAddress?: true
-  recipientPubKeyHash?: true
   status?: true
-  disputeDeadline?: true
-  recipientLockDeadline?: true
+  funderAddress?: true
+  funderStakeInAda?: true
+  recipientAddress?: true
+  recipientStakeInAda?: true
   contractIpfsHash?: true
-  createdAt?: true
-  updatedAt?: true
-  lockedAt?: true
+  recipientLockDeadline?: true
+  submissionDeadline?: true
   resolutionDeadline?: true
-  datumHash?: true
   scriptCbor?: true
-  confirmations?: true
-  blockHeight?: true
-  blockHash?: true
   approvedAt?: true
   disputedAt?: true
   resolvedAt?: true
-  userId?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type EscrowCountAggregateInputType = {
   id?: true
-  txHash?: true
   scriptAddress?: true
-  amount?: true
-  amountAda?: true
-  funderAddress?: true
-  funderPubKeyHash?: true
-  recipientAddress?: true
-  recipientPubKeyHash?: true
   status?: true
-  disputeDeadline?: true
-  recipientLockDeadline?: true
-  datum?: true
+  funderAddress?: true
+  funderStakeInAda?: true
+  recipientAddress?: true
+  recipientStakeInAda?: true
   contractIpfsHash?: true
-  createdAt?: true
-  updatedAt?: true
-  lockedAt?: true
+  recipientLockDeadline?: true
+  submissionDeadline?: true
   resolutionDeadline?: true
-  datumHash?: true
   scriptCbor?: true
-  confirmations?: true
-  blockHeight?: true
-  blockHash?: true
   approvedAt?: true
   disputedAt?: true
   resolvedAt?: true
-  userId?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -321,32 +257,22 @@ export type EscrowGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type EscrowGroupByOutputType = {
   id: string
-  txHash: string
   scriptAddress: string
-  amount: bigint
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash: string | null
-  recipientAddress: string
-  recipientPubKeyHash: string | null
   status: $Enums.EscrowStatus
-  disputeDeadline: Date | null
-  recipientLockDeadline: Date | null
-  datum: runtime.JsonValue
-  contractIpfsHash: string | null
-  createdAt: Date
-  updatedAt: Date
-  lockedAt: Date
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date
+  submissionDeadline: Date
   resolutionDeadline: Date | null
-  datumHash: string | null
   scriptCbor: string | null
-  confirmations: number
-  blockHeight: number | null
-  blockHash: string | null
   approvedAt: Date | null
   disputedAt: Date | null
   resolvedAt: Date | null
-  userId: string | null
+  createdAt: Date
+  updatedAt: Date
   _count: EscrowCountAggregateOutputType | null
   _avg: EscrowAvgAggregateOutputType | null
   _sum: EscrowSumAggregateOutputType | null
@@ -374,137 +300,97 @@ export type EscrowWhereInput = {
   OR?: Prisma.EscrowWhereInput[]
   NOT?: Prisma.EscrowWhereInput | Prisma.EscrowWhereInput[]
   id?: Prisma.StringFilter<"Escrow"> | string
-  txHash?: Prisma.StringFilter<"Escrow"> | string
   scriptAddress?: Prisma.StringFilter<"Escrow"> | string
-  amount?: Prisma.BigIntFilter<"Escrow"> | bigint | number
-  amountAda?: Prisma.FloatFilter<"Escrow"> | number
-  funderAddress?: Prisma.StringFilter<"Escrow"> | string
-  funderPubKeyHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  recipientAddress?: Prisma.StringFilter<"Escrow"> | string
-  recipientPubKeyHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   status?: Prisma.EnumEscrowStatusFilter<"Escrow"> | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  recipientLockDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  datum?: Prisma.JsonFilter<"Escrow">
-  contractIpfsHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
-  lockedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  funderAddress?: Prisma.StringFilter<"Escrow"> | string
+  funderStakeInAda?: Prisma.FloatFilter<"Escrow"> | number
+  recipientAddress?: Prisma.StringFilter<"Escrow"> | string
+  recipientStakeInAda?: Prisma.FloatNullableFilter<"Escrow"> | number | null
+  contractIpfsHash?: Prisma.StringFilter<"Escrow"> | string
+  recipientLockDeadline?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  submissionDeadline?: Prisma.DateTimeFilter<"Escrow"> | Date | string
   resolutionDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  datumHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   scriptCbor?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  confirmations?: Prisma.IntFilter<"Escrow"> | number
-  blockHeight?: Prisma.IntNullableFilter<"Escrow"> | number | null
-  blockHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
   disputedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
   resolvedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  userId?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  createdAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  users?: Prisma.UserListRelationFilter
   dispute?: Prisma.XOR<Prisma.DisputeNullableScalarRelationFilter, Prisma.DisputeWhereInput> | null
   resolution?: Prisma.XOR<Prisma.ResolutionNullableScalarRelationFilter, Prisma.ResolutionWhereInput> | null
-  escrowTransactions?: Prisma.EscrowTransactionListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }
 
 export type EscrowOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  txHash?: Prisma.SortOrder
   scriptAddress?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
-  amountAda?: Prisma.SortOrder
-  funderAddress?: Prisma.SortOrder
-  funderPubKeyHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  recipientAddress?: Prisma.SortOrder
-  recipientPubKeyHash?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  disputeDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
-  recipientLockDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
-  datum?: Prisma.SortOrder
-  contractIpfsHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  lockedAt?: Prisma.SortOrder
+  funderAddress?: Prisma.SortOrder
+  funderStakeInAda?: Prisma.SortOrder
+  recipientAddress?: Prisma.SortOrder
+  recipientStakeInAda?: Prisma.SortOrderInput | Prisma.SortOrder
+  contractIpfsHash?: Prisma.SortOrder
+  recipientLockDeadline?: Prisma.SortOrder
+  submissionDeadline?: Prisma.SortOrder
   resolutionDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
-  datumHash?: Prisma.SortOrderInput | Prisma.SortOrder
   scriptCbor?: Prisma.SortOrderInput | Prisma.SortOrder
-  confirmations?: Prisma.SortOrder
-  blockHeight?: Prisma.SortOrderInput | Prisma.SortOrder
-  blockHash?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   disputedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   resolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  users?: Prisma.UserOrderByRelationAggregateInput
   dispute?: Prisma.DisputeOrderByWithRelationInput
   resolution?: Prisma.ResolutionOrderByWithRelationInput
-  escrowTransactions?: Prisma.EscrowTransactionOrderByRelationAggregateInput
+  transactions?: Prisma.TransactionOrderByRelationAggregateInput
 }
 
 export type EscrowWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  txHash?: string
   AND?: Prisma.EscrowWhereInput | Prisma.EscrowWhereInput[]
   OR?: Prisma.EscrowWhereInput[]
   NOT?: Prisma.EscrowWhereInput | Prisma.EscrowWhereInput[]
   scriptAddress?: Prisma.StringFilter<"Escrow"> | string
-  amount?: Prisma.BigIntFilter<"Escrow"> | bigint | number
-  amountAda?: Prisma.FloatFilter<"Escrow"> | number
-  funderAddress?: Prisma.StringFilter<"Escrow"> | string
-  funderPubKeyHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  recipientAddress?: Prisma.StringFilter<"Escrow"> | string
-  recipientPubKeyHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   status?: Prisma.EnumEscrowStatusFilter<"Escrow"> | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  recipientLockDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  datum?: Prisma.JsonFilter<"Escrow">
-  contractIpfsHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
-  lockedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  funderAddress?: Prisma.StringFilter<"Escrow"> | string
+  funderStakeInAda?: Prisma.FloatFilter<"Escrow"> | number
+  recipientAddress?: Prisma.StringFilter<"Escrow"> | string
+  recipientStakeInAda?: Prisma.FloatNullableFilter<"Escrow"> | number | null
+  contractIpfsHash?: Prisma.StringFilter<"Escrow"> | string
+  recipientLockDeadline?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  submissionDeadline?: Prisma.DateTimeFilter<"Escrow"> | Date | string
   resolutionDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  datumHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   scriptCbor?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  confirmations?: Prisma.IntFilter<"Escrow"> | number
-  blockHeight?: Prisma.IntNullableFilter<"Escrow"> | number | null
-  blockHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
   disputedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
   resolvedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  userId?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  createdAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  users?: Prisma.UserListRelationFilter
   dispute?: Prisma.XOR<Prisma.DisputeNullableScalarRelationFilter, Prisma.DisputeWhereInput> | null
   resolution?: Prisma.XOR<Prisma.ResolutionNullableScalarRelationFilter, Prisma.ResolutionWhereInput> | null
-  escrowTransactions?: Prisma.EscrowTransactionListRelationFilter
-}, "id" | "txHash">
+  transactions?: Prisma.TransactionListRelationFilter
+}, "id">
 
 export type EscrowOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  txHash?: Prisma.SortOrder
   scriptAddress?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
-  amountAda?: Prisma.SortOrder
-  funderAddress?: Prisma.SortOrder
-  funderPubKeyHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  recipientAddress?: Prisma.SortOrder
-  recipientPubKeyHash?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  disputeDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
-  recipientLockDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
-  datum?: Prisma.SortOrder
-  contractIpfsHash?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  lockedAt?: Prisma.SortOrder
+  funderAddress?: Prisma.SortOrder
+  funderStakeInAda?: Prisma.SortOrder
+  recipientAddress?: Prisma.SortOrder
+  recipientStakeInAda?: Prisma.SortOrderInput | Prisma.SortOrder
+  contractIpfsHash?: Prisma.SortOrder
+  recipientLockDeadline?: Prisma.SortOrder
+  submissionDeadline?: Prisma.SortOrder
   resolutionDeadline?: Prisma.SortOrderInput | Prisma.SortOrder
-  datumHash?: Prisma.SortOrderInput | Prisma.SortOrder
   scriptCbor?: Prisma.SortOrderInput | Prisma.SortOrder
-  confirmations?: Prisma.SortOrder
-  blockHeight?: Prisma.SortOrderInput | Prisma.SortOrder
-  blockHash?: Prisma.SortOrderInput | Prisma.SortOrder
   approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   disputedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   resolvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.EscrowCountOrderByAggregateInput
   _avg?: Prisma.EscrowAvgOrderByAggregateInput
   _max?: Prisma.EscrowMaxOrderByAggregateInput
@@ -517,253 +403,178 @@ export type EscrowScalarWhereWithAggregatesInput = {
   OR?: Prisma.EscrowScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EscrowScalarWhereWithAggregatesInput | Prisma.EscrowScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
-  txHash?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
   scriptAddress?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
-  amount?: Prisma.BigIntWithAggregatesFilter<"Escrow"> | bigint | number
-  amountAda?: Prisma.FloatWithAggregatesFilter<"Escrow"> | number
-  funderAddress?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
-  funderPubKeyHash?: Prisma.StringNullableWithAggregatesFilter<"Escrow"> | string | null
-  recipientAddress?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
-  recipientPubKeyHash?: Prisma.StringNullableWithAggregatesFilter<"Escrow"> | string | null
   status?: Prisma.EnumEscrowStatusWithAggregatesFilter<"Escrow"> | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.DateTimeNullableWithAggregatesFilter<"Escrow"> | Date | string | null
-  recipientLockDeadline?: Prisma.DateTimeNullableWithAggregatesFilter<"Escrow"> | Date | string | null
-  datum?: Prisma.JsonWithAggregatesFilter<"Escrow">
-  contractIpfsHash?: Prisma.StringNullableWithAggregatesFilter<"Escrow"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Escrow"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Escrow"> | Date | string
-  lockedAt?: Prisma.DateTimeWithAggregatesFilter<"Escrow"> | Date | string
+  funderAddress?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
+  funderStakeInAda?: Prisma.FloatWithAggregatesFilter<"Escrow"> | number
+  recipientAddress?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
+  recipientStakeInAda?: Prisma.FloatNullableWithAggregatesFilter<"Escrow"> | number | null
+  contractIpfsHash?: Prisma.StringWithAggregatesFilter<"Escrow"> | string
+  recipientLockDeadline?: Prisma.DateTimeWithAggregatesFilter<"Escrow"> | Date | string
+  submissionDeadline?: Prisma.DateTimeWithAggregatesFilter<"Escrow"> | Date | string
   resolutionDeadline?: Prisma.DateTimeNullableWithAggregatesFilter<"Escrow"> | Date | string | null
-  datumHash?: Prisma.StringNullableWithAggregatesFilter<"Escrow"> | string | null
   scriptCbor?: Prisma.StringNullableWithAggregatesFilter<"Escrow"> | string | null
-  confirmations?: Prisma.IntWithAggregatesFilter<"Escrow"> | number
-  blockHeight?: Prisma.IntNullableWithAggregatesFilter<"Escrow"> | number | null
-  blockHash?: Prisma.StringNullableWithAggregatesFilter<"Escrow"> | string | null
   approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Escrow"> | Date | string | null
   disputedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Escrow"> | Date | string | null
   resolvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Escrow"> | Date | string | null
-  userId?: Prisma.StringNullableWithAggregatesFilter<"Escrow"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Escrow"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Escrow"> | Date | string
 }
 
 export type EscrowCreateInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  user?: Prisma.UserCreateNestedOneWithoutEscrowsInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutEscrowsInput
   dispute?: Prisma.DisputeCreateNestedOneWithoutEscrowInput
   resolution?: Prisma.ResolutionCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutEscrowInput
 }
 
 export type EscrowUncheckedCreateInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  userId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutEscrowsInput
   dispute?: Prisma.DisputeUncheckedCreateNestedOneWithoutEscrowInput
   resolution?: Prisma.ResolutionUncheckedCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutEscrowInput
 }
 
 export type EscrowUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  user?: Prisma.UserUpdateOneWithoutEscrowsNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutEscrowsNestedInput
   dispute?: Prisma.DisputeUpdateOneWithoutEscrowNestedInput
   resolution?: Prisma.ResolutionUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutEscrowNestedInput
 }
 
 export type EscrowUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutEscrowsNestedInput
   dispute?: Prisma.DisputeUncheckedUpdateOneWithoutEscrowNestedInput
   resolution?: Prisma.ResolutionUncheckedUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutEscrowNestedInput
 }
 
 export type EscrowCreateManyInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  userId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type EscrowUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type EscrowUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type EscrowListRelationFilter = {
@@ -778,104 +589,72 @@ export type EscrowOrderByRelationAggregateInput = {
 
 export type EscrowCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  txHash?: Prisma.SortOrder
   scriptAddress?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
-  amountAda?: Prisma.SortOrder
-  funderAddress?: Prisma.SortOrder
-  funderPubKeyHash?: Prisma.SortOrder
-  recipientAddress?: Prisma.SortOrder
-  recipientPubKeyHash?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  disputeDeadline?: Prisma.SortOrder
-  recipientLockDeadline?: Prisma.SortOrder
-  datum?: Prisma.SortOrder
+  funderAddress?: Prisma.SortOrder
+  funderStakeInAda?: Prisma.SortOrder
+  recipientAddress?: Prisma.SortOrder
+  recipientStakeInAda?: Prisma.SortOrder
   contractIpfsHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  lockedAt?: Prisma.SortOrder
+  recipientLockDeadline?: Prisma.SortOrder
+  submissionDeadline?: Prisma.SortOrder
   resolutionDeadline?: Prisma.SortOrder
-  datumHash?: Prisma.SortOrder
   scriptCbor?: Prisma.SortOrder
-  confirmations?: Prisma.SortOrder
-  blockHeight?: Prisma.SortOrder
-  blockHash?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   disputedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type EscrowAvgOrderByAggregateInput = {
-  amount?: Prisma.SortOrder
-  amountAda?: Prisma.SortOrder
-  confirmations?: Prisma.SortOrder
-  blockHeight?: Prisma.SortOrder
+  funderStakeInAda?: Prisma.SortOrder
+  recipientStakeInAda?: Prisma.SortOrder
 }
 
 export type EscrowMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  txHash?: Prisma.SortOrder
   scriptAddress?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
-  amountAda?: Prisma.SortOrder
-  funderAddress?: Prisma.SortOrder
-  funderPubKeyHash?: Prisma.SortOrder
-  recipientAddress?: Prisma.SortOrder
-  recipientPubKeyHash?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  disputeDeadline?: Prisma.SortOrder
-  recipientLockDeadline?: Prisma.SortOrder
+  funderAddress?: Prisma.SortOrder
+  funderStakeInAda?: Prisma.SortOrder
+  recipientAddress?: Prisma.SortOrder
+  recipientStakeInAda?: Prisma.SortOrder
   contractIpfsHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  lockedAt?: Prisma.SortOrder
+  recipientLockDeadline?: Prisma.SortOrder
+  submissionDeadline?: Prisma.SortOrder
   resolutionDeadline?: Prisma.SortOrder
-  datumHash?: Prisma.SortOrder
   scriptCbor?: Prisma.SortOrder
-  confirmations?: Prisma.SortOrder
-  blockHeight?: Prisma.SortOrder
-  blockHash?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   disputedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type EscrowMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  txHash?: Prisma.SortOrder
   scriptAddress?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
-  amountAda?: Prisma.SortOrder
-  funderAddress?: Prisma.SortOrder
-  funderPubKeyHash?: Prisma.SortOrder
-  recipientAddress?: Prisma.SortOrder
-  recipientPubKeyHash?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  disputeDeadline?: Prisma.SortOrder
-  recipientLockDeadline?: Prisma.SortOrder
+  funderAddress?: Prisma.SortOrder
+  funderStakeInAda?: Prisma.SortOrder
+  recipientAddress?: Prisma.SortOrder
+  recipientStakeInAda?: Prisma.SortOrder
   contractIpfsHash?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  lockedAt?: Prisma.SortOrder
+  recipientLockDeadline?: Prisma.SortOrder
+  submissionDeadline?: Prisma.SortOrder
   resolutionDeadline?: Prisma.SortOrder
-  datumHash?: Prisma.SortOrder
   scriptCbor?: Prisma.SortOrder
-  confirmations?: Prisma.SortOrder
-  blockHeight?: Prisma.SortOrder
-  blockHash?: Prisma.SortOrder
   approvedAt?: Prisma.SortOrder
   disputedAt?: Prisma.SortOrder
   resolvedAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type EscrowSumOrderByAggregateInput = {
-  amount?: Prisma.SortOrder
-  amountAda?: Prisma.SortOrder
-  confirmations?: Prisma.SortOrder
-  blockHeight?: Prisma.SortOrder
+  funderStakeInAda?: Prisma.SortOrder
+  recipientStakeInAda?: Prisma.SortOrder
 }
 
 export type EscrowScalarRelationFilter = {
@@ -883,45 +662,41 @@ export type EscrowScalarRelationFilter = {
   isNot?: Prisma.EscrowWhereInput
 }
 
-export type EscrowCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUserInput, Prisma.EscrowUncheckedCreateWithoutUserInput> | Prisma.EscrowCreateWithoutUserInput[] | Prisma.EscrowUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUserInput | Prisma.EscrowCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.EscrowCreateManyUserInputEnvelope
+export type EscrowCreateNestedManyWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUsersInput, Prisma.EscrowUncheckedCreateWithoutUsersInput> | Prisma.EscrowCreateWithoutUsersInput[] | Prisma.EscrowUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUsersInput | Prisma.EscrowCreateOrConnectWithoutUsersInput[]
   connect?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
 }
 
-export type EscrowUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUserInput, Prisma.EscrowUncheckedCreateWithoutUserInput> | Prisma.EscrowCreateWithoutUserInput[] | Prisma.EscrowUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUserInput | Prisma.EscrowCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.EscrowCreateManyUserInputEnvelope
+export type EscrowUncheckedCreateNestedManyWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUsersInput, Prisma.EscrowUncheckedCreateWithoutUsersInput> | Prisma.EscrowCreateWithoutUsersInput[] | Prisma.EscrowUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUsersInput | Prisma.EscrowCreateOrConnectWithoutUsersInput[]
   connect?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
 }
 
-export type EscrowUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUserInput, Prisma.EscrowUncheckedCreateWithoutUserInput> | Prisma.EscrowCreateWithoutUserInput[] | Prisma.EscrowUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUserInput | Prisma.EscrowCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.EscrowUpsertWithWhereUniqueWithoutUserInput | Prisma.EscrowUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.EscrowCreateManyUserInputEnvelope
+export type EscrowUpdateManyWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUsersInput, Prisma.EscrowUncheckedCreateWithoutUsersInput> | Prisma.EscrowCreateWithoutUsersInput[] | Prisma.EscrowUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUsersInput | Prisma.EscrowCreateOrConnectWithoutUsersInput[]
+  upsert?: Prisma.EscrowUpsertWithWhereUniqueWithoutUsersInput | Prisma.EscrowUpsertWithWhereUniqueWithoutUsersInput[]
   set?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
   disconnect?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
   delete?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
   connect?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
-  update?: Prisma.EscrowUpdateWithWhereUniqueWithoutUserInput | Prisma.EscrowUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.EscrowUpdateManyWithWhereWithoutUserInput | Prisma.EscrowUpdateManyWithWhereWithoutUserInput[]
+  update?: Prisma.EscrowUpdateWithWhereUniqueWithoutUsersInput | Prisma.EscrowUpdateWithWhereUniqueWithoutUsersInput[]
+  updateMany?: Prisma.EscrowUpdateManyWithWhereWithoutUsersInput | Prisma.EscrowUpdateManyWithWhereWithoutUsersInput[]
   deleteMany?: Prisma.EscrowScalarWhereInput | Prisma.EscrowScalarWhereInput[]
 }
 
-export type EscrowUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUserInput, Prisma.EscrowUncheckedCreateWithoutUserInput> | Prisma.EscrowCreateWithoutUserInput[] | Prisma.EscrowUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUserInput | Prisma.EscrowCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.EscrowUpsertWithWhereUniqueWithoutUserInput | Prisma.EscrowUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.EscrowCreateManyUserInputEnvelope
+export type EscrowUncheckedUpdateManyWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.EscrowCreateWithoutUsersInput, Prisma.EscrowUncheckedCreateWithoutUsersInput> | Prisma.EscrowCreateWithoutUsersInput[] | Prisma.EscrowUncheckedCreateWithoutUsersInput[]
+  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutUsersInput | Prisma.EscrowCreateOrConnectWithoutUsersInput[]
+  upsert?: Prisma.EscrowUpsertWithWhereUniqueWithoutUsersInput | Prisma.EscrowUpsertWithWhereUniqueWithoutUsersInput[]
   set?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
   disconnect?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
   delete?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
   connect?: Prisma.EscrowWhereUniqueInput | Prisma.EscrowWhereUniqueInput[]
-  update?: Prisma.EscrowUpdateWithWhereUniqueWithoutUserInput | Prisma.EscrowUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.EscrowUpdateManyWithWhereWithoutUserInput | Prisma.EscrowUpdateManyWithWhereWithoutUserInput[]
+  update?: Prisma.EscrowUpdateWithWhereUniqueWithoutUsersInput | Prisma.EscrowUpdateWithWhereUniqueWithoutUsersInput[]
+  updateMany?: Prisma.EscrowUpdateManyWithWhereWithoutUsersInput | Prisma.EscrowUpdateManyWithWhereWithoutUsersInput[]
   deleteMany?: Prisma.EscrowScalarWhereInput | Prisma.EscrowScalarWhereInput[]
 }
 
@@ -929,7 +704,7 @@ export type EnumEscrowStatusFieldUpdateOperationsInput = {
   set?: $Enums.EscrowStatus
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
+export type NullableFloatFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
   decrement?: number
@@ -937,18 +712,18 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type EscrowCreateNestedOneWithoutEscrowTransactionsInput = {
-  create?: Prisma.XOR<Prisma.EscrowCreateWithoutEscrowTransactionsInput, Prisma.EscrowUncheckedCreateWithoutEscrowTransactionsInput>
-  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutEscrowTransactionsInput
+export type EscrowCreateNestedOneWithoutTransactionsInput = {
+  create?: Prisma.XOR<Prisma.EscrowCreateWithoutTransactionsInput, Prisma.EscrowUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutTransactionsInput
   connect?: Prisma.EscrowWhereUniqueInput
 }
 
-export type EscrowUpdateOneRequiredWithoutEscrowTransactionsNestedInput = {
-  create?: Prisma.XOR<Prisma.EscrowCreateWithoutEscrowTransactionsInput, Prisma.EscrowUncheckedCreateWithoutEscrowTransactionsInput>
-  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutEscrowTransactionsInput
-  upsert?: Prisma.EscrowUpsertWithoutEscrowTransactionsInput
+export type EscrowUpdateOneRequiredWithoutTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.EscrowCreateWithoutTransactionsInput, Prisma.EscrowUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.EscrowCreateOrConnectWithoutTransactionsInput
+  upsert?: Prisma.EscrowUpsertWithoutTransactionsInput
   connect?: Prisma.EscrowWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EscrowUpdateToOneWithWhereWithoutEscrowTransactionsInput, Prisma.EscrowUpdateWithoutEscrowTransactionsInput>, Prisma.EscrowUncheckedUpdateWithoutEscrowTransactionsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EscrowUpdateToOneWithWhereWithoutTransactionsInput, Prisma.EscrowUpdateWithoutTransactionsInput>, Prisma.EscrowUncheckedUpdateWithoutTransactionsInput>
 }
 
 export type EscrowCreateNestedOneWithoutDisputeInput = {
@@ -979,94 +754,71 @@ export type EscrowUpdateOneRequiredWithoutResolutionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EscrowUpdateToOneWithWhereWithoutResolutionInput, Prisma.EscrowUpdateWithoutResolutionInput>, Prisma.EscrowUncheckedUpdateWithoutResolutionInput>
 }
 
-export type EscrowCreateWithoutUserInput = {
+export type EscrowCreateWithoutUsersInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   dispute?: Prisma.DisputeCreateNestedOneWithoutEscrowInput
   resolution?: Prisma.ResolutionCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutEscrowInput
 }
 
-export type EscrowUncheckedCreateWithoutUserInput = {
+export type EscrowUncheckedCreateWithoutUsersInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   dispute?: Prisma.DisputeUncheckedCreateNestedOneWithoutEscrowInput
   resolution?: Prisma.ResolutionUncheckedCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutEscrowInput
 }
 
-export type EscrowCreateOrConnectWithoutUserInput = {
+export type EscrowCreateOrConnectWithoutUsersInput = {
   where: Prisma.EscrowWhereUniqueInput
-  create: Prisma.XOR<Prisma.EscrowCreateWithoutUserInput, Prisma.EscrowUncheckedCreateWithoutUserInput>
+  create: Prisma.XOR<Prisma.EscrowCreateWithoutUsersInput, Prisma.EscrowUncheckedCreateWithoutUsersInput>
 }
 
-export type EscrowCreateManyUserInputEnvelope = {
-  data: Prisma.EscrowCreateManyUserInput | Prisma.EscrowCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type EscrowUpsertWithWhereUniqueWithoutUserInput = {
+export type EscrowUpsertWithWhereUniqueWithoutUsersInput = {
   where: Prisma.EscrowWhereUniqueInput
-  update: Prisma.XOR<Prisma.EscrowUpdateWithoutUserInput, Prisma.EscrowUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.EscrowCreateWithoutUserInput, Prisma.EscrowUncheckedCreateWithoutUserInput>
+  update: Prisma.XOR<Prisma.EscrowUpdateWithoutUsersInput, Prisma.EscrowUncheckedUpdateWithoutUsersInput>
+  create: Prisma.XOR<Prisma.EscrowCreateWithoutUsersInput, Prisma.EscrowUncheckedCreateWithoutUsersInput>
 }
 
-export type EscrowUpdateWithWhereUniqueWithoutUserInput = {
+export type EscrowUpdateWithWhereUniqueWithoutUsersInput = {
   where: Prisma.EscrowWhereUniqueInput
-  data: Prisma.XOR<Prisma.EscrowUpdateWithoutUserInput, Prisma.EscrowUncheckedUpdateWithoutUserInput>
+  data: Prisma.XOR<Prisma.EscrowUpdateWithoutUsersInput, Prisma.EscrowUncheckedUpdateWithoutUsersInput>
 }
 
-export type EscrowUpdateManyWithWhereWithoutUserInput = {
+export type EscrowUpdateManyWithWhereWithoutUsersInput = {
   where: Prisma.EscrowScalarWhereInput
-  data: Prisma.XOR<Prisma.EscrowUpdateManyMutationInput, Prisma.EscrowUncheckedUpdateManyWithoutUserInput>
+  data: Prisma.XOR<Prisma.EscrowUpdateManyMutationInput, Prisma.EscrowUncheckedUpdateManyWithoutUsersInput>
 }
 
 export type EscrowScalarWhereInput = {
@@ -1074,240 +826,176 @@ export type EscrowScalarWhereInput = {
   OR?: Prisma.EscrowScalarWhereInput[]
   NOT?: Prisma.EscrowScalarWhereInput | Prisma.EscrowScalarWhereInput[]
   id?: Prisma.StringFilter<"Escrow"> | string
-  txHash?: Prisma.StringFilter<"Escrow"> | string
   scriptAddress?: Prisma.StringFilter<"Escrow"> | string
-  amount?: Prisma.BigIntFilter<"Escrow"> | bigint | number
-  amountAda?: Prisma.FloatFilter<"Escrow"> | number
-  funderAddress?: Prisma.StringFilter<"Escrow"> | string
-  funderPubKeyHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  recipientAddress?: Prisma.StringFilter<"Escrow"> | string
-  recipientPubKeyHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   status?: Prisma.EnumEscrowStatusFilter<"Escrow"> | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  recipientLockDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  datum?: Prisma.JsonFilter<"Escrow">
-  contractIpfsHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
-  lockedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  funderAddress?: Prisma.StringFilter<"Escrow"> | string
+  funderStakeInAda?: Prisma.FloatFilter<"Escrow"> | number
+  recipientAddress?: Prisma.StringFilter<"Escrow"> | string
+  recipientStakeInAda?: Prisma.FloatNullableFilter<"Escrow"> | number | null
+  contractIpfsHash?: Prisma.StringFilter<"Escrow"> | string
+  recipientLockDeadline?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  submissionDeadline?: Prisma.DateTimeFilter<"Escrow"> | Date | string
   resolutionDeadline?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  datumHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   scriptCbor?: Prisma.StringNullableFilter<"Escrow"> | string | null
-  confirmations?: Prisma.IntFilter<"Escrow"> | number
-  blockHeight?: Prisma.IntNullableFilter<"Escrow"> | number | null
-  blockHash?: Prisma.StringNullableFilter<"Escrow"> | string | null
   approvedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
   disputedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
   resolvedAt?: Prisma.DateTimeNullableFilter<"Escrow"> | Date | string | null
-  userId?: Prisma.StringNullableFilter<"Escrow"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Escrow"> | Date | string
 }
 
-export type EscrowCreateWithoutEscrowTransactionsInput = {
+export type EscrowCreateWithoutTransactionsInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  user?: Prisma.UserCreateNestedOneWithoutEscrowsInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutEscrowsInput
   dispute?: Prisma.DisputeCreateNestedOneWithoutEscrowInput
   resolution?: Prisma.ResolutionCreateNestedOneWithoutEscrowInput
 }
 
-export type EscrowUncheckedCreateWithoutEscrowTransactionsInput = {
+export type EscrowUncheckedCreateWithoutTransactionsInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  userId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutEscrowsInput
   dispute?: Prisma.DisputeUncheckedCreateNestedOneWithoutEscrowInput
   resolution?: Prisma.ResolutionUncheckedCreateNestedOneWithoutEscrowInput
 }
 
-export type EscrowCreateOrConnectWithoutEscrowTransactionsInput = {
+export type EscrowCreateOrConnectWithoutTransactionsInput = {
   where: Prisma.EscrowWhereUniqueInput
-  create: Prisma.XOR<Prisma.EscrowCreateWithoutEscrowTransactionsInput, Prisma.EscrowUncheckedCreateWithoutEscrowTransactionsInput>
+  create: Prisma.XOR<Prisma.EscrowCreateWithoutTransactionsInput, Prisma.EscrowUncheckedCreateWithoutTransactionsInput>
 }
 
-export type EscrowUpsertWithoutEscrowTransactionsInput = {
-  update: Prisma.XOR<Prisma.EscrowUpdateWithoutEscrowTransactionsInput, Prisma.EscrowUncheckedUpdateWithoutEscrowTransactionsInput>
-  create: Prisma.XOR<Prisma.EscrowCreateWithoutEscrowTransactionsInput, Prisma.EscrowUncheckedCreateWithoutEscrowTransactionsInput>
+export type EscrowUpsertWithoutTransactionsInput = {
+  update: Prisma.XOR<Prisma.EscrowUpdateWithoutTransactionsInput, Prisma.EscrowUncheckedUpdateWithoutTransactionsInput>
+  create: Prisma.XOR<Prisma.EscrowCreateWithoutTransactionsInput, Prisma.EscrowUncheckedCreateWithoutTransactionsInput>
   where?: Prisma.EscrowWhereInput
 }
 
-export type EscrowUpdateToOneWithWhereWithoutEscrowTransactionsInput = {
+export type EscrowUpdateToOneWithWhereWithoutTransactionsInput = {
   where?: Prisma.EscrowWhereInput
-  data: Prisma.XOR<Prisma.EscrowUpdateWithoutEscrowTransactionsInput, Prisma.EscrowUncheckedUpdateWithoutEscrowTransactionsInput>
+  data: Prisma.XOR<Prisma.EscrowUpdateWithoutTransactionsInput, Prisma.EscrowUncheckedUpdateWithoutTransactionsInput>
 }
 
-export type EscrowUpdateWithoutEscrowTransactionsInput = {
+export type EscrowUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  user?: Prisma.UserUpdateOneWithoutEscrowsNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutEscrowsNestedInput
   dispute?: Prisma.DisputeUpdateOneWithoutEscrowNestedInput
   resolution?: Prisma.ResolutionUpdateOneWithoutEscrowNestedInput
 }
 
-export type EscrowUncheckedUpdateWithoutEscrowTransactionsInput = {
+export type EscrowUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutEscrowsNestedInput
   dispute?: Prisma.DisputeUncheckedUpdateOneWithoutEscrowNestedInput
   resolution?: Prisma.ResolutionUncheckedUpdateOneWithoutEscrowNestedInput
 }
 
 export type EscrowCreateWithoutDisputeInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  user?: Prisma.UserCreateNestedOneWithoutEscrowsInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutEscrowsInput
   resolution?: Prisma.ResolutionCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutEscrowInput
 }
 
 export type EscrowUncheckedCreateWithoutDisputeInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  userId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutEscrowsInput
   resolution?: Prisma.ResolutionUncheckedCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutEscrowInput
 }
 
 export type EscrowCreateOrConnectWithoutDisputeInput = {
@@ -1328,130 +1016,94 @@ export type EscrowUpdateToOneWithWhereWithoutDisputeInput = {
 
 export type EscrowUpdateWithoutDisputeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  user?: Prisma.UserUpdateOneWithoutEscrowsNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutEscrowsNestedInput
   resolution?: Prisma.ResolutionUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutEscrowNestedInput
 }
 
 export type EscrowUncheckedUpdateWithoutDisputeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutEscrowsNestedInput
   resolution?: Prisma.ResolutionUncheckedUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutEscrowNestedInput
 }
 
 export type EscrowCreateWithoutResolutionInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  user?: Prisma.UserCreateNestedOneWithoutEscrowsInput
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutEscrowsInput
   dispute?: Prisma.DisputeCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutEscrowInput
 }
 
 export type EscrowUncheckedCreateWithoutResolutionInput = {
   id?: string
-  txHash: string
   scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
   status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
+  funderAddress: string
+  funderStakeInAda: number
+  recipientAddress: string
+  recipientStakeInAda?: number | null
+  contractIpfsHash: string
+  recipientLockDeadline: Date | string
+  submissionDeadline: Date | string
   resolutionDeadline?: Date | string | null
-  datumHash?: string | null
   scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
   approvedAt?: Date | string | null
   disputedAt?: Date | string | null
   resolvedAt?: Date | string | null
-  userId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutEscrowsInput
   dispute?: Prisma.DisputeUncheckedCreateNestedOneWithoutEscrowInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedCreateNestedManyWithoutEscrowInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutEscrowInput
 }
 
 export type EscrowCreateOrConnectWithoutResolutionInput = {
@@ -1472,188 +1124,114 @@ export type EscrowUpdateToOneWithWhereWithoutResolutionInput = {
 
 export type EscrowUpdateWithoutResolutionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  user?: Prisma.UserUpdateOneWithoutEscrowsNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutEscrowsNestedInput
   dispute?: Prisma.DisputeUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutEscrowNestedInput
 }
 
 export type EscrowUncheckedUpdateWithoutResolutionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutEscrowsNestedInput
   dispute?: Prisma.DisputeUncheckedUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutEscrowNestedInput
 }
 
-export type EscrowCreateManyUserInput = {
-  id?: string
-  txHash: string
-  scriptAddress: string
-  amount: bigint | number
-  amountAda: number
-  funderAddress: string
-  funderPubKeyHash?: string | null
-  recipientAddress: string
-  recipientPubKeyHash?: string | null
-  status?: $Enums.EscrowStatus
-  disputeDeadline?: Date | string | null
-  recipientLockDeadline?: Date | string | null
-  datum: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  lockedAt?: Date | string
-  resolutionDeadline?: Date | string | null
-  datumHash?: string | null
-  scriptCbor?: string | null
-  confirmations?: number
-  blockHeight?: number | null
-  blockHash?: string | null
-  approvedAt?: Date | string | null
-  disputedAt?: Date | string | null
-  resolvedAt?: Date | string | null
-}
-
-export type EscrowUpdateWithoutUserInput = {
+export type EscrowUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dispute?: Prisma.DisputeUpdateOneWithoutEscrowNestedInput
   resolution?: Prisma.ResolutionUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutEscrowNestedInput
 }
 
-export type EscrowUncheckedUpdateWithoutUserInput = {
+export type EscrowUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dispute?: Prisma.DisputeUncheckedUpdateOneWithoutEscrowNestedInput
   resolution?: Prisma.ResolutionUncheckedUpdateOneWithoutEscrowNestedInput
-  escrowTransactions?: Prisma.EscrowTransactionUncheckedUpdateManyWithoutEscrowNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutEscrowNestedInput
 }
 
-export type EscrowUncheckedUpdateManyWithoutUserInput = {
+export type EscrowUncheckedUpdateManyWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  txHash?: Prisma.StringFieldUpdateOperationsInput | string
   scriptAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  amountAda?: Prisma.FloatFieldUpdateOperationsInput | number
-  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  funderPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  recipientPubKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEscrowStatusFieldUpdateOperationsInput | $Enums.EscrowStatus
-  disputeDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  recipientLockDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datum?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  contractIpfsHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lockedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  funderAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  funderStakeInAda?: Prisma.FloatFieldUpdateOperationsInput | number
+  recipientAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientStakeInAda?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  contractIpfsHash?: Prisma.StringFieldUpdateOperationsInput | string
+  recipientLockDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  submissionDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   resolutionDeadline?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  datumHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scriptCbor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  confirmations?: Prisma.IntFieldUpdateOperationsInput | number
-  blockHeight?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  blockHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   disputedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resolvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1662,11 +1240,13 @@ export type EscrowUncheckedUpdateManyWithoutUserInput = {
  */
 
 export type EscrowCountOutputType = {
-  escrowTransactions: number
+  users: number
+  transactions: number
 }
 
 export type EscrowCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  escrowTransactions?: boolean | EscrowCountOutputTypeCountEscrowTransactionsArgs
+  users?: boolean | EscrowCountOutputTypeCountUsersArgs
+  transactions?: boolean | EscrowCountOutputTypeCountTransactionsArgs
 }
 
 /**
@@ -1682,189 +1262,140 @@ export type EscrowCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * EscrowCountOutputType without action
  */
-export type EscrowCountOutputTypeCountEscrowTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.EscrowTransactionWhereInput
+export type EscrowCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * EscrowCountOutputType without action
+ */
+export type EscrowCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionWhereInput
 }
 
 
 export type EscrowSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  txHash?: boolean
   scriptAddress?: boolean
-  amount?: boolean
-  amountAda?: boolean
-  funderAddress?: boolean
-  funderPubKeyHash?: boolean
-  recipientAddress?: boolean
-  recipientPubKeyHash?: boolean
   status?: boolean
-  disputeDeadline?: boolean
-  recipientLockDeadline?: boolean
-  datum?: boolean
+  funderAddress?: boolean
+  funderStakeInAda?: boolean
+  recipientAddress?: boolean
+  recipientStakeInAda?: boolean
   contractIpfsHash?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  lockedAt?: boolean
+  recipientLockDeadline?: boolean
+  submissionDeadline?: boolean
   resolutionDeadline?: boolean
-  datumHash?: boolean
   scriptCbor?: boolean
-  confirmations?: boolean
-  blockHeight?: boolean
-  blockHash?: boolean
   approvedAt?: boolean
   disputedAt?: boolean
   resolvedAt?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.Escrow$userArgs<ExtArgs>
+  createdAt?: boolean
+  updatedAt?: boolean
+  users?: boolean | Prisma.Escrow$usersArgs<ExtArgs>
   dispute?: boolean | Prisma.Escrow$disputeArgs<ExtArgs>
   resolution?: boolean | Prisma.Escrow$resolutionArgs<ExtArgs>
-  escrowTransactions?: boolean | Prisma.Escrow$escrowTransactionsArgs<ExtArgs>
+  transactions?: boolean | Prisma.Escrow$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.EscrowCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["escrow"]>
 
 export type EscrowSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  txHash?: boolean
   scriptAddress?: boolean
-  amount?: boolean
-  amountAda?: boolean
-  funderAddress?: boolean
-  funderPubKeyHash?: boolean
-  recipientAddress?: boolean
-  recipientPubKeyHash?: boolean
   status?: boolean
-  disputeDeadline?: boolean
-  recipientLockDeadline?: boolean
-  datum?: boolean
+  funderAddress?: boolean
+  funderStakeInAda?: boolean
+  recipientAddress?: boolean
+  recipientStakeInAda?: boolean
   contractIpfsHash?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  lockedAt?: boolean
+  recipientLockDeadline?: boolean
+  submissionDeadline?: boolean
   resolutionDeadline?: boolean
-  datumHash?: boolean
   scriptCbor?: boolean
-  confirmations?: boolean
-  blockHeight?: boolean
-  blockHash?: boolean
   approvedAt?: boolean
   disputedAt?: boolean
   resolvedAt?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.Escrow$userArgs<ExtArgs>
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["escrow"]>
 
 export type EscrowSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  txHash?: boolean
   scriptAddress?: boolean
-  amount?: boolean
-  amountAda?: boolean
-  funderAddress?: boolean
-  funderPubKeyHash?: boolean
-  recipientAddress?: boolean
-  recipientPubKeyHash?: boolean
   status?: boolean
-  disputeDeadline?: boolean
-  recipientLockDeadline?: boolean
-  datum?: boolean
+  funderAddress?: boolean
+  funderStakeInAda?: boolean
+  recipientAddress?: boolean
+  recipientStakeInAda?: boolean
   contractIpfsHash?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  lockedAt?: boolean
+  recipientLockDeadline?: boolean
+  submissionDeadline?: boolean
   resolutionDeadline?: boolean
-  datumHash?: boolean
   scriptCbor?: boolean
-  confirmations?: boolean
-  blockHeight?: boolean
-  blockHash?: boolean
   approvedAt?: boolean
   disputedAt?: boolean
   resolvedAt?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.Escrow$userArgs<ExtArgs>
+  createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["escrow"]>
 
 export type EscrowSelectScalar = {
   id?: boolean
-  txHash?: boolean
   scriptAddress?: boolean
-  amount?: boolean
-  amountAda?: boolean
-  funderAddress?: boolean
-  funderPubKeyHash?: boolean
-  recipientAddress?: boolean
-  recipientPubKeyHash?: boolean
   status?: boolean
-  disputeDeadline?: boolean
-  recipientLockDeadline?: boolean
-  datum?: boolean
+  funderAddress?: boolean
+  funderStakeInAda?: boolean
+  recipientAddress?: boolean
+  recipientStakeInAda?: boolean
   contractIpfsHash?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  lockedAt?: boolean
+  recipientLockDeadline?: boolean
+  submissionDeadline?: boolean
   resolutionDeadline?: boolean
-  datumHash?: boolean
   scriptCbor?: boolean
-  confirmations?: boolean
-  blockHeight?: boolean
-  blockHash?: boolean
   approvedAt?: boolean
   disputedAt?: boolean
   resolvedAt?: boolean
-  userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type EscrowOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "txHash" | "scriptAddress" | "amount" | "amountAda" | "funderAddress" | "funderPubKeyHash" | "recipientAddress" | "recipientPubKeyHash" | "status" | "disputeDeadline" | "recipientLockDeadline" | "datum" | "contractIpfsHash" | "createdAt" | "updatedAt" | "lockedAt" | "resolutionDeadline" | "datumHash" | "scriptCbor" | "confirmations" | "blockHeight" | "blockHash" | "approvedAt" | "disputedAt" | "resolvedAt" | "userId", ExtArgs["result"]["escrow"]>
+export type EscrowOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "scriptAddress" | "status" | "funderAddress" | "funderStakeInAda" | "recipientAddress" | "recipientStakeInAda" | "contractIpfsHash" | "recipientLockDeadline" | "submissionDeadline" | "resolutionDeadline" | "scriptCbor" | "approvedAt" | "disputedAt" | "resolvedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["escrow"]>
 export type EscrowInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.Escrow$userArgs<ExtArgs>
+  users?: boolean | Prisma.Escrow$usersArgs<ExtArgs>
   dispute?: boolean | Prisma.Escrow$disputeArgs<ExtArgs>
   resolution?: boolean | Prisma.Escrow$resolutionArgs<ExtArgs>
-  escrowTransactions?: boolean | Prisma.Escrow$escrowTransactionsArgs<ExtArgs>
+  transactions?: boolean | Prisma.Escrow$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.EscrowCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type EscrowIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.Escrow$userArgs<ExtArgs>
-}
-export type EscrowIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.Escrow$userArgs<ExtArgs>
-}
+export type EscrowIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type EscrowIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $EscrowPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Escrow"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs> | null
+    users: Prisma.$UserPayload<ExtArgs>[]
     dispute: Prisma.$DisputePayload<ExtArgs> | null
     resolution: Prisma.$ResolutionPayload<ExtArgs> | null
-    escrowTransactions: Prisma.$EscrowTransactionPayload<ExtArgs>[]
+    transactions: Prisma.$TransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    txHash: string
     scriptAddress: string
-    amount: bigint
-    amountAda: number
-    funderAddress: string
-    funderPubKeyHash: string | null
-    recipientAddress: string
-    recipientPubKeyHash: string | null
     status: $Enums.EscrowStatus
-    disputeDeadline: Date | null
-    recipientLockDeadline: Date | null
-    datum: runtime.JsonValue
-    contractIpfsHash: string | null
-    createdAt: Date
-    updatedAt: Date
-    lockedAt: Date
+    funderAddress: string
+    funderStakeInAda: number
+    recipientAddress: string
+    recipientStakeInAda: number | null
+    contractIpfsHash: string
+    recipientLockDeadline: Date
+    submissionDeadline: Date
     resolutionDeadline: Date | null
-    datumHash: string | null
     scriptCbor: string | null
-    confirmations: number
-    blockHeight: number | null
-    blockHash: string | null
     approvedAt: Date | null
     disputedAt: Date | null
     resolvedAt: Date | null
-    userId: string | null
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["escrow"]>
   composites: {}
 }
@@ -2259,10 +1790,10 @@ readonly fields: EscrowFieldRefs;
  */
 export interface Prisma__EscrowClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.Escrow$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Escrow$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  users<T extends Prisma.Escrow$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Escrow$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dispute<T extends Prisma.Escrow$disputeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Escrow$disputeArgs<ExtArgs>>): Prisma.Prisma__DisputeClient<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   resolution<T extends Prisma.Escrow$resolutionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Escrow$resolutionArgs<ExtArgs>>): Prisma.Prisma__ResolutionClient<runtime.Types.Result.GetResult<Prisma.$ResolutionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  escrowTransactions<T extends Prisma.Escrow$escrowTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Escrow$escrowTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EscrowTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transactions<T extends Prisma.Escrow$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Escrow$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2293,32 +1824,22 @@ export interface Prisma__EscrowClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface EscrowFieldRefs {
   readonly id: Prisma.FieldRef<"Escrow", 'String'>
-  readonly txHash: Prisma.FieldRef<"Escrow", 'String'>
   readonly scriptAddress: Prisma.FieldRef<"Escrow", 'String'>
-  readonly amount: Prisma.FieldRef<"Escrow", 'BigInt'>
-  readonly amountAda: Prisma.FieldRef<"Escrow", 'Float'>
-  readonly funderAddress: Prisma.FieldRef<"Escrow", 'String'>
-  readonly funderPubKeyHash: Prisma.FieldRef<"Escrow", 'String'>
-  readonly recipientAddress: Prisma.FieldRef<"Escrow", 'String'>
-  readonly recipientPubKeyHash: Prisma.FieldRef<"Escrow", 'String'>
   readonly status: Prisma.FieldRef<"Escrow", 'EscrowStatus'>
-  readonly disputeDeadline: Prisma.FieldRef<"Escrow", 'DateTime'>
-  readonly recipientLockDeadline: Prisma.FieldRef<"Escrow", 'DateTime'>
-  readonly datum: Prisma.FieldRef<"Escrow", 'Json'>
+  readonly funderAddress: Prisma.FieldRef<"Escrow", 'String'>
+  readonly funderStakeInAda: Prisma.FieldRef<"Escrow", 'Float'>
+  readonly recipientAddress: Prisma.FieldRef<"Escrow", 'String'>
+  readonly recipientStakeInAda: Prisma.FieldRef<"Escrow", 'Float'>
   readonly contractIpfsHash: Prisma.FieldRef<"Escrow", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Escrow", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Escrow", 'DateTime'>
-  readonly lockedAt: Prisma.FieldRef<"Escrow", 'DateTime'>
+  readonly recipientLockDeadline: Prisma.FieldRef<"Escrow", 'DateTime'>
+  readonly submissionDeadline: Prisma.FieldRef<"Escrow", 'DateTime'>
   readonly resolutionDeadline: Prisma.FieldRef<"Escrow", 'DateTime'>
-  readonly datumHash: Prisma.FieldRef<"Escrow", 'String'>
   readonly scriptCbor: Prisma.FieldRef<"Escrow", 'String'>
-  readonly confirmations: Prisma.FieldRef<"Escrow", 'Int'>
-  readonly blockHeight: Prisma.FieldRef<"Escrow", 'Int'>
-  readonly blockHash: Prisma.FieldRef<"Escrow", 'String'>
   readonly approvedAt: Prisma.FieldRef<"Escrow", 'DateTime'>
   readonly disputedAt: Prisma.FieldRef<"Escrow", 'DateTime'>
   readonly resolvedAt: Prisma.FieldRef<"Escrow", 'DateTime'>
-  readonly userId: Prisma.FieldRef<"Escrow", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Escrow", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Escrow", 'DateTime'>
 }
     
 
@@ -2568,10 +2089,6 @@ export type EscrowCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    */
   data: Prisma.EscrowCreateManyInput | Prisma.EscrowCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EscrowIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2642,10 +2159,6 @@ export type EscrowUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many Escrows to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.EscrowIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2715,9 +2228,9 @@ export type EscrowDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Escrow.user
+ * Escrow.users
  */
-export type Escrow$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Escrow$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */
@@ -2731,6 +2244,11 @@ export type Escrow$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**
@@ -2772,27 +2290,27 @@ export type Escrow$resolutionArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Escrow.escrowTransactions
+ * Escrow.transactions
  */
-export type Escrow$escrowTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Escrow$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the EscrowTransaction
+   * Select specific fields to fetch from the Transaction
    */
-  select?: Prisma.EscrowTransactionSelect<ExtArgs> | null
+  select?: Prisma.TransactionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the EscrowTransaction
+   * Omit specific fields from the Transaction
    */
-  omit?: Prisma.EscrowTransactionOmit<ExtArgs> | null
+  omit?: Prisma.TransactionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.EscrowTransactionInclude<ExtArgs> | null
-  where?: Prisma.EscrowTransactionWhereInput
-  orderBy?: Prisma.EscrowTransactionOrderByWithRelationInput | Prisma.EscrowTransactionOrderByWithRelationInput[]
-  cursor?: Prisma.EscrowTransactionWhereUniqueInput
+  include?: Prisma.TransactionInclude<ExtArgs> | null
+  where?: Prisma.TransactionWhereInput
+  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.EscrowTransactionScalarFieldEnum | Prisma.EscrowTransactionScalarFieldEnum[]
+  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
 }
 
 /**

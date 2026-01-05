@@ -1,307 +1,333 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import { 
-    Loader2, 
-    ArrowRight, 
-    CheckCircle2, 
-    Info, 
-    HelpCircle, 
-    DollarSign, 
-    Hash, 
-    FileSearch, 
-    ExternalLink,
-    Lock
-} from "lucide-react"
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Loader2,
+  Hash,
+  Lock,
+  Clock,
+  Shield,
+  AlertTriangle,
+  Wallet,
+  HelpCircleIcon,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { useWalletContext } from '@/contexts/WalletContext'
-import { getScript, getTxBuilder, getUtxoByTxHash } from '@/lib/aiken'
-import { adaToLovelace } from '@/utils'
-import { DEFAULT_REDEEMER_BUDGET, deserializeDatum, MeshValue, mergeAssets } from '@meshsdk/core'
-import { 
-    activeEscrowDatum, 
-    getErrMsg, 
-    InitiationDatum, 
-    recipientDepositRedeemer, 
-} from '@/utils/aiken'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useWalletContext } from "@/contexts/WalletContext";
+import { getScript, getTxBuilder, getUtxoByTxHash } from "@/lib/aiken";
+import { adaToLovelace, calculateTimeRemaining, formatDate } from "@/utils";
+import { DEFAULT_REDEEMER_BUDGET, deserializeDatum, MeshValue, mergeAssets } from "@meshsdk/core";
+import {
+  activeEscrowDatum,
+  getErrMsg,
+  InitiationDatum,
+  recipientDepositRedeemer,
+  stringifyPlutusData,
+} from "@/utils/aiken";
 
-
-import { useContractActionLog } from "@/store/useLogger"
-import FloatingDebugJson from "@/components/custom/DebugJson"
-import PersistentText from '@/components/custom/PersistentText'
+import PersistentText from "@/components/custom/PersistentText";
+import { useGetEscrowByIdQuery, useRecipientStakeMutation } from "@/services/escrow.service";
+import { useSearchParams } from "next/navigation";
+import { EscrowAnalysisCard } from "@/components/custom/EscrowAnalysisCard";
+import { Card } from "@/components/ui/card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { toast } from "sonner";
 
 export default function RecipientDepositPage() {
-    const { wallet, changeAddress, collateral, refreshBalance } = useWalletContext()
-    const logAction = useContractActionLog((state) => state.logAction)
+  const { wallet, changeAddress, collateral, refreshBalance } = useWalletContext();
 
-    // State
-    const [amount, setAmount] = useState<number>(0)
-    const [funderTxHash, setFunderTxHash] = useState("")
-    const [depositTxHash, setDepositTxHash] = useState("")
-    const [isPending, setIsPending] = useState(false)
-    
-    // Contract Visualization State
-    const [contractData, setContractData] = useState<{ipfsHash: string, amount: string} | null>(null)
-    const [isFetchingContract, setIsFetchingContract] = useState(false)
+  const searchParams = useSearchParams();
+  const escrowId = searchParams.get("id");
+  const getEscrowQuery = useGetEscrowByIdQuery({ id: escrowId || undefined, enabled: !!escrowId });
+  const escrow = useMemo(() => getEscrowQuery.data || undefined, [getEscrowQuery.data]);
 
-    const handleFetchContract = async () => {
-        if (!funderTxHash || funderTxHash.length < 10) return;
-        try {
-            setIsFetchingContract(true)
-            const escrowUtxo = await getUtxoByTxHash(funderTxHash)
-            if (escrowUtxo) {
-                const inputDatum = deserializeDatum<InitiationDatum>(escrowUtxo.output.plutusData!)
-                // In InitiationDatum, fields[4] is usually the IPFS hash, fields[1] is amount
-                setContractData({
-                    ipfsHash: String(inputDatum.fields[4] || ""),
-                    amount: (Number(MeshValue.fromValue(inputDatum.fields[1]).toAssets()[0].quantity) / 1_000_000).toString()
-                })
-            }
-        } catch (e) {
-            console.error("Preview error", e)
-        } finally {
-            setIsFetchingContract(false)
-        }
+  const recipientDepositMutation = useRecipientStakeMutation();
+
+  // State
+  const [funderTxHash, setFunderTxHash] = useState("");
+  const [depositTxHash, setDepositTxHash] = useState("");
+  const [isPending, setIsPending] = useState(false);
+
+  // Constants
+  const COLLATERAL_AMOUNT = 5; // Fixed 5 ADA collateral
+  const now = new Date();
+  const deadline = escrow?.recipientLockDeadline ? new Date(escrow.recipientLockDeadline) : null;
+  const isExpired = deadline ? deadline < now : false;
+  const timeRemaining = deadline ? calculateTimeRemaining(deadline) : null;
+
+  const handleRecipientDeposit = async () => {
+    if (!funderTxHash) return alert("Funder Transaction Hash is required.");
+
+    if (isExpired) {
+      return alert(
+        "The deadline for accepting this agreement has expired. You can no longer deposit collateral."
+      );
     }
 
-    const handleRecipientDeposit = async () => {
-        if (!amount || amount <= 0) return alert("Enter a valid deposit amount.");
-        if (!funderTxHash) return alert("Funder Transaction Hash is required.");
-
-        const walletAddress = changeAddress;
-        logAction({
-            action: 'INIT',
-            contractName: 'AikenEscrow',
-            method: 'recipientDeposit',
-            details: { recipient: walletAddress, depositAmountADA: amount, funderTxHash }
-        });
-
-        try {
-            setIsPending(true)
-            const depositAmount = [{ unit: "lovelace", quantity: adaToLovelace(amount).toString() }];
-            const utxos = await wallet.getUtxos();
-            const { scriptAddr, scriptCbor } = getScript();
-            const txBuilder = getTxBuilder();
-
-            const escrowUtxo = await getUtxoByTxHash(funderTxHash);
-            if (!escrowUtxo) throw new Error("Could not find script UTxO.");
-
-            const inputDatum = deserializeDatum<InitiationDatum>(escrowUtxo.output.plutusData!);
-            const outputDatum = activeEscrowDatum(inputDatum, walletAddress, depositAmount);
-            const redeemerValue = recipientDepositRedeemer(walletAddress, depositAmount);
-
-            const inputAssets = MeshValue.fromValue(inputDatum.fields[1]).toAssets();
-            const totalEscrowAmount = mergeAssets([...depositAmount, ...inputAssets]);
-
-            await txBuilder
-                .spendingPlutusScript('V3')
-                .txIn(escrowUtxo.input.txHash, escrowUtxo.input.outputIndex, escrowUtxo.output.amount, scriptAddr)
-                .spendingReferenceTxInInlineDatumPresent()
-                .txInRedeemerValue(redeemerValue, "JSON", DEFAULT_REDEEMER_BUDGET)
-                .txInScript(scriptCbor)
-                .txOut(scriptAddr, totalEscrowAmount)
-                .txOutInlineDatumValue(outputDatum, "JSON")
-                .changeAddress(walletAddress)
-                .txInCollateral(
-                    collateral[0].input.txHash,
-                    collateral[0].input.outputIndex,
-                    collateral[0].output.amount,
-                    collateral[0].output.address
-                )
-                .selectUtxosFrom(utxos)
-                .complete();
-
-            const signedTx = await wallet.signTx(txBuilder.txHex, undefined, true);
-            const newTxHash = await wallet.submitTx(signedTx);
-            
-            setDepositTxHash(newTxHash);
-            await refreshBalance();
-
-            logAction({
-                action: 'CALL',
-                contractName: 'AikenEscrow',
-                method: 'recipientDeposit',
-                txHash: newTxHash,
-                details: { status: 'Success', deposit: `${amount} ADA` }
-            });
-        } catch (error) {
-            alert(getErrMsg(error));
-        } finally {
-            setIsPending(false)
-        }
+    if (!escrow) {
+      toast.error("Escrow not found.");
+      return;
     }
 
-    return (
-        <div className="min-h-[calc(100vh-5rem)] bg-white py-12 px-6">
-            <div className="max-w-6xl mx-auto">
-                <FloatingDebugJson data={{ amount, funderTxHash, contractData }} />
+    const walletAddress = changeAddress;
 
-                {/* Header */}
-                <header className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <div className="space-y-1">
-                        <div className="flex items-center gap-2 text-primary/80 mb-1">
-                            <Lock className="h-4 w-4" />
-                            <span className="text-xs font-bold uppercase tracking-[0.2em]">Active Protection</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <h1 className="text-4xl font-semibold tracking-tight text-zinc-900">Join Agreement</h1>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 text-zinc-500">
-                                        <HelpCircle className="h-5 w-5" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-80 p-5 shadow-2xl border-zinc-100" align="start">
-                                    <div className="space-y-3">
-                                        <h3 className="font-bold text-zinc-900 flex items-center gap-2">
-                                            <Info className="h-4 w-4 text-primary" />
-                                            Counter-Deposit
-                                        </h3>
-                                        <p className="text-sm text-zinc-600 leading-relaxed">
-                                            As the recipient, you must match the agreed deposit to activate the contract. Both {`parties'`} funds are held safely by the protocol.
-                                        </p>
-                                    </div>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-                    </div>
-                </header>
+    try {
+      setIsPending(true);
+      const depositAmount = [
+        { unit: "lovelace", quantity: adaToLovelace(COLLATERAL_AMOUNT).toString() },
+      ];
+      const utxos = await wallet.getUtxos();
+      const { scriptAddr, scriptCbor } = getScript();
+      const txBuilder = getTxBuilder();
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-                    
-                    {/* LEFT COLUMN: FORM */}
-                    <div className="lg:col-span-6 space-y-12">
-                        <div className="space-y-8">
-                            {/* Funder Tx Hash Input */}
-                            <div className="space-y-2">
-                                <Label className="text-zinc-500 uppercase text-[10px] font-bold tracking-widest">Agreement Reference (Tx Hash)</Label>
-                                <div className="relative group">
-                                    <Hash className="absolute left-1 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400 group-focus-within:text-primary transition-colors" strokeWidth={1.5} />
-                                    <Input 
-                                        placeholder="Paste original funding hash..." 
-                                        value={funderTxHash}
-                                        onChange={(e) => setFunderTxHash(e.target.value)}
-                                        onBlur={handleFetchContract}
-                                        className="border-0 border-b border-zinc-300 rounded-none pl-9 h-12 focus-visible:ring-0 focus-visible:border-primary font-mono text-base placeholder:text-zinc-200" 
-                                    />
-                                    {isFetchingContract && <Loader2 className="absolute right-2 top-3 h-4 w-4 animate-spin text-zinc-400" />}
-                                </div>
-                            </div>
+      const escrowUtxo = await getUtxoByTxHash(funderTxHash);
+      if (!escrowUtxo) throw new Error("Could not find script UTxO.");
 
-                            {/* Amount Input */}
-                            <div className="space-y-2">
-                                <Label className="text-zinc-500 uppercase text-[10px] font-bold tracking-widest">Your Security Deposit (ADA)</Label>
-                                <div className="relative group">
-                                    <DollarSign className="absolute left-1 top-1/2 -translate-y-1/2 h-5 w-5 text-zinc-400 group-focus-within:text-primary transition-colors" strokeWidth={1.5} />
-                                    <Input 
-                                        type="number" 
-                                        placeholder="0.00" 
-                                        value={amount || ""}
-                                        onChange={(e) => setAmount(e.target.valueAsNumber || 0)}
-                                        className="border-0 border-b border-zinc-300 rounded-none pl-9 h-12 focus-visible:ring-0 focus-visible:border-primary text-lg transition-all placeholder:text-zinc-200" 
-                                    />
-                                </div>
-                            </div>
-                        </div>
+      const inputDatum = deserializeDatum<InitiationDatum>(escrowUtxo.output.plutusData!);
+      const outputDatum = activeEscrowDatum(inputDatum, walletAddress, depositAmount);
+      const redeemerValue = recipientDepositRedeemer(walletAddress, depositAmount);
 
-                        <div className="pt-4">
-                            <Button
-                                onClick={handleRecipientDeposit}
-                                disabled={isPending || !funderTxHash}
-                                className="w-full h-14 text-lg font-medium transition-all active:scale-[0.98] rounded-md shadow-lg shadow-primary/10"
-                            >
-                                {isPending ? (
-                                    <div className="flex items-center gap-3">
-                                        <Loader2 className="h-5 w-5 animate-spin" />
-                                        <span>Submitting Deposit...</span>
-                                    </div>
-                                ) : (
-                                    <div className="flex items-center gap-2">
-                                        <span>Confirm & Deposit</span>
-                                        <ArrowRight className="h-5 w-5" />
-                                    </div>
-                                )}
-                            </Button>
-                        </div>
+      const inputAssets = MeshValue.fromValue(inputDatum.fields[1]).toAssets();
+      const totalEscrowAmount = mergeAssets([...depositAmount, ...inputAssets]);
 
-                        {depositTxHash && (
-                            <div className="p-8 bg-emerald-50/30 border border-emerald-100 rounded-2xl animate-in fade-in slide-in-from-bottom-3 duration-700">
-                                <div className="flex items-center gap-2 text-emerald-600 mb-6">
-                                    <CheckCircle2 className="h-4 w-4" />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Agreement Fully Activated</span>
-                                </div>
-                                <PersistentText
-                                    data={depositTxHash}
-                                    storageKey="depositTxHash"
-                                    label="Activation Receipt"
-                                    description="This transaction hash confirms your deposit and the activation of the escrow."
-                                />
-                            </div>
-                        )}
-                    </div>
+      await txBuilder
+        .spendingPlutusScript("V3")
+        .txIn(
+          escrowUtxo.input.txHash,
+          escrowUtxo.input.outputIndex,
+          escrowUtxo.output.amount,
+          scriptAddr
+        )
+        .spendingReferenceTxInInlineDatumPresent()
+        .txInRedeemerValue(redeemerValue, "JSON", DEFAULT_REDEEMER_BUDGET)
+        .txInScript(scriptCbor)
+        .txOut(scriptAddr, totalEscrowAmount)
+        .txOutInlineDatumValue(outputDatum, "JSON")
+        .changeAddress(walletAddress)
+        .txInCollateral(
+          collateral[0].input.txHash,
+          collateral[0].input.outputIndex,
+          collateral[0].output.amount,
+          collateral[0].output.address
+        )
+        .selectUtxosFrom(utxos)
+        .complete();
 
-                    {/* RIGHT COLUMN: CONTRACT VISUALIZATION */}
-                    <div className="lg:col-span-6">
-                        <div className="sticky top-12 space-y-6">
-                            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Contract Preview</h2>
-                            
-                            {contractData ? (
-                                <div className="border border-zinc-200 rounded-md p-0 overflow-hidden bg-zinc-50/30 transition-all animate-in zoom-in-95">
-                                    <div className="p-6 border-b border-zinc-100 bg-white flex justify-between items-center">
-                                        <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                                                <FileSearch className="h-5 w-5 text-primary" />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-bold text-zinc-900 leading-tight">Agreed Document</p>
-                                                <p className="text-[10px] text-zinc-400 uppercase tracking-tighter">Locked on IPFS</p>
-                                            </div>
-                                        </div>
-                                        <Button variant="outline" size="sm" className="h-8 gap-2 rounded-lg text-xs" asChild>
-                                            <a href={`https://gateway.pinata.cloud/ipfs/${contractData.ipfsHash}`} target="_blank" rel="noreferrer">
-                                                Open <ExternalLink className="h-3 w-3" />
-                                            </a>
-                                        </Button>
-                                    </div>
-                                    
-                                    <div className="p-8 space-y-6">
-                                        <div className="flex justify-between items-end border-b border-zinc-100 pb-4">
-                                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{`Funder's`} Stake</span>
-                                            <span className="text-2xl font-semibold text-zinc-900">{contractData.amount} ADA</span>
-                                        </div>
-                                        <div className="space-y-2">
-                                            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest block">Immutable Terms</span>
-                                            <p className="text-[11px] font-mono text-zinc-500 break-all bg-zinc-100/50 p-3 rounded-lg border border-zinc-200/50 leading-relaxed">
-                                                {contractData.ipfsHash}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="border border-dashed border-zinc-200 rounded-md h-64 flex flex-col items-center justify-center text-center p-8">
-                                    <div className="h-12 w-12 bg-zinc-50 rounded-full flex items-center justify-center mb-4">
-                                        <Hash className="h-6 w-6 text-zinc-200" />
-                                    </div>
-                                    <p className="text-sm font-medium text-zinc-400">Enter a Transaction Hash</p>
-                                    <p className="text-[11px] text-zinc-300 mt-1 max-w-[200px]">Provide the reference hash to load the contract details and terms.</p>
-                                </div>
-                            )}
+      const signedTx = await wallet.signTx(txBuilder.txHex, undefined, true);
+      const newTxHash = await wallet.submitTx(signedTx);
 
-                            <div className="flex items-start gap-3 p-4 bg-zinc-50 rounded-xl border border-zinc-100">
-                                <Info className="h-4 w-4 text-zinc-400 mt-0.5" />
-                                <p className="text-[11px] text-zinc-500 leading-relaxed">
-                                    By depositing, you acknowledge the terms stored in the IPFS hash above. The contract becomes <strong>active</strong> once your transaction is confirmed on-chain.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+      setDepositTxHash(newTxHash);
+      await refreshBalance();
 
-                </div>
+      recipientDepositMutation.mutate({
+        escrowId: escrow.id,
+        recipientStakeInAda: COLLATERAL_AMOUNT,
+        transaction: {
+          datum: stringifyPlutusData(outputDatum),
+          txHash: newTxHash,
+        },
+      });
+    } catch (error) {
+      let errMsg = getErrMsg(error);
+      if (errMsg.includes("already been spent")) {
+        errMsg = "Escrow has already been cancelled.";
+      } else if (errMsg.includes("The requested component has not been found")) {
+        errMsg = "The requested component has not been found";
+      } else if (errMsg.includes("they leave a collateral value as compensation")) {
+        errMsg = "Add collateral value as compensation";
+      }
+      console.log({ error });
+      toast.error(errMsg);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  useEffect(() => {
+    if (escrow) {
+      const latestTnx = escrow.transactions.find((tnx) => tnx.type === "CREATE_ESCROW");
+
+      if (latestTnx) {
+        setFunderTxHash(latestTnx.txHash);
+      }
+    }
+  }, [escrow]);
+
+  useEffect(() => {
+    if (recipientDepositMutation.isSuccess) {
+      toast.success("Recipient deposit successful");
+      getEscrowQuery.refetch();
+    } else if (recipientDepositMutation.isError) {
+      const errMsg = getErrMsg(recipientDepositMutation.error);
+      toast.error(errMsg);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    recipientDepositMutation.isSuccess,
+    recipientDepositMutation.isError,
+    recipientDepositMutation.error,
+  ]);
+
+  return (
+    <div className="min-h-[calc(100vh-5rem)] bg-white px-6 py-12">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-14">
+        <section>
+          <header className="mb-10 space-y-2">
+            <div className="text-primary/80 flex items-center gap-2">
+              <Lock className="h-4 w-4" />
+              <span className="text-xs font-bold tracking-[0.2em] uppercase">Escrow Protocol</span>
             </div>
-        </div>
-    )
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">
+                Accept Agreement
+              </h1>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 rounded-full text-zinc-400"
+                  >
+                    <HelpCircleIcon className="h-5 w-5" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 border-zinc-100 p-5 shadow-2xl" align="start">
+                  <div className="space-y-3">
+                    <h3 className="flex items-center gap-2 font-bold text-red-600">
+                      <AlertTriangle className="h-4 w-4" />
+                      Safety Notice
+                    </h3>
+                    <p className="text-sm leading-relaxed text-zinc-600">
+                      Review requirements and deposit collateral to activate the contract.
+                    </p>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+          </header>
+
+          <div className="flex flex-col gap-8">
+            {/* Unified Agreement Terms Card */}
+            <Card
+              className={`overflow-hidden rounded-none border-none py-0 shadow-none ${isExpired ? "border-red-200" : "border-zinc-200"}`}
+            >
+              {/* Top Section: Stats Split */}
+              <div className="flex divide-x divide-zinc-100">
+                {/* Time Limit */}
+                <div className="flex-1 p-5">
+                  <div className="mb-2 flex items-center gap-2 text-zinc-500">
+                    <Clock className="h-4 w-4" />
+                    <span className="text-[10px] font-bold tracking-wider uppercase">
+                      Time Limit
+                    </span>
+                  </div>
+                  <div
+                    className={`text-2xl font-bold ${isExpired ? "text-red-600" : "text-zinc-900"}`}
+                  >
+                    {isExpired
+                      ? "Expired"
+                      : `${timeRemaining?.days || 0}d ${timeRemaining?.hours || 0}h`}
+                  </div>
+                  <div className="mt-1 truncate text-xs font-medium text-zinc-400">
+                    Due by {deadline ? formatDate(deadline) : "N/A"}
+                  </div>
+                </div>
+
+                {/* Required Deposit */}
+                <div className="flex-1 bg-zinc-50/50 p-5">
+                  <div className="mb-2 flex items-center gap-2 text-zinc-500">
+                    <Shield className="h-4 w-4" />
+                    <span className="text-[10px] font-bold tracking-wider uppercase">
+                      Required Deposit
+                    </span>
+                  </div>
+                  <div className="flex items-baseline gap-1 text-2xl font-bold text-zinc-900">
+                    {COLLATERAL_AMOUNT}{" "}
+                    <span className="text-sm font-medium text-zinc-500">ADA</span>
+                  </div>
+                  <div className="mt-1 truncate text-xs font-medium text-emerald-600">
+                    Refundable upon completion
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Section: Warning */}
+              <div className="border-t border-amber-100 bg-amber-50 p-4">
+                <div className="flex gap-3">
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
+                  <div className="space-y-1">
+                    <p className="text-xs font-bold tracking-wide text-amber-800 uppercase">
+                      Forfeiture Warning
+                    </p>
+                    <p className="text-xs leading-relaxed text-amber-700">
+                      Your <strong>{COLLATERAL_AMOUNT} ADA</strong> will be forfeited to the funder
+                      if you fail to fulfill the agreed terms. It serves as your bond of good faith.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Input & Action */}
+            <div className="space-y-4">
+              <div className="space-y-3">
+                <Label className="text-xs font-medium text-zinc-500">
+                  Agreement Reference Hash
+                </Label>
+                <div className="relative">
+                  <Hash className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  <Input
+                    placeholder="Paste original funding hash..."
+                    value={funderTxHash}
+                    onChange={(e) => setFunderTxHash(e.target.value)}
+                    className="h-12 rounded-none border-0 border-b border-zinc-300 pl-9 font-mono text-base transition-all focus-visible:border-red-500 focus-visible:ring-0"
+                    disabled={!!escrow}
+                  />
+                </div>
+              </div>
+
+              <Button
+                onClick={handleRecipientDeposit}
+                disabled={isPending || !funderTxHash || isExpired}
+                className="h-12 w-full text-base font-medium shadow-md transition-all active:scale-[0.99]"
+              >
+                {isPending ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Processing Deposit...</span>
+                  </div>
+                ) : isExpired ? (
+                  <span>Deadline Expired</span>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <Wallet className="h-4 w-4" />
+                    <span>Deposit {COLLATERAL_AMOUNT} ADA & Start</span>
+                  </div>
+                )}
+              </Button>
+            </div>
+
+            {/* Success Receipt */}
+            {depositTxHash && (
+              <div className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <PersistentText
+                  data={depositTxHash}
+                  storageKey="depositTxHash"
+                  label="Agreement Active"
+                  description="Collateral deposited. You may now proceed with the work."
+                />
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Right Column: Analysis */}
+        <section>
+          <EscrowAnalysisCard data={escrow} mode="recipient-deposit" />
+        </section>
+      </div>
+    </div>
+  );
 }

@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
 const useNow = () => {
-    const now = new Date();
-    return now
-}
+  const now = new Date();
+  return now;
+};
 
-export default useNow
+export default useNow;

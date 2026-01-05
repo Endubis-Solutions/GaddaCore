@@ -11,7 +11,7 @@
 export type * from './models/User'
 export type * from './models/Arbitrator'
 export type * from './models/Escrow'
-export type * from './models/EscrowTransaction'
+export type * from './models/Transaction'
 export type * from './models/Dispute'
 export type * from './models/Vote'
 export type * from './models/Resolution'

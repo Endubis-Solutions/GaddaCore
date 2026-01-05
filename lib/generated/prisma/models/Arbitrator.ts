@@ -28,33 +28,34 @@ export type AggregateArbitrator = {
 
 export type ArbitratorAvgAggregateOutputType = {
   qualificationScore: number | null
+  reputationScore: number | null
   lockedAmount: number | null
   totalEarned: number | null
   totalLost: number | null
   totalCases: number | null
   correctVotes: number | null
   wrongVotes: number | null
-  reputationScore: number | null
 }
 
 export type ArbitratorSumAggregateOutputType = {
   qualificationScore: number | null
+  reputationScore: number | null
   lockedAmount: bigint | null
   totalEarned: bigint | null
   totalLost: bigint | null
   totalCases: number | null
   correctVotes: number | null
   wrongVotes: number | null
-  reputationScore: number | null
 }
 
 export type ArbitratorMinAggregateOutputType = {
   id: string | null
   walletAddress: string | null
   name: string | null
-  description: string | null
+  bio: string | null
   isQualified: boolean | null
   qualificationScore: number | null
+  reputationScore: number | null
   isActive: boolean | null
   lockedAmount: bigint | null
   lockedTxHash: string | null
@@ -63,8 +64,6 @@ export type ArbitratorMinAggregateOutputType = {
   totalCases: number | null
   correctVotes: number | null
   wrongVotes: number | null
-  reputationScore: number | null
-  registeredAt: Date | null
   lastActiveAt: Date | null
   updatedAt: Date | null
 }
@@ -73,9 +72,10 @@ export type ArbitratorMaxAggregateOutputType = {
   id: string | null
   walletAddress: string | null
   name: string | null
-  description: string | null
+  bio: string | null
   isQualified: boolean | null
   qualificationScore: number | null
+  reputationScore: number | null
   isActive: boolean | null
   lockedAmount: bigint | null
   lockedTxHash: string | null
@@ -84,8 +84,6 @@ export type ArbitratorMaxAggregateOutputType = {
   totalCases: number | null
   correctVotes: number | null
   wrongVotes: number | null
-  reputationScore: number | null
-  registeredAt: Date | null
   lastActiveAt: Date | null
   updatedAt: Date | null
 }
@@ -94,10 +92,11 @@ export type ArbitratorCountAggregateOutputType = {
   id: number
   walletAddress: number
   name: number
-  description: number
+  bio: number
   expertise: number
   isQualified: number
   qualificationScore: number
+  reputationScore: number
   isActive: number
   lockedAmount: number
   lockedTxHash: number
@@ -106,8 +105,6 @@ export type ArbitratorCountAggregateOutputType = {
   totalCases: number
   correctVotes: number
   wrongVotes: number
-  reputationScore: number
-  registeredAt: number
   lastActiveAt: number
   updatedAt: number
   _all: number
@@ -116,33 +113,34 @@ export type ArbitratorCountAggregateOutputType = {
 
 export type ArbitratorAvgAggregateInputType = {
   qualificationScore?: true
+  reputationScore?: true
   lockedAmount?: true
   totalEarned?: true
   totalLost?: true
   totalCases?: true
   correctVotes?: true
   wrongVotes?: true
-  reputationScore?: true
 }
 
 export type ArbitratorSumAggregateInputType = {
   qualificationScore?: true
+  reputationScore?: true
   lockedAmount?: true
   totalEarned?: true
   totalLost?: true
   totalCases?: true
   correctVotes?: true
   wrongVotes?: true
-  reputationScore?: true
 }
 
 export type ArbitratorMinAggregateInputType = {
   id?: true
   walletAddress?: true
   name?: true
-  description?: true
+  bio?: true
   isQualified?: true
   qualificationScore?: true
+  reputationScore?: true
   isActive?: true
   lockedAmount?: true
   lockedTxHash?: true
@@ -151,8 +149,6 @@ export type ArbitratorMinAggregateInputType = {
   totalCases?: true
   correctVotes?: true
   wrongVotes?: true
-  reputationScore?: true
-  registeredAt?: true
   lastActiveAt?: true
   updatedAt?: true
 }
@@ -161,9 +157,10 @@ export type ArbitratorMaxAggregateInputType = {
   id?: true
   walletAddress?: true
   name?: true
-  description?: true
+  bio?: true
   isQualified?: true
   qualificationScore?: true
+  reputationScore?: true
   isActive?: true
   lockedAmount?: true
   lockedTxHash?: true
@@ -172,8 +169,6 @@ export type ArbitratorMaxAggregateInputType = {
   totalCases?: true
   correctVotes?: true
   wrongVotes?: true
-  reputationScore?: true
-  registeredAt?: true
   lastActiveAt?: true
   updatedAt?: true
 }
@@ -182,10 +177,11 @@ export type ArbitratorCountAggregateInputType = {
   id?: true
   walletAddress?: true
   name?: true
-  description?: true
+  bio?: true
   expertise?: true
   isQualified?: true
   qualificationScore?: true
+  reputationScore?: true
   isActive?: true
   lockedAmount?: true
   lockedTxHash?: true
@@ -194,8 +190,6 @@ export type ArbitratorCountAggregateInputType = {
   totalCases?: true
   correctVotes?: true
   wrongVotes?: true
-  reputationScore?: true
-  registeredAt?: true
   lastActiveAt?: true
   updatedAt?: true
   _all?: true
@@ -291,20 +285,19 @@ export type ArbitratorGroupByOutputType = {
   id: string
   walletAddress: string
   name: string | null
-  description: string | null
+  bio: string | null
   expertise: string[]
   isQualified: boolean
   qualificationScore: number
+  reputationScore: number
   isActive: boolean
   lockedAmount: bigint
-  lockedTxHash: string | null
+  lockedTxHash: string
   totalEarned: bigint
   totalLost: bigint
   totalCases: number
   correctVotes: number
   wrongVotes: number
-  reputationScore: number
-  registeredAt: Date
   lastActiveAt: Date | null
   updatedAt: Date
   _count: ArbitratorCountAggregateOutputType | null
@@ -336,20 +329,19 @@ export type ArbitratorWhereInput = {
   id?: Prisma.StringFilter<"Arbitrator"> | string
   walletAddress?: Prisma.StringFilter<"Arbitrator"> | string
   name?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
-  description?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
+  bio?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
   expertise?: Prisma.StringNullableListFilter<"Arbitrator">
   isQualified?: Prisma.BoolFilter<"Arbitrator"> | boolean
   qualificationScore?: Prisma.IntFilter<"Arbitrator"> | number
+  reputationScore?: Prisma.FloatFilter<"Arbitrator"> | number
   isActive?: Prisma.BoolFilter<"Arbitrator"> | boolean
   lockedAmount?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
-  lockedTxHash?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
+  lockedTxHash?: Prisma.StringFilter<"Arbitrator"> | string
   totalEarned?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
   totalLost?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
   totalCases?: Prisma.IntFilter<"Arbitrator"> | number
   correctVotes?: Prisma.IntFilter<"Arbitrator"> | number
   wrongVotes?: Prisma.IntFilter<"Arbitrator"> | number
-  reputationScore?: Prisma.FloatFilter<"Arbitrator"> | number
-  registeredAt?: Prisma.DateTimeFilter<"Arbitrator"> | Date | string
   lastActiveAt?: Prisma.DateTimeNullableFilter<"Arbitrator"> | Date | string | null
   updatedAt?: Prisma.DateTimeFilter<"Arbitrator"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -362,20 +354,19 @@ export type ArbitratorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
   expertise?: Prisma.SortOrder
   isQualified?: Prisma.SortOrder
   qualificationScore?: Prisma.SortOrder
+  reputationScore?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lockedAmount?: Prisma.SortOrder
-  lockedTxHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedTxHash?: Prisma.SortOrder
   totalEarned?: Prisma.SortOrder
   totalLost?: Prisma.SortOrder
   totalCases?: Prisma.SortOrder
   correctVotes?: Prisma.SortOrder
   wrongVotes?: Prisma.SortOrder
-  reputationScore?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -391,20 +382,19 @@ export type ArbitratorWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ArbitratorWhereInput[]
   NOT?: Prisma.ArbitratorWhereInput | Prisma.ArbitratorWhereInput[]
   name?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
-  description?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
+  bio?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
   expertise?: Prisma.StringNullableListFilter<"Arbitrator">
   isQualified?: Prisma.BoolFilter<"Arbitrator"> | boolean
   qualificationScore?: Prisma.IntFilter<"Arbitrator"> | number
+  reputationScore?: Prisma.FloatFilter<"Arbitrator"> | number
   isActive?: Prisma.BoolFilter<"Arbitrator"> | boolean
   lockedAmount?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
-  lockedTxHash?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
+  lockedTxHash?: Prisma.StringFilter<"Arbitrator"> | string
   totalEarned?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
   totalLost?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
   totalCases?: Prisma.IntFilter<"Arbitrator"> | number
   correctVotes?: Prisma.IntFilter<"Arbitrator"> | number
   wrongVotes?: Prisma.IntFilter<"Arbitrator"> | number
-  reputationScore?: Prisma.FloatFilter<"Arbitrator"> | number
-  registeredAt?: Prisma.DateTimeFilter<"Arbitrator"> | Date | string
   lastActiveAt?: Prisma.DateTimeNullableFilter<"Arbitrator"> | Date | string | null
   updatedAt?: Prisma.DateTimeFilter<"Arbitrator"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -417,20 +407,19 @@ export type ArbitratorOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
   expertise?: Prisma.SortOrder
   isQualified?: Prisma.SortOrder
   qualificationScore?: Prisma.SortOrder
+  reputationScore?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lockedAmount?: Prisma.SortOrder
-  lockedTxHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  lockedTxHash?: Prisma.SortOrder
   totalEarned?: Prisma.SortOrder
   totalLost?: Prisma.SortOrder
   totalCases?: Prisma.SortOrder
   correctVotes?: Prisma.SortOrder
   wrongVotes?: Prisma.SortOrder
-  reputationScore?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ArbitratorCountOrderByAggregateInput
@@ -447,20 +436,19 @@ export type ArbitratorScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Arbitrator"> | string
   walletAddress?: Prisma.StringWithAggregatesFilter<"Arbitrator"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"Arbitrator"> | string | null
-  description?: Prisma.StringNullableWithAggregatesFilter<"Arbitrator"> | string | null
+  bio?: Prisma.StringNullableWithAggregatesFilter<"Arbitrator"> | string | null
   expertise?: Prisma.StringNullableListFilter<"Arbitrator">
   isQualified?: Prisma.BoolWithAggregatesFilter<"Arbitrator"> | boolean
   qualificationScore?: Prisma.IntWithAggregatesFilter<"Arbitrator"> | number
+  reputationScore?: Prisma.FloatWithAggregatesFilter<"Arbitrator"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"Arbitrator"> | boolean
   lockedAmount?: Prisma.BigIntWithAggregatesFilter<"Arbitrator"> | bigint | number
-  lockedTxHash?: Prisma.StringNullableWithAggregatesFilter<"Arbitrator"> | string | null
+  lockedTxHash?: Prisma.StringWithAggregatesFilter<"Arbitrator"> | string
   totalEarned?: Prisma.BigIntWithAggregatesFilter<"Arbitrator"> | bigint | number
   totalLost?: Prisma.BigIntWithAggregatesFilter<"Arbitrator"> | bigint | number
   totalCases?: Prisma.IntWithAggregatesFilter<"Arbitrator"> | number
   correctVotes?: Prisma.IntWithAggregatesFilter<"Arbitrator"> | number
   wrongVotes?: Prisma.IntWithAggregatesFilter<"Arbitrator"> | number
-  reputationScore?: Prisma.FloatWithAggregatesFilter<"Arbitrator"> | number
-  registeredAt?: Prisma.DateTimeWithAggregatesFilter<"Arbitrator"> | Date | string
   lastActiveAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Arbitrator"> | Date | string | null
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Arbitrator"> | Date | string
 }
@@ -468,24 +456,23 @@ export type ArbitratorScalarWhereWithAggregatesInput = {
 export type ArbitratorCreateInput = {
   id?: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutArbitratorInput
-  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorsInput
   disputes?: Prisma.DisputeCreateNestedManyWithoutArbitratorsInput
   votes?: Prisma.VoteCreateNestedManyWithoutArbitratorInput
 }
@@ -494,23 +481,22 @@ export type ArbitratorUncheckedCreateInput = {
   id?: string
   walletAddress: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
-  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorsInput
   disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutArbitratorsInput
   votes?: Prisma.VoteUncheckedCreateNestedManyWithoutArbitratorInput
 }
@@ -518,24 +504,23 @@ export type ArbitratorUncheckedCreateInput = {
 export type ArbitratorUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutArbitratorNestedInput
-  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorNestedInput
+  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorsNestedInput
   disputes?: Prisma.DisputeUpdateManyWithoutArbitratorsNestedInput
   votes?: Prisma.VoteUpdateManyWithoutArbitratorNestedInput
 }
@@ -544,23 +529,22 @@ export type ArbitratorUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorNestedInput
+  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorsNestedInput
   disputes?: Prisma.DisputeUncheckedUpdateManyWithoutArbitratorsNestedInput
   votes?: Prisma.VoteUncheckedUpdateManyWithoutArbitratorNestedInput
 }
@@ -569,20 +553,19 @@ export type ArbitratorCreateManyInput = {
   id?: string
   walletAddress: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
 }
@@ -590,20 +573,19 @@ export type ArbitratorCreateManyInput = {
 export type ArbitratorUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -612,20 +594,19 @@ export type ArbitratorUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -647,10 +628,11 @@ export type ArbitratorCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
   expertise?: Prisma.SortOrder
   isQualified?: Prisma.SortOrder
   qualificationScore?: Prisma.SortOrder
+  reputationScore?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lockedAmount?: Prisma.SortOrder
   lockedTxHash?: Prisma.SortOrder
@@ -659,30 +641,29 @@ export type ArbitratorCountOrderByAggregateInput = {
   totalCases?: Prisma.SortOrder
   correctVotes?: Prisma.SortOrder
   wrongVotes?: Prisma.SortOrder
-  reputationScore?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ArbitratorAvgOrderByAggregateInput = {
   qualificationScore?: Prisma.SortOrder
+  reputationScore?: Prisma.SortOrder
   lockedAmount?: Prisma.SortOrder
   totalEarned?: Prisma.SortOrder
   totalLost?: Prisma.SortOrder
   totalCases?: Prisma.SortOrder
   correctVotes?: Prisma.SortOrder
   wrongVotes?: Prisma.SortOrder
-  reputationScore?: Prisma.SortOrder
 }
 
 export type ArbitratorMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
   isQualified?: Prisma.SortOrder
   qualificationScore?: Prisma.SortOrder
+  reputationScore?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lockedAmount?: Prisma.SortOrder
   lockedTxHash?: Prisma.SortOrder
@@ -691,8 +672,6 @@ export type ArbitratorMaxOrderByAggregateInput = {
   totalCases?: Prisma.SortOrder
   correctVotes?: Prisma.SortOrder
   wrongVotes?: Prisma.SortOrder
-  reputationScore?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -701,9 +680,10 @@ export type ArbitratorMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   walletAddress?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
   isQualified?: Prisma.SortOrder
   qualificationScore?: Prisma.SortOrder
+  reputationScore?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   lockedAmount?: Prisma.SortOrder
   lockedTxHash?: Prisma.SortOrder
@@ -712,21 +692,19 @@ export type ArbitratorMinOrderByAggregateInput = {
   totalCases?: Prisma.SortOrder
   correctVotes?: Prisma.SortOrder
   wrongVotes?: Prisma.SortOrder
-  reputationScore?: Prisma.SortOrder
-  registeredAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ArbitratorSumOrderByAggregateInput = {
   qualificationScore?: Prisma.SortOrder
+  reputationScore?: Prisma.SortOrder
   lockedAmount?: Prisma.SortOrder
   totalEarned?: Prisma.SortOrder
   totalLost?: Prisma.SortOrder
   totalCases?: Prisma.SortOrder
   correctVotes?: Prisma.SortOrder
   wrongVotes?: Prisma.SortOrder
-  reputationScore?: Prisma.SortOrder
 }
 
 export type ArbitratorListRelationFilter = {
@@ -801,20 +779,20 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type BigIntFieldUpdateOperationsInput = {
-  set?: bigint | number
-  increment?: bigint | number
-  decrement?: bigint | number
-  multiply?: bigint | number
-  divide?: bigint | number
-}
-
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type BigIntFieldUpdateOperationsInput = {
+  set?: bigint | number
+  increment?: bigint | number
+  decrement?: bigint | number
+  multiply?: bigint | number
+  divide?: bigint | number
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -873,42 +851,63 @@ export type ArbitratorUpdateOneRequiredWithoutVotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ArbitratorUpdateToOneWithWhereWithoutVotesInput, Prisma.ArbitratorUpdateWithoutVotesInput>, Prisma.ArbitratorUncheckedUpdateWithoutVotesInput>
 }
 
-export type ArbitratorCreateNestedOneWithoutResolutionsInput = {
-  create?: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput>
-  connectOrCreate?: Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput
-  connect?: Prisma.ArbitratorWhereUniqueInput
+export type ArbitratorCreateNestedManyWithoutResolutionsInput = {
+  create?: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput> | Prisma.ArbitratorCreateWithoutResolutionsInput[] | Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput[]
+  connectOrCreate?: Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput | Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput[]
+  connect?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
 }
 
-export type ArbitratorUpdateOneWithoutResolutionsNestedInput = {
-  create?: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput>
-  connectOrCreate?: Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput
-  upsert?: Prisma.ArbitratorUpsertWithoutResolutionsInput
-  disconnect?: Prisma.ArbitratorWhereInput | boolean
-  delete?: Prisma.ArbitratorWhereInput | boolean
-  connect?: Prisma.ArbitratorWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ArbitratorUpdateToOneWithWhereWithoutResolutionsInput, Prisma.ArbitratorUpdateWithoutResolutionsInput>, Prisma.ArbitratorUncheckedUpdateWithoutResolutionsInput>
+export type ArbitratorUncheckedCreateNestedManyWithoutResolutionsInput = {
+  create?: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput> | Prisma.ArbitratorCreateWithoutResolutionsInput[] | Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput[]
+  connectOrCreate?: Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput | Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput[]
+  connect?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+}
+
+export type ArbitratorUpdateManyWithoutResolutionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput> | Prisma.ArbitratorCreateWithoutResolutionsInput[] | Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput[]
+  connectOrCreate?: Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput | Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput[]
+  upsert?: Prisma.ArbitratorUpsertWithWhereUniqueWithoutResolutionsInput | Prisma.ArbitratorUpsertWithWhereUniqueWithoutResolutionsInput[]
+  set?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  disconnect?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  delete?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  connect?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  update?: Prisma.ArbitratorUpdateWithWhereUniqueWithoutResolutionsInput | Prisma.ArbitratorUpdateWithWhereUniqueWithoutResolutionsInput[]
+  updateMany?: Prisma.ArbitratorUpdateManyWithWhereWithoutResolutionsInput | Prisma.ArbitratorUpdateManyWithWhereWithoutResolutionsInput[]
+  deleteMany?: Prisma.ArbitratorScalarWhereInput | Prisma.ArbitratorScalarWhereInput[]
+}
+
+export type ArbitratorUncheckedUpdateManyWithoutResolutionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput> | Prisma.ArbitratorCreateWithoutResolutionsInput[] | Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput[]
+  connectOrCreate?: Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput | Prisma.ArbitratorCreateOrConnectWithoutResolutionsInput[]
+  upsert?: Prisma.ArbitratorUpsertWithWhereUniqueWithoutResolutionsInput | Prisma.ArbitratorUpsertWithWhereUniqueWithoutResolutionsInput[]
+  set?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  disconnect?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  delete?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  connect?: Prisma.ArbitratorWhereUniqueInput | Prisma.ArbitratorWhereUniqueInput[]
+  update?: Prisma.ArbitratorUpdateWithWhereUniqueWithoutResolutionsInput | Prisma.ArbitratorUpdateWithWhereUniqueWithoutResolutionsInput[]
+  updateMany?: Prisma.ArbitratorUpdateManyWithWhereWithoutResolutionsInput | Prisma.ArbitratorUpdateManyWithWhereWithoutResolutionsInput[]
+  deleteMany?: Prisma.ArbitratorScalarWhereInput | Prisma.ArbitratorScalarWhereInput[]
 }
 
 export type ArbitratorCreateWithoutUserInput = {
   id?: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
-  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorsInput
   disputes?: Prisma.DisputeCreateNestedManyWithoutArbitratorsInput
   votes?: Prisma.VoteCreateNestedManyWithoutArbitratorInput
 }
@@ -916,23 +915,22 @@ export type ArbitratorCreateWithoutUserInput = {
 export type ArbitratorUncheckedCreateWithoutUserInput = {
   id?: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
-  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorsInput
   disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutArbitratorsInput
   votes?: Prisma.VoteUncheckedCreateNestedManyWithoutArbitratorInput
 }
@@ -956,23 +954,22 @@ export type ArbitratorUpdateToOneWithWhereWithoutUserInput = {
 export type ArbitratorUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorNestedInput
+  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorsNestedInput
   disputes?: Prisma.DisputeUpdateManyWithoutArbitratorsNestedInput
   votes?: Prisma.VoteUpdateManyWithoutArbitratorNestedInput
 }
@@ -980,23 +977,22 @@ export type ArbitratorUpdateWithoutUserInput = {
 export type ArbitratorUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorNestedInput
+  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorsNestedInput
   disputes?: Prisma.DisputeUncheckedUpdateManyWithoutArbitratorsNestedInput
   votes?: Prisma.VoteUncheckedUpdateManyWithoutArbitratorNestedInput
 }
@@ -1004,24 +1000,23 @@ export type ArbitratorUncheckedUpdateWithoutUserInput = {
 export type ArbitratorCreateWithoutDisputesInput = {
   id?: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutArbitratorInput
-  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorsInput
   votes?: Prisma.VoteCreateNestedManyWithoutArbitratorInput
 }
 
@@ -1029,23 +1024,22 @@ export type ArbitratorUncheckedCreateWithoutDisputesInput = {
   id?: string
   walletAddress: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
-  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorsInput
   votes?: Prisma.VoteUncheckedCreateNestedManyWithoutArbitratorInput
 }
 
@@ -1077,20 +1071,19 @@ export type ArbitratorScalarWhereInput = {
   id?: Prisma.StringFilter<"Arbitrator"> | string
   walletAddress?: Prisma.StringFilter<"Arbitrator"> | string
   name?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
-  description?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
+  bio?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
   expertise?: Prisma.StringNullableListFilter<"Arbitrator">
   isQualified?: Prisma.BoolFilter<"Arbitrator"> | boolean
   qualificationScore?: Prisma.IntFilter<"Arbitrator"> | number
+  reputationScore?: Prisma.FloatFilter<"Arbitrator"> | number
   isActive?: Prisma.BoolFilter<"Arbitrator"> | boolean
   lockedAmount?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
-  lockedTxHash?: Prisma.StringNullableFilter<"Arbitrator"> | string | null
+  lockedTxHash?: Prisma.StringFilter<"Arbitrator"> | string
   totalEarned?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
   totalLost?: Prisma.BigIntFilter<"Arbitrator"> | bigint | number
   totalCases?: Prisma.IntFilter<"Arbitrator"> | number
   correctVotes?: Prisma.IntFilter<"Arbitrator"> | number
   wrongVotes?: Prisma.IntFilter<"Arbitrator"> | number
-  reputationScore?: Prisma.FloatFilter<"Arbitrator"> | number
-  registeredAt?: Prisma.DateTimeFilter<"Arbitrator"> | Date | string
   lastActiveAt?: Prisma.DateTimeNullableFilter<"Arbitrator"> | Date | string | null
   updatedAt?: Prisma.DateTimeFilter<"Arbitrator"> | Date | string
 }
@@ -1098,24 +1091,23 @@ export type ArbitratorScalarWhereInput = {
 export type ArbitratorCreateWithoutVotesInput = {
   id?: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutArbitratorInput
-  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionCreateNestedManyWithoutArbitratorsInput
   disputes?: Prisma.DisputeCreateNestedManyWithoutArbitratorsInput
 }
 
@@ -1123,23 +1115,22 @@ export type ArbitratorUncheckedCreateWithoutVotesInput = {
   id?: string
   walletAddress: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
-  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorInput
+  resolutions?: Prisma.ResolutionUncheckedCreateNestedManyWithoutArbitratorsInput
   disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutArbitratorsInput
 }
 
@@ -1162,24 +1153,23 @@ export type ArbitratorUpdateToOneWithWhereWithoutVotesInput = {
 export type ArbitratorUpdateWithoutVotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutArbitratorNestedInput
-  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorNestedInput
+  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorsNestedInput
   disputes?: Prisma.DisputeUpdateManyWithoutArbitratorsNestedInput
 }
 
@@ -1187,43 +1177,41 @@ export type ArbitratorUncheckedUpdateWithoutVotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorNestedInput
+  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorsNestedInput
   disputes?: Prisma.DisputeUncheckedUpdateManyWithoutArbitratorsNestedInput
 }
 
 export type ArbitratorCreateWithoutResolutionsInput = {
   id?: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutArbitratorInput
@@ -1235,20 +1223,19 @@ export type ArbitratorUncheckedCreateWithoutResolutionsInput = {
   id?: string
   walletAddress: string
   name?: string | null
-  description?: string | null
+  bio?: string | null
   expertise?: Prisma.ArbitratorCreateexpertiseInput | string[]
   isQualified?: boolean
   qualificationScore?: number
+  reputationScore?: number
   isActive?: boolean
   lockedAmount?: bigint | number
-  lockedTxHash?: string | null
+  lockedTxHash: string
   totalEarned?: bigint | number
   totalLost?: bigint | number
   totalCases?: number
   correctVotes?: number
   wrongVotes?: number
-  reputationScore?: number
-  registeredAt?: Date | string
   lastActiveAt?: Date | string | null
   updatedAt?: Date | string
   disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutArbitratorsInput
@@ -1260,34 +1247,105 @@ export type ArbitratorCreateOrConnectWithoutResolutionsInput = {
   create: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput>
 }
 
-export type ArbitratorUpsertWithoutResolutionsInput = {
+export type ArbitratorUpsertWithWhereUniqueWithoutResolutionsInput = {
+  where: Prisma.ArbitratorWhereUniqueInput
   update: Prisma.XOR<Prisma.ArbitratorUpdateWithoutResolutionsInput, Prisma.ArbitratorUncheckedUpdateWithoutResolutionsInput>
   create: Prisma.XOR<Prisma.ArbitratorCreateWithoutResolutionsInput, Prisma.ArbitratorUncheckedCreateWithoutResolutionsInput>
-  where?: Prisma.ArbitratorWhereInput
 }
 
-export type ArbitratorUpdateToOneWithWhereWithoutResolutionsInput = {
-  where?: Prisma.ArbitratorWhereInput
+export type ArbitratorUpdateWithWhereUniqueWithoutResolutionsInput = {
+  where: Prisma.ArbitratorWhereUniqueInput
   data: Prisma.XOR<Prisma.ArbitratorUpdateWithoutResolutionsInput, Prisma.ArbitratorUncheckedUpdateWithoutResolutionsInput>
 }
 
-export type ArbitratorUpdateWithoutResolutionsInput = {
+export type ArbitratorUpdateManyWithWhereWithoutResolutionsInput = {
+  where: Prisma.ArbitratorScalarWhereInput
+  data: Prisma.XOR<Prisma.ArbitratorUpdateManyMutationInput, Prisma.ArbitratorUncheckedUpdateManyWithoutResolutionsInput>
+}
+
+export type ArbitratorUpdateWithoutDisputesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutArbitratorNestedInput
+  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorsNestedInput
+  votes?: Prisma.VoteUpdateManyWithoutArbitratorNestedInput
+}
+
+export type ArbitratorUncheckedUpdateWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
+  isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
   reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
+  totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalCases?: Prisma.IntFieldUpdateOperationsInput | number
+  correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorsNestedInput
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutArbitratorNestedInput
+}
+
+export type ArbitratorUncheckedUpdateManyWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
+  isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
+  totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalCases?: Prisma.IntFieldUpdateOperationsInput | number
+  correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ArbitratorUpdateWithoutResolutionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
+  isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
+  totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
+  totalCases?: Prisma.IntFieldUpdateOperationsInput | number
+  correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
+  wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutArbitratorNestedInput
@@ -1299,92 +1357,42 @@ export type ArbitratorUncheckedUpdateWithoutResolutionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   disputes?: Prisma.DisputeUncheckedUpdateManyWithoutArbitratorsNestedInput
   votes?: Prisma.VoteUncheckedUpdateManyWithoutArbitratorNestedInput
 }
 
-export type ArbitratorUpdateWithoutDisputesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
-  isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  totalCases?: Prisma.IntFieldUpdateOperationsInput | number
-  correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutArbitratorNestedInput
-  resolutions?: Prisma.ResolutionUpdateManyWithoutArbitratorNestedInput
-  votes?: Prisma.VoteUpdateManyWithoutArbitratorNestedInput
-}
-
-export type ArbitratorUncheckedUpdateWithoutDisputesInput = {
+export type ArbitratorUncheckedUpdateManyWithoutResolutionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
   isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
+  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockedTxHash?: Prisma.StringFieldUpdateOperationsInput | string
   totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
   totalCases?: Prisma.IntFieldUpdateOperationsInput | number
   correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
   wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  resolutions?: Prisma.ResolutionUncheckedUpdateManyWithoutArbitratorNestedInput
-  votes?: Prisma.VoteUncheckedUpdateManyWithoutArbitratorNestedInput
-}
-
-export type ArbitratorUncheckedUpdateManyWithoutDisputesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  walletAddress?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  expertise?: Prisma.ArbitratorUpdateexpertiseInput | string[]
-  isQualified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  qualificationScore?: Prisma.IntFieldUpdateOperationsInput | number
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lockedAmount?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  lockedTxHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  totalEarned?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  totalLost?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  totalCases?: Prisma.IntFieldUpdateOperationsInput | number
-  correctVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  wrongVotes?: Prisma.IntFieldUpdateOperationsInput | number
-  reputationScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1442,10 +1450,11 @@ export type ArbitratorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   walletAddress?: boolean
   name?: boolean
-  description?: boolean
+  bio?: boolean
   expertise?: boolean
   isQualified?: boolean
   qualificationScore?: boolean
+  reputationScore?: boolean
   isActive?: boolean
   lockedAmount?: boolean
   lockedTxHash?: boolean
@@ -1454,8 +1463,6 @@ export type ArbitratorSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   totalCases?: boolean
   correctVotes?: boolean
   wrongVotes?: boolean
-  reputationScore?: boolean
-  registeredAt?: boolean
   lastActiveAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1469,10 +1476,11 @@ export type ArbitratorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   walletAddress?: boolean
   name?: boolean
-  description?: boolean
+  bio?: boolean
   expertise?: boolean
   isQualified?: boolean
   qualificationScore?: boolean
+  reputationScore?: boolean
   isActive?: boolean
   lockedAmount?: boolean
   lockedTxHash?: boolean
@@ -1481,8 +1489,6 @@ export type ArbitratorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   totalCases?: boolean
   correctVotes?: boolean
   wrongVotes?: boolean
-  reputationScore?: boolean
-  registeredAt?: boolean
   lastActiveAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1492,10 +1498,11 @@ export type ArbitratorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   walletAddress?: boolean
   name?: boolean
-  description?: boolean
+  bio?: boolean
   expertise?: boolean
   isQualified?: boolean
   qualificationScore?: boolean
+  reputationScore?: boolean
   isActive?: boolean
   lockedAmount?: boolean
   lockedTxHash?: boolean
@@ -1504,8 +1511,6 @@ export type ArbitratorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   totalCases?: boolean
   correctVotes?: boolean
   wrongVotes?: boolean
-  reputationScore?: boolean
-  registeredAt?: boolean
   lastActiveAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1515,10 +1520,11 @@ export type ArbitratorSelectScalar = {
   id?: boolean
   walletAddress?: boolean
   name?: boolean
-  description?: boolean
+  bio?: boolean
   expertise?: boolean
   isQualified?: boolean
   qualificationScore?: boolean
+  reputationScore?: boolean
   isActive?: boolean
   lockedAmount?: boolean
   lockedTxHash?: boolean
@@ -1527,13 +1533,11 @@ export type ArbitratorSelectScalar = {
   totalCases?: boolean
   correctVotes?: boolean
   wrongVotes?: boolean
-  reputationScore?: boolean
-  registeredAt?: boolean
   lastActiveAt?: boolean
   updatedAt?: boolean
 }
 
-export type ArbitratorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "walletAddress" | "name" | "description" | "expertise" | "isQualified" | "qualificationScore" | "isActive" | "lockedAmount" | "lockedTxHash" | "totalEarned" | "totalLost" | "totalCases" | "correctVotes" | "wrongVotes" | "reputationScore" | "registeredAt" | "lastActiveAt" | "updatedAt", ExtArgs["result"]["arbitrator"]>
+export type ArbitratorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "walletAddress" | "name" | "bio" | "expertise" | "isQualified" | "qualificationScore" | "reputationScore" | "isActive" | "lockedAmount" | "lockedTxHash" | "totalEarned" | "totalLost" | "totalCases" | "correctVotes" | "wrongVotes" | "lastActiveAt" | "updatedAt", ExtArgs["result"]["arbitrator"]>
 export type ArbitratorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   resolutions?: boolean | Prisma.Arbitrator$resolutionsArgs<ExtArgs>
@@ -1560,20 +1564,19 @@ export type $ArbitratorPayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     walletAddress: string
     name: string | null
-    description: string | null
+    bio: string | null
     expertise: string[]
     isQualified: boolean
     qualificationScore: number
+    reputationScore: number
     isActive: boolean
     lockedAmount: bigint
-    lockedTxHash: string | null
+    lockedTxHash: string
     totalEarned: bigint
     totalLost: bigint
     totalCases: number
     correctVotes: number
     wrongVotes: number
-    reputationScore: number
-    registeredAt: Date
     lastActiveAt: Date | null
     updatedAt: Date
   }, ExtArgs["result"]["arbitrator"]>
@@ -2006,10 +2009,11 @@ export interface ArbitratorFieldRefs {
   readonly id: Prisma.FieldRef<"Arbitrator", 'String'>
   readonly walletAddress: Prisma.FieldRef<"Arbitrator", 'String'>
   readonly name: Prisma.FieldRef<"Arbitrator", 'String'>
-  readonly description: Prisma.FieldRef<"Arbitrator", 'String'>
+  readonly bio: Prisma.FieldRef<"Arbitrator", 'String'>
   readonly expertise: Prisma.FieldRef<"Arbitrator", 'String[]'>
   readonly isQualified: Prisma.FieldRef<"Arbitrator", 'Boolean'>
   readonly qualificationScore: Prisma.FieldRef<"Arbitrator", 'Int'>
+  readonly reputationScore: Prisma.FieldRef<"Arbitrator", 'Float'>
   readonly isActive: Prisma.FieldRef<"Arbitrator", 'Boolean'>
   readonly lockedAmount: Prisma.FieldRef<"Arbitrator", 'BigInt'>
   readonly lockedTxHash: Prisma.FieldRef<"Arbitrator", 'String'>
@@ -2018,8 +2022,6 @@ export interface ArbitratorFieldRefs {
   readonly totalCases: Prisma.FieldRef<"Arbitrator", 'Int'>
   readonly correctVotes: Prisma.FieldRef<"Arbitrator", 'Int'>
   readonly wrongVotes: Prisma.FieldRef<"Arbitrator", 'Int'>
-  readonly reputationScore: Prisma.FieldRef<"Arbitrator", 'Float'>
-  readonly registeredAt: Prisma.FieldRef<"Arbitrator", 'DateTime'>
   readonly lastActiveAt: Prisma.FieldRef<"Arbitrator", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Arbitrator", 'DateTime'>
 }
