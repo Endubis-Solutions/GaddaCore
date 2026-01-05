@@ -23,28 +23,28 @@ export const metadata: Metadata = {
   title: "GaddaCore | Secure Cardano Escrow Platform",
   description:
     "Decentralized escrow service on Cardano. Create trustless agreements, secure ADA payments with smart contracts, and ensure fair transactions without intermediaries.",
-  openGraph: {
-    title: "GaddaCore | Secure Cardano Escrow Platform",
-    description: "Decentralized escrow service on Cardano blockchain",
-    type: "website",
-    url: "https://gadda-core.vercel.app",
-    siteName: "GaddaCore",
-    images: [
-      {
-        url: "/og-image.svg",
-        width: 1200,
-        height: 630,
-        alt: "GaddaCore Cardano Escrow Platform",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "GaddaCore | Secure Cardano Escrow Platform",
-    description: "Decentralized escrow service on Cardano blockchain",
-    images: ["/twitter-image.png"],
-    creator: "@gaddacore",
-  },
+  // openGraph: {
+  //   title: "GaddaCore | Secure Cardano Escrow Platform",
+  //   description: "Decentralized escrow service on Cardano blockchain",
+  //   type: "website",
+  //   url: "https://gadda-core.vercel.app",
+  //   siteName: "GaddaCore",
+  //   images: [
+  //     {
+  //       url: "/og-image.svg",
+  //       width: 1200,
+  //       height: 630,
+  //       alt: "GaddaCore Cardano Escrow Platform",
+  //     },
+  //   ],
+  // },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "GaddaCore | Secure Cardano Escrow Platform",
+  //   description: "Decentralized escrow service on Cardano blockchain",
+  //   images: ["/twitter-image.png"],
+  //   creator: "@gaddacore",
+  // },
 };
 export default function RootLayout({
   children,
